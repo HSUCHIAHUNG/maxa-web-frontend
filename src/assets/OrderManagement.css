@@ -1,0 +1,58 @@
+/* tab表單相關 */
+
+/* tab bar */
+.arco-tabs-header-scroll {
+  flex-direction: column;
+  padding: 8px 12px;
+}
+
+.arco-tabs-header {
+  display: flex;
+  gap: 16px;
+}
+
+/* tab item */
+.arco-tabs-header-title {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.arco-tabs-header-extra {
+  line-height: initial;
+}
+
+/* tab icon */
+.arco-icon-hover {
+  display: none;
+}
+
+/* tab內容 */
+.arco-typography {
+  margin: 0 !important;
+}
+
+.arco-pagination-item {
+  margin: 0 !important;
+}
+
+/* 在畫面大於 768 時，調整 arco-tabs-content-horizontal 的 padding */
+@media screen and (min-width: 768px) {
+  /* tab最外層 */
+  .arco-tabs {
+    border-radius: 8px !important;
+    border-color: #e5e6eb !important;
+    border-width: 1px !important;
+  }
+
+  /* tab bar */
+  .arco-tabs-header-scroll {
+    flex-direction: row;
+    padding: 8px 16px;
+  }
+
+  /* tab內容 */
+  .arco-tabs-content {
+    background-color: #f2f3f5;
+    padding: 20px;
+  }
+}
