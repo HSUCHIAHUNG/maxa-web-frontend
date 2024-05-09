@@ -58,16 +58,14 @@ const SelectSeats: React.FC = () => {
   };
 
   // 儲存票數票種( 成人、兒童、敬老 )
-  // function storePassengerTicket(adult: number, child: number, old: number) {
-  //   dispatch(orderActions.setSeatsData({
-  //     passengerTicket: [
-  //       { adult: adult },
-  //       { child: child },
-  //       { old: old }
-  //     ],
-  //     selectSeats: state.bookingData.selectSeats // 如果需要傳遞其他屬性，可以從 state 中獲取
-  //   }));
-  // }
+  function storePassengerTicket(total: number, type: string) {
+    const ticket = {
+      type: type,
+      total: total,
+    };
+    dispatch(orderActions.setSeatsData(ticket));
+  }
+
   return (
     <>
       {isOpen() === "block" && (
@@ -107,9 +105,10 @@ const SelectSeats: React.FC = () => {
               className={`m-0 md:w-[180px]`}
             >
               <InputNumber
-                // onChange={(value) => storePassengerTicket(value, 'adult')}
+                onChange={(value) => storePassengerTicket(value, "adult")}
                 mode="button"
                 defaultValue={0}
+                min={0}
                 max={10}
                 className={`!w-full md:w-[200px]`}
                 style={{ width: 160, margin: "10px 24px 10px 0" }}
@@ -127,8 +126,10 @@ const SelectSeats: React.FC = () => {
               className={`m-0 md:w-[180px]`}
             >
               <InputNumber
+                onChange={(value) => storePassengerTicket(value, "兒童票數")}
                 mode="button"
                 defaultValue={0}
+                min={0}
                 max={10}
                 className={`!w-full md:w-[200px]`}
                 style={{ width: 160, margin: "10px 24px 10px 0" }}
@@ -142,8 +143,10 @@ const SelectSeats: React.FC = () => {
               className={`m-0 md:w-[180px] mb-[16px]`}
             >
               <InputNumber
+                onChange={(value) => storePassengerTicket(value, "敬老票數")}
                 mode="button"
                 defaultValue={0}
+                min={0}
                 max={20}
                 className={`!w-full md:w-[200px]`}
                 style={{ width: 160, margin: "10px 24px 10px 0" }}

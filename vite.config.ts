@@ -13,12 +13,10 @@ export default defineConfig({
   server: {
     open: true,
     proxy: {
-      '/api/v1': {
+      '/api': {
         target: 'https://maxa-d.chanjui.com',
         changeOrigin: true,
-        // https://maxa-d.chanjui.com/api/v1/login
-        // mapping -> /api/v1
-        // -> /backend/api.php
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },

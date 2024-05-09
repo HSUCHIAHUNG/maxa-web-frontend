@@ -10,16 +10,17 @@ interface TimeDataType {
 }
 
 // 票數、座位型別
-interface SeatsDataType {
-  passengerTicket:  [{adult: number},{child: number},{old: number}],
-  selectSeats: [{id: number, type: string, name: string | null}]
+interface PassengerTicketType {
+  type: string
+  total: number
 }
 
 // 儲存定單資料型別
 interface BookingData {
   stationData: { [key: string]: object };
   timeData: { [key: string]: TimeDataType }; // 將 timeData 介面應用於 timeData 物件
-  seatsData: { [key: string]: SeatsDataType };
+  seatsData: { [key: string]: PassengerTicketType };
+  passengerTicket: { [key: string]: PassengerTicketType };
 }
 
 // 訂單票種(單程票、來回票)
@@ -38,6 +39,7 @@ const initialOrderState: {
   bookingData: {
     stationData: {},
     timeData: {},
+    passengerTicket:{},
     seatsData: {},
   },
 };
@@ -70,9 +72,12 @@ const orderSlice = createSlice({
       state.bookingData.timeData[keyToUpdate] = newData;
     },
     // 儲存乘客數及座位號碼
-    // setSeatsData(state, action: PayloadAction<SeatsDataType>) {
-    //   console.log(state);
-    // },
+    setSeatsData(state, action: PayloadAction<PassengerTicketType>) {
+      const { type, total } = action.payload;
+      state.bookingData.passengerTicket[type] = { type, total };
+      console.log(state.bookingData.passengerTicket);
+    },
+    
 
     // 重設bookingData
     reseBbookingData(state) {
