@@ -9,9 +9,10 @@ import Guest from "./pages/Guest/Guest";
 
 /** @const 取得Guest頁面dilog開關狀態(全域狀態) */
 function App() {
-  /** @const 取得dilog開關狀態(全域狀態) */
+  // 取得dilog開關狀態(全域狀態)
   const isDialog = useSelector((state: RootState) => state.auth.isDialog);
-  /** @const 取得登入狀態(全域狀態) */
+
+  // 取得登入狀態(全域狀態)
   const auth = useSelector((state: RootState) => state.auth.isMember);
 
   // function print() {
@@ -20,7 +21,10 @@ function App() {
   //     url: "/api/api.php",
   //     data: {
   //       action: "login",
-  //       data: { member_account: "a0989541162@gmail.com", member_passwd: "kK3836519" },
+  //       data: {
+  //         member_account: "guest@test.com",
+  //         member_passwd: "123456",
+  //       },
   //     },
   //   });
   // }

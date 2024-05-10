@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// selectTime階段型別
+// selectTime階段
 interface TimeDataType {
   id: string;
   startStation: string;
@@ -9,17 +9,29 @@ interface TimeDataType {
   Vehicles: string;
 }
 
-// 票數、座位型別
+// 票數、座位
 interface PassengerTicketType {
   type: string
   total: number
+}
+
+// 儲存劃位資料
+interface SeatDataType {
+  id: number;
+  type: string;
+  name: string | null;
+}
+
+// 儲存劃位資料
+interface SeatsData  {
+  [key: string]: SeatDataType[];
 }
 
 // 儲存定單資料型別
 interface BookingData {
   stationData: { [key: string]: object };
   timeData: { [key: string]: TimeDataType }; // 將 timeData 介面應用於 timeData 物件
-  seatsData: { [key: string]: PassengerTicketType };
+  seatsData: SeatsData;
   passengerTicket: { [key: string]: PassengerTicketType };
 }
 
@@ -39,7 +51,7 @@ const initialOrderState: {
   bookingData: {
     stationData: {},
     timeData: {},
-    passengerTicket:{},
+    passengerTicket: {},
     seatsData: {},
   },
 };
@@ -71,14 +83,18 @@ const orderSlice = createSlice({
       const [keyToUpdate, newData] = action.payload;
       state.bookingData.timeData[keyToUpdate] = newData;
     },
-    // 儲存乘客數及座位號碼
-    setSeatsData(state, action: PayloadAction<PassengerTicketType>) {
+    // 儲存乘客數票數
+    setPassengerTicket(state, action: PayloadAction<PassengerTicketType>) {
       const { type, total } = action.payload;
       state.bookingData.passengerTicket[type] = { type, total };
-      console.log(state.bookingData.passengerTicket);
+      // console.log(state.bookingData.passengerTicket);
     },
-    
-
+    // 儲存劃位資料
+    setSeatsData(state, action: PayloadAction<[SeatDataType[], string]>) {
+      const [newData, ticketType] = action.payload;
+      state.bookingData.seatsData[ticketType] = newData;
+      console.log(state.bookingData.seatsData[ticketType]);
+    },
     // 重設bookingData
     reseBbookingData(state) {
       state.bookingData = initialOrderState.bookingData;

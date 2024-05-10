@@ -14,12 +14,16 @@ import {
   Radio,
   Space,
   Typography,
+  Message,
 } from "@arco-design/web-react";
 import SetSeat from "./SetSeat";
 
 const SelectSeats: React.FC = () => {
   // redux(方法調用)
   const dispatch = useAppDispatch();
+  
+  // 動態路由切換
+  const navigate = useNavigate();
 
   // ticket( 單程票、來回票 )狀態
   const ticketState = useSelector((state: RootState) => state.order.ticket);
@@ -29,19 +33,48 @@ const SelectSeats: React.FC = () => {
     (state: RootState) => state.order.bookingStage
   );
 
-  // 動態路由切換
-  const navigate = useNavigate();
+  // 乘客票數
+  const passengerTicket = useSelector(
+    (state: RootState) => state.order.bookingData.passengerTicket
+  );
 
+  // 已選乘客總數
+  const passengerTicketTotal = Object.values(passengerTicket).reduce(
+    (acc, obj) => acc + obj.total,
+    0
+  );
+
+  // 去程已選座位數
+  const oneWayTicketSeats = useSelector(
+    (state: RootState) => state.order.bookingData?.seatsData?.oneWayTicket
+  );
+
+  // 回程已選座位數
+  const roundTripTicket = useSelector(
+    (state: RootState) => state.order.bookingData?.seatsData?.roundTripTicket
+  );
+  
   // 手動劃位
-  const [isSetSeats, setIsSetSeats] = useState(false);
+  const [isSetSeats, setIsSetSeats] = useState({
+    isOpen: false,
+    ticketState: "",
+  });
 
   // ui kit
   const FormItem = Form.Item;
   const [form] = Form.useForm();
 
-  /** @func login表單提交 */
+  //  login表單提交
   const submit = (value: object) => {
     console.log(value);
+    if (passengerTicketTotal < 1) {
+      Message.error("乘客票數不可小於1");
+      return;
+    }
+    if((oneWayTicketSeats.length + roundTripTicket.length)*2 !== passengerTicketTotal ) {
+      Message.error("票數與已選座位數不符");
+      return;
+    }
     navigate("/contract");
   };
 
@@ -51,10 +84,19 @@ const SelectSeats: React.FC = () => {
   // 設定座位
   const seatHandler = (
     _checked: boolean,
-    event: React.ChangeEvent<Element>
+    event: React.ChangeEvent<Element>,
+    state: string
   ) => {
+    if (passengerTicketTotal < 1) {
+      Message.error("乘客票數不可小於1");
+      return;
+    }
     if ((event.target as HTMLInputElement).defaultValue === "手動劃位")
-      setIsSetSeats(!isSetSeats);
+      setIsSetSeats((prevState) => ({
+        ...prevState,
+        isOpen: !prevState.isOpen,
+        ticketState: state, // 这里使用参数 state 而不是 state 函数
+      }));
   };
 
   // 儲存票數票種( 成人、兒童、敬老 )
@@ -63,20 +105,41 @@ const SelectSeats: React.FC = () => {
       type: type,
       total: total,
     };
-    dispatch(orderActions.setSeatsData(ticket));
+    dispatch(orderActions.setPassengerTicket(ticket));
   }
 
   return (
     <>
       {isOpen() === "block" && (
         <>
-          {/* 手動劃位 */}
-          {isSetSeats && (
+          {/* 選擇去程手動劃位 */}
+          <div
+            className={`${
+              isSetSeats.isOpen && isSetSeats.ticketState === "選擇去程座位"
+                ? "block"
+                : "hidden"
+            }`}
+          >
             <SetSeat
-              isSetSeats={isSetSeats}
+              isSetSeats={isSetSeats.isOpen}
               setIsSetSeats={setIsSetSeats}
+              ticketState={isSetSeats.ticketState}
             ></SetSeat>
-          )}
+          </div>
+          {/* 選擇回程手動劃位 */}
+          <div
+            className={`${
+              isSetSeats.isOpen && isSetSeats.ticketState === "選擇回程座位"
+                ? "block"
+                : "hidden"
+            }`}
+          >
+            <SetSeat
+              isSetSeats={isSetSeats.isOpen}
+              setIsSetSeats={setIsSetSeats}
+              ticketState={isSetSeats.ticketState}
+            ></SetSeat>
+          </div>
           <Form
             form={form}
             autoComplete="on"
@@ -88,20 +151,6 @@ const SelectSeats: React.FC = () => {
               label="成人票數"
               field="aldult"
               required
-              rules={[
-                {
-                  required: true,
-                  validator: (v, cb) => {
-                    if (v === undefined) {
-                      return cb("必填");
-                    }
-                    if (v < 1) {
-                      return cb("不可小於1");
-                    }
-                    cb(null);
-                  },
-                },
-              ]}
               className={`m-0 md:w-[180px]`}
             >
               <InputNumber
@@ -126,7 +175,7 @@ const SelectSeats: React.FC = () => {
               className={`m-0 md:w-[180px]`}
             >
               <InputNumber
-                onChange={(value) => storePassengerTicket(value, "兒童票數")}
+                onChange={(value) => storePassengerTicket(value, "child")}
                 mode="button"
                 defaultValue={0}
                 min={0}
@@ -143,7 +192,7 @@ const SelectSeats: React.FC = () => {
               className={`m-0 md:w-[180px] mb-[16px]`}
             >
               <InputNumber
-                onChange={(value) => storePassengerTicket(value, "敬老票數")}
+                onChange={(value) => storePassengerTicket(value, "old")}
                 mode="button"
                 defaultValue={0}
                 min={0}
@@ -163,7 +212,7 @@ const SelectSeats: React.FC = () => {
                   return (
                     <Radio
                       onChange={(_checked, event) =>
-                        seatHandler(_checked, event)
+                        seatHandler(_checked, event, "選擇去程座位")
                       }
                       key={item}
                       value={item}
@@ -227,7 +276,7 @@ const SelectSeats: React.FC = () => {
                     return (
                       <Radio
                         onChange={(_checked, event) =>
-                          seatHandler(_checked, event)
+                          seatHandler(_checked, event, "選擇回程座位")
                         }
                         key={item}
                         value={item}

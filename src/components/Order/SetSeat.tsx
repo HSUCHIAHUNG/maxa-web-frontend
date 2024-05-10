@@ -1,5 +1,8 @@
 // 元生方法
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+// redux
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../stores/index";
 // 匯入組件
 import Mask from "../common/Mask";
 // 匯入圖片
@@ -11,74 +14,111 @@ import driver from "../../assets/images/order/driver.png";
 // import save from "../../assets/images/order/save.png";
 import istairs from "../../assets/images/order/istairs.png";
 import exit from "../../assets/images/order/exit.png";
-import { Alert } from "@arco-design/web-react";
+import { Icon, Message } from "@arco-design/web-react";
+import { orderActions } from "../../stores/order";
 
 interface SetSeatProps {
   isSetSeats: boolean;
-  setIsSetSeats: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSetSeats: React.Dispatch<
+    React.SetStateAction<{ isOpen: boolean; ticketState: string }>
+  >;
+  ticketState: string
 }
 
-const SetSeat: React.FC<SetSeatProps> = ({ isSetSeats, setIsSetSeats }) => {
-  const [seatMessage, setSeatMessage] = useState(false);
+interface SeatDataType {
+  id: number;
+  type: string;
+  name: string | null;
+}
+
+const IconFont = Icon.addFromIconFontCn({
+  src: "//at.alicdn.com/t/font_180975_26f1p759rvn.js",
+});
+
+const SetSeat: React.FC<SetSeatProps> = ({ isSetSeats, setIsSetSeats, ticketState }) => {
+  // redux(方法調用)
+  const dispatch = useAppDispatch();
+  
+  // 提示訊息
+  // const [seatMessage, setSeatMessage] = useState(false);
+
+  // 儲存已選座位數
+  const [tempSelectSeats, setTempSelectSeats] = useState(0);
+
+  // 暫存已選擇座位待送出確認後存進redux
+  const tempSelectSeatsRef = useRef<SeatDataType[]>([]);
+
+  // 座位列表的狀態
   const [seatArr, setSeatArr] = useState([
-    { id: 1, type: "driver", name: "" },
-    { id: 2, type: "null", name: "" },
-    { id: 3, type: "null", name: "" },
-    { id: 4, type: "null", name: "" },
-    { id: 5, type: "istairs", name: "" },
+    { id: 1, type: "driver", name: null },
+    { id: 2, type: "null", name: null },
+    { id: 3, type: "null", name: null },
+    { id: 4, type: "null", name: null },
+    { id: 5, type: "istairs", name: null },
     { id: 6, type: "sear_n", name: "A1" },
     { id: 7, type: "sear_n", name: "B1" },
-    { id: 8, type: "null", name: "" },
-    { id: 9, type: "null", name: "" },
+    { id: 8, type: "null", name: null },
+    { id: 9, type: "null", name: null },
     { id: 10, type: "sear_n", name: "E1" },
     { id: 11, type: "sear_n", name: "A2" },
     { id: 12, type: "sear_n", name: "B2" },
-    { id: 13, type: "null", name: "" },
-    { id: 14, type: "null", name: "" },
-    { id: 15, type: "seat_d", name: "" },
+    { id: 13, type: "null", name: null },
+    { id: 14, type: "null", name: null },
+    { id: 15, type: "seat_d", name: null },
 
     { id: 16, type: "sear_n", name: "A3" },
     { id: 17, type: "sear_n", name: "B3" },
-    { id: 18, type: "null", name: "" },
-    { id: 19, type: "null", name: "" },
-    { id: 20, type: "seat_d", name: "" },
+    { id: 18, type: "null", name: null },
+    { id: 19, type: "null", name: null },
+    { id: 20, type: "seat_d", name: null },
 
     { id: 21, type: "sear_n", name: "A4" },
     { id: 22, type: "sear_n", name: "B4" },
-    { id: 23, type: "null", name: "" },
-    { id: 24, type: "null", name: "" },
+    { id: 23, type: "null", name: null },
+    { id: 24, type: "null", name: null },
     { id: 25, type: "sear_n", name: "E4" },
 
-    { id: 26, type: "exit", name: "" },
-    { id: 27, type: "null", name: "" },
-    { id: 28, type: "null", name: "" },
-    { id: 29, type: "null", name: "" },
+    { id: 26, type: "exit", name: null },
+    { id: 27, type: "null", name: null },
+    { id: 28, type: "null", name: null },
+    { id: 29, type: "null", name: null },
     { id: 30, type: "istairs", name: null },
 
     { id: 31, type: "sear_n", name: "A5" },
     { id: 32, type: "sear_n", name: "B5" },
-    { id: 33, type: "null", name: "" },
+    { id: 33, type: "null", name: null },
     { id: 34, type: "sear_n", name: "D5" },
     { id: 35, type: "sear_n", name: "E5" },
 
     { id: 36, type: "sear_n", name: "A6" },
     { id: 37, type: "sear_n", name: "B6" },
-    { id: 38, type: "null", name: "" },
+    { id: 38, type: "null", name: null },
     { id: 39, type: "sear_n", name: "D6" },
     { id: 40, type: "sear_n", name: "E6" },
 
     { id: 41, type: "sear_n", name: "A7" },
     { id: 42, type: "sear_n", name: "B7" },
-    { id: 43, type: "null", name: "" },
+    { id: 43, type: "null", name: null },
     { id: 44, type: "sear_n", name: "D7" },
     { id: 45, type: "sear_n", name: "E7" },
 
     { id: 46, type: "sear_n", name: "A8" },
     { id: 47, type: "sear_n", name: "B8" },
-    { id: 48, type: "null", name: "" },
+    { id: 48, type: "null", name: null },
     { id: 49, type: "sear_n", name: "D8" },
     { id: 50, type: "sear_n", name: "E8" },
-  ]); // 座位列表的狀態
+  ]);
+
+  // 乘客票數
+  const passengerTicket = useSelector(
+    (state: RootState) => state.order.bookingData.passengerTicket
+  );
+
+  // 已選乘客總數
+  const passengerTicketTotal = Object.values(passengerTicket).reduce(
+    (acc, obj) => acc + obj.total,
+    0
+  );
 
   // 設定座位icon
   const setSeatImg = (type: string | null) => {
@@ -92,7 +132,26 @@ const SetSeat: React.FC<SetSeatProps> = ({ isSetSeats, setIsSetSeats }) => {
 
   // 提交訂單跳轉頁面到合約頁面
   function submitSetSeat() {
-    setSeatMessage(true);
+    if (passengerTicketTotal < tempSelectSeats) {
+      Message.error("訂位數超過票數");
+      return;
+    }
+    if (passengerTicketTotal === tempSelectSeats) {
+      Message.success({
+        icon: <IconFont type="icon-success" />,
+        content: "劃位成功",
+      });
+      // 關閉談窗
+      setIsSetSeats((prevState) => ({
+        ...prevState,
+        isOpen: !prevState.isOpen,
+      }));
+      // TODO:如果票數與座位數一樣就跳通過，將資料存進Redux(要標示回程還是去程)，並且關閉視窗。
+      dispatch(orderActions.setSeatsData([tempSelectSeatsRef.current, ticketState === '選擇去程座位' ? 'oneWayTicket': "roundTripTicket"]));
+    } else {
+      Message.error("已選座位數與票數不符");
+      return
+    }
   }
 
   // 在點擊按鈕後更新座位的類型並更換圖片
@@ -100,7 +159,23 @@ const SetSeat: React.FC<SetSeatProps> = ({ isSetSeats, setIsSetSeats }) => {
     setSeatArr((prevSeatArr) => {
       return prevSeatArr.map((seat) => {
         if (seat.id === id && seat.type === "sear_n") {
-          return { ...seat, type: "seat_s" }; // 更新座位類型為 "seat_s"
+          if (passengerTicketTotal < tempSelectSeats + 1) {
+            Message.error("訂位數超過票數");
+            return { ...seat };
+          }
+          tempSelectSeatsRef.current.push(seat);
+          // 增加座位数
+          setTempSelectSeats((state) => state + 1);
+          // 更新座位類型為 "seat_s"
+          return { ...seat, type: "seat_s" };
+        }
+        if (seat.id === id && seat.type === "seat_s") {
+          // 如果是已選擇的座位，則從 tempSelectSeats 移除該座位
+          tempSelectSeatsRef.current = tempSelectSeatsRef.current.filter(
+            (selectedSeat: SeatDataType) => selectedSeat.id !== id
+          );
+          setTempSelectSeats((state) => state - 1); // 增加座位数
+          return { ...seat, type: "sear_n" }; // 更新座位類型為 "seat_s"
         }
         return seat; // 如果不是目標座位，保持原樣
       });
@@ -118,17 +193,20 @@ const SetSeat: React.FC<SetSeatProps> = ({ isSetSeats, setIsSetSeats }) => {
               <div className="flex justify-between items-center text-[16px] shadow-md w-full px-[16px] py-[12px] ">
                 <p>手動劃位</p>
                 <button
-                  onClick={() => setIsSetSeats(false)}
+                  onClick={() => setIsSetSeats((prevState) => ({
+                    ...prevState,
+                    isOpen: !prevState.isOpen,
+                  }))}
                   className="icon-[ri--close-fill] cursor-pointer h-[16px] w-[16px]"
                 ></button>
               </div>
-              {seatMessage && (
+              {/* {seatMessage && (
                 <Alert
                   type="error"
                   content="尚未選擇完座位"
                   className={`text-center`}
                 />
-              )}
+              )} */}
               {/* 座位狀態圖示 */}
               <div
                 className={`flex justify-center gap-[16px] pt-[20px] pb-[16px]`}
@@ -180,10 +258,15 @@ const SetSeat: React.FC<SetSeatProps> = ({ isSetSeats, setIsSetSeats }) => {
               </div>
               {/* 下方已選擇座位 & 按鈕 */}
               <div className="flex justify-between items-center text-[14px] shadow-xl w-full p-[16px] ">
-                <p>已選擇(0/6)個座位</p>
+                <p>
+                  已選擇({passengerTicketTotal}/{tempSelectSeats})個座位
+                </p>
                 <div className={`flex gap-[8px]`}>
                   <button
-                    onClick={() => setIsSetSeats(false)}
+                    onClick={() => setIsSetSeats((prevState) => ({
+                      ...prevState,
+                      isOpen: !prevState.isOpen,
+                    }))}
                     className={`bg-[#F2F3F5] py-[5px] px-[16px] rounded-[2px]`}
                   >
                     取消

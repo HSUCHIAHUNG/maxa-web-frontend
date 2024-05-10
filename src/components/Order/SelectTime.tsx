@@ -10,6 +10,7 @@ import {
   Button,
   Divider,
   Form,
+  Message,
   Table,
   TableColumnProps,
 } from "@arco-design/web-react";
@@ -119,12 +120,13 @@ const SelectTime: React.FC<SelectTimeProps> = () => {
   const [form] = Form.useForm();
 
   /** @func login表單提交 */
-  const loginSubmit = () => {
+  const submit = () => {
     console.log(bookingData);
     console.log(Object.keys(bookingData.timeData).length);
     if (ticketState === "oneWayTicket") {
       if (Object.keys(bookingData.timeData).length === 0) {
         setTimeIsSelect(Object.keys(bookingData.timeData).length === 0);
+        Message.error("請選擇搭車時間");
       } else {
         setTimeIsSelect(false);
         // redux(切換全域訂單階段)
@@ -135,6 +137,7 @@ const SelectTime: React.FC<SelectTimeProps> = () => {
     if (ticketState === "roundTripTicket") {
       if (Object.keys(bookingData.timeData).length < 2) {
         setTimeIsSelect(Object.keys(bookingData.timeData).length < 2);
+        Message.error("請選擇搭車時間");
       } else {
         setTimeIsSelect(false);
         // redux(切換全域訂單階段)
@@ -165,13 +168,12 @@ const SelectTime: React.FC<SelectTimeProps> = () => {
   return (
     <>
       <div className={`${isOpen()}`}>
-        {timeIsSelect && <Alert banner type="error" content="請選擇搭車時間" />}
         <Form
           form={form}
           autoComplete="on"
           requiredSymbol={{ position: "start" }}
           layout="vertical"
-          onSubmit={loginSubmit}
+          onSubmit={submit}
           className={`${isOpen()}`}
         >
           <div className={` md:gap-[20px] `}>
