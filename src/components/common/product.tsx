@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface ProductProps {
   url: string;
@@ -33,7 +34,7 @@ const Carousel: React.FC<ProductProps> = (props) => {
   };
 
   return (
-    <div className={`border border-solid border-[#E5E6EB] rounded-[8px] w-[100%] h-[400px] md:w-[232px] xl:w-[370px] ${className}`}>
+    <Link  to={`order/test`} className={`border border-solid border-[#E5E6EB] rounded-[8px] w-[100%] h-[400px] md:w-[232px] xl:w-[370px] ${className}`}>
       <img
         src={url}
         alt={title}
@@ -58,7 +59,7 @@ const Carousel: React.FC<ProductProps> = (props) => {
           <p className=" text-[20px]">NT${money}</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

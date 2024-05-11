@@ -15,6 +15,7 @@ const CartPages = lazy(() => import("../pages/Cart"));
 const OrderContentPage = lazy(() => import("../pages/OrderContent"));
 const SearchOrderPage = lazy(() => import("../pages/SearchOrder"));
 const AccountPage = lazy(() => import("../pages/MemberCenter/Account"));
+const CollectionPage = lazy(() => import("../pages/Collection"));
 const FrequentTravelersPage = lazy(
   () => import("../pages/MemberCenter/FrequentTravelers")
 );
@@ -155,6 +156,15 @@ const routes = [
           </Suspense>
         ),
         path: "/searchOrder",
+      },
+      // 收藏
+      {
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <CollectionPage />
+          </Suspense>
+        ),
+        path: "/collection",
       },
     ],
   },

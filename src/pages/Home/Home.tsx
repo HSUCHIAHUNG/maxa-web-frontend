@@ -10,7 +10,7 @@ import ubusBlack from "@/assets/images/homePage/Partner_black_3.svg";
 
 // 匯入組件
 import Banner from "../../components/Carousel";
-import News from "../../components/common/News";
+// import News from "../../components/common/News";
 import Product from "../../components/common/product";
 import PhotoTitle from "../../components/Home/PhotoTitle";
 import CityCard from "../../components/common/City";
@@ -25,26 +25,26 @@ function Home() {
     "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/24e0dd27418d2291b65db1b21aa62254.png~tplv-uwbnlip3yd-webp.webp",
   ];
 
-  const newsList = [
-    {
-      id: 1,
-      url: "https://tabiiro.travel/img/articles/21032501/main.jpg",
-      title: "櫻花季優惠來嘍!!",
-      date: "活動至 2024/12/26 23;59 止",
-    },
-    {
-      id: 2,
-      url: "https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_144240/20230519001422_pi5Eo/jpg",
-      title: "暑假暢玩沖繩",
-      date: "活動至 2024/12/26 23;59 止",
-    },
-    {
-      id: 3,
-      url: "https://pic.amwaynet.com.tw/PR/ishare/article/2023061903d50269c264453eac3e8ce071016b06.jpg",
-      title: "暑假暢玩沖繩",
-      date: "活動至 2024/12/26 23;59 止",
-    },
-  ];
+  // const newsList = [
+  //   {
+  //     id: 1,
+  //     url: "https://tabiiro.travel/img/articles/21032501/main.jpg",
+  //     title: "櫻花季優惠來嘍!!",
+  //     date: "活動至 2024/12/26 23;59 止",
+  //   },
+  //   {
+  //     id: 2,
+  //     url: "https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_144240/20230519001422_pi5Eo/jpg",
+  //     title: "暑假暢玩沖繩",
+  //     date: "活動至 2024/12/26 23;59 止",
+  //   },
+  //   {
+  //     id: 3,
+  //     url: "https://pic.amwaynet.com.tw/PR/ishare/article/2023061903d50269c264453eac3e8ce071016b06.jpg",
+  //     title: "暑假暢玩沖繩",
+  //     date: "活動至 2024/12/26 23;59 止",
+  //   },
+  // ];
 
   const productList = [
     {
@@ -162,7 +162,7 @@ function Home() {
       <div className=" w-[100%] m-[0_auto] pt-[20px] pb-[40px] md:pt-[56px] md:pb-[60px] xl:pt-[96px] xl:pb-[100px] ">
         <div className=" w-[100%] max-w-[1200px] m-[0_auto] flex flex-col gap-[80px] px-[12px] md:px-[24px] ">
           {/* 最新消息 */}
-          <div>
+          {/* <div>
             <PhotoTitle text="最新消息" subtitle="Latest News" />
             <div className=" flex gap-[20px] flex-col md:flex-row ">
               {newsList.map((newsList) => (
@@ -174,10 +174,10 @@ function Home() {
                 />
               ))}
             </div>
-          </div>
+          </div> */}
           {/* 熱門商品 */}
-          <div>
-            <PhotoTitle text="熱門商品" subtitle="Popular product" />
+          <div className={`md:w-[720px] xl:w-auto`}>
+            <PhotoTitle text="熱門商品" subtitle="Popular product" readAll />
             <div className=" flex gap-[20px] flex-col md:flex-row ">
               {productList.map((productItem) => (
                 <Product
@@ -192,7 +192,7 @@ function Home() {
             </div>
           </div>
           {/* 推薦城市 */}
-          <div>
+          <div className={`md:w-[720px] xl:w-auto`}>
             <PhotoTitle text="推薦城市" subtitle="Recommended Cities" />
             <div className="flex gap-[20px] flex-col md:flex-row">
               {cityList.map((cityItem) => (
@@ -205,7 +205,7 @@ function Home() {
             </div>
           </div>
           {/* 為什麼選擇MAXA? */}
-          <div>
+          <div className={`md:w-[720px] xl:w-auto`} >
             <PhotoTitle text="為什麼選擇MAXA?" subtitle="Why choose MAXA?" />
             <div className="flex flex-col items-center md:flex-row">
               {choseList.map((choseItem) => (
@@ -218,7 +218,7 @@ function Home() {
             </div>
           </div>
           {/* 合作夥伴 */}
-          <div className="  ">
+          <div className={`md:w-[720px] xl:w-auto`} >
             <PhotoTitle text="合作夥伴?" subtitle="Partner" />
             <div className=" flex flex-col items-center md:flex-row gap-[8px] ">
               {parnerLisr.map(({ id, blackUrl, colorUrl }) => (

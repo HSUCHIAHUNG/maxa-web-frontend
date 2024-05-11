@@ -57,10 +57,8 @@ function GuestPage() {
   }, []);
 
   // 點擊灰底區域關閉視窗
-  const handleBackdropClick = (
-    event: React.MouseEvent<HTMLElement>
-  ) => {
-    const target = event.target as HTMLElement; 
+  const handleBackdropClick = (event: React.MouseEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement;
     if (target.classList.contains("bg-[black]") && isDialog && !auth) {
       dialogToggle(); // 关闭对话框
     }
@@ -106,10 +104,9 @@ function GuestPage() {
         <div
           className={`w-[320px] max-h-[80vh] overflow-y-auto pt-[16px] flex flex-col items-center md:w-[420px] md:h-fit justify-between`}
         >
-          <button
-            onClick={dialogToggle}
-            className="icon-[ri--close-fill] cursor-pointer h-[16px] w-[16px] mr-[16px] self-end  "
-          ></button>
+          <button onClick={dialogToggle} className={`self-end`}>
+            <span className="icon-[ri--close-fill] cursor-pointer h-[16px] w-[16px] mr-[16px]   "></span>
+          </button>
           <div>
             <p className={`text-center py-[8px]`}>{titles[model]}</p>
             <img src={Logo} alt="Logo" className={`w-[120px] h-[28px] `} />

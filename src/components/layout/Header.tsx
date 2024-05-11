@@ -18,7 +18,7 @@ interface IsOpenType {
   list: boolean;
   memberList: boolean;
   langue: boolean;
-  cart: boolean;
+  collection: boolean;
 }
 
 const Header: React.FC = () => {
@@ -48,7 +48,7 @@ const Header: React.FC = () => {
       list: false,
       memberList: false,
       langue: false,
-      cart: false,
+      collection: false,
     }));
     dispatch(authActions.dialogToggle());
   };
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
       list: false,
       memberList: false,
       langue: false,
-      cart: false,
+      collection: false,
     }));
   };
 
@@ -71,13 +71,13 @@ const Header: React.FC = () => {
     list: false,
     memberList: false,
     langue: false,
-    cart: false,
+    collection: false,
   });
   const { search, list, memberList } = isOpen;
 
   /** @const {Array} 未登入routes */
   const menuList = [
-    { id: "1", lable: "購物車", route: "/cart" },
+    { id: "1", lable: "收藏商品", route: "/collection" },
     { id: "2", lable: "訂單查詢", route: "/searchOrder" },
   ];
 
@@ -100,8 +100,8 @@ const Header: React.FC = () => {
         return "solar--user-id-bold-duotone";
       case "登出":
         return "solar--logout-3-bold-duotone";
-      case "購物車":
-        return "solar--cart-large-minimalistic-bold-duotone";
+      case "收藏商品":
+        return "solar--star-bold-duotone";
       case "訂單查詢":
         return "solar--cart-large-minimalistic-bold-duotone";
       default:
@@ -113,7 +113,7 @@ const Header: React.FC = () => {
   const toggleOpen = (key: keyof IsOpenType) => {
     if (isOpen.memberList && key !== "memberList") toggleOpen("memberList");
     if (isOpen.list && key !== "list") toggleOpen("list");
-    if (isOpen.cart && key !== "cart") toggleOpen("cart");
+    if (isOpen.collection && key !== "collection") toggleOpen("collection");
     if (isOpen.langue && key !== "langue") toggleOpen("langue");
     if (isOpen.search && key !== "search") toggleOpen("search");
 
@@ -153,7 +153,7 @@ const Header: React.FC = () => {
         <div className={`flex gap-[24px] ${search && "hidden"} hidden md:flex`}>
           {/* 查詢訂單 */}
           <div
-            onClick={() => toggleOpen("cart")}
+            onClick={() => toggleOpen("collection")}
             className={`group hidden md:block`}
           >
             <NavLink
@@ -173,14 +173,14 @@ const Header: React.FC = () => {
           </div>
           {/* 購物車 */}
           <div
-            onClick={() => toggleOpen("cart")}
+            onClick={() => toggleOpen("collection")}
             className={`group hidden md:block`}
           >
             <NavLink
-              to={"/cart"}
+              to={"/collection"}
               className={({ isActive }) =>
                 [
-                  `icon-[solar--cart-large-minimalistic-bold-duotone] w-[24px] h-[24px] cursor-pointer group-hover:text-[#3A57E8]`,
+                  `icon-[solar--star-bold-duotone] w-[24px] h-[24px] cursor-pointer group-hover:text-[#3A57E8]`,
                   isActive ? "text-[#3A57E8]" : "text-[#4E5969]",
                 ].join(" ")
               }
@@ -188,7 +188,7 @@ const Header: React.FC = () => {
 
             <div
               className={`absolute w-[24px] h-[5px] bg-[#3A57E8] bottom-[0px] group-hover:block  ${
-                currentPathName === "/cart" ? "block" : "hidden"
+                currentPathName === "/collection" ? "block" : "hidden"
               }`}
             ></div>
           </div>
@@ -219,7 +219,7 @@ const Header: React.FC = () => {
             <div
               className={`icon-[solar--hamburger-menu-bold-duotone] w-[24px] h-[24px] cursor-pointer block group-hover:text-[#3A57E8] md:hidden ${
                 currentPathName === "/searchOrder" ||
-                currentPathName === "/cart"
+                currentPathName === "/collection"
                   ? "text-[#3A57E8]"
                   : "text-[#4E5969]"
               } `}
@@ -227,7 +227,7 @@ const Header: React.FC = () => {
             <div
               className={`absolute w-[24px] h-[5px] bg-[#3A57E8] bottom-[0px] group-hover:block ${
                 currentPathName === "/searchOrder" ||
-                currentPathName === "/cart"
+                currentPathName === "/collection"
                   ? "block"
                   : "hidden"
               }`}
