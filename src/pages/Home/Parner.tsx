@@ -6,7 +6,7 @@ import { Carousel } from "@arco-design/web-react";
 // 匯入圖片
 import parnerImg from "../../assets/images/homePage/Partner_color_1.svg";
 import PhotoTitle from "../../components/Home/PhotoTitle";
-import News from "../..//components/common/News";
+// import News from "../..//components/common/News";
 import Product from "../..//components/common/product";
 
 const Patner: React.FC = () => {
@@ -17,26 +17,26 @@ const Patner: React.FC = () => {
     "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/24e0dd27418d2291b65db1b21aa62254.png~tplv-uwbnlip3yd-webp.webp",
   ];
 
-  const newsList = [
-    {
-      id: 1,
-      url: "https://tabiiro.travel/img/articles/21032501/main.jpg",
-      title: "櫻花季優惠來嘍!!",
-      date: "活動至 2024/12/26 23;59 止",
-    },
-    {
-      id: 2,
-      url: "https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_144240/20230519001422_pi5Eo/jpg",
-      title: "暑假暢玩沖繩",
-      date: "活動至 2024/12/26 23;59 止",
-    },
-    {
-      id: 3,
-      url: "https://pic.amwaynet.com.tw/PR/ishare/article/2023061903d50269c264453eac3e8ce071016b06.jpg",
-      title: "暑假暢玩沖繩",
-      date: "活動至 2024/12/26 23;59 止",
-    },
-  ];
+  // const newsList = [
+  //   {
+  //     id: 1,
+  //     url: "https://tabiiro.travel/img/articles/21032501/main.jpg",
+  //     title: "櫻花季優惠來嘍!!",
+  //     date: "活動至 2024/12/26 23;59 止",
+  //   },
+  //   {
+  //     id: 2,
+  //     url: "https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_144240/20230519001422_pi5Eo/jpg",
+  //     title: "暑假暢玩沖繩",
+  //     date: "活動至 2024/12/26 23;59 止",
+  //   },
+  //   {
+  //     id: 3,
+  //     url: "https://pic.amwaynet.com.tw/PR/ishare/article/2023061903d50269c264453eac3e8ce071016b06.jpg",
+  //     title: "暑假暢玩沖繩",
+  //     date: "活動至 2024/12/26 23;59 止",
+  //   },
+  // ];
 
   const productList = [
     {
@@ -99,7 +99,7 @@ const Patner: React.FC = () => {
           </div>
         </div>
         {/* 最新消息 */}
-        <div className="md:w-[720px] xl:w-[1152px]">
+        {/* <div className="md:w-[720px] xl:w-[1152px]">
           <PhotoTitle
             text="最新消息"
             subtitle="Latest News"
@@ -115,7 +115,7 @@ const Patner: React.FC = () => {
               />
             ))}
           </div>
-        </div>
+        </div> */}
         {/* 熱門商品 */}
         <div className="md:w-[720px] xl:w-[1152px]">
           <PhotoTitle

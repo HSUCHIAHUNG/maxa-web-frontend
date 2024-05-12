@@ -1,7 +1,5 @@
 // react原生方法
 import React, { useState } from "react";
-// router
-import { useNavigate } from "react-router-dom";
 // redux
 import { useSelector } from "react-redux";
 import { orderActions } from "../../stores/order";
@@ -21,12 +19,9 @@ import SetSeat from "./SetSeat";
 const SelectSeats: React.FC = () => {
   // redux(方法調用)
   const dispatch = useAppDispatch();
-  
-  // 動態路由切換
-  const navigate = useNavigate();
 
   // ticket( 單程票、來回票 )狀態
-  const ticketState = useSelector((state: RootState) => state.order.ticket);
+  const tabState = useSelector((state: RootState) => state.order.ticket);
 
   // 訂車階段(起訖站、日期、時間狀態)
   const bookingStage = useSelector(
@@ -53,7 +48,7 @@ const SelectSeats: React.FC = () => {
   const roundTripTicket = useSelector(
     (state: RootState) => state.order.bookingData?.seatsData?.roundTripTicket
   );
-  
+
   // 手動劃位
   const [isSetSeats, setIsSetSeats] = useState({
     isOpen: false,
@@ -67,15 +62,33 @@ const SelectSeats: React.FC = () => {
   //  login表單提交
   const submit = (value: object) => {
     console.log(value);
+    console.log(tabState);
+    // 判斷乘客是否已選票
     if (passengerTicketTotal < 1) {
       Message.error("乘客票數不可小於1");
       return;
+    } else {
+      // 單程票
+      if (tabState === "oneWayTicket") {
+        if (oneWayTicketSeats.length !== passengerTicketTotal) {
+          Message.error("票數與已選座位數不符");
+          return;
+        }
+      }
+      // 來回票
+      if (tabState === "roundTripTicket") {
+        if (
+          (oneWayTicketSeats.length + roundTripTicket.length) !==
+          passengerTicketTotal*2
+        ) {
+          Message.error("票數與已選座位數不符");
+          return;
+        }
+      }
     }
-    if((oneWayTicketSeats.length + roundTripTicket.length)*2 !== passengerTicketTotal ) {
-      Message.error("票數與已選座位數不符");
-      return;
-    }
-    navigate("/contract");
+    Message.success("劃位成功");
+    // redux(切換tab全域狀態)
+    dispatch(orderActions.switchStage("contract"));
   };
 
   // 控制訂車階段顯示
@@ -202,6 +215,7 @@ const SelectSeats: React.FC = () => {
               />
             </FormItem>
             {/* 選擇去程座位 */}
+
             <FormItem label="選擇去程座位" required>
               <Radio.Group
                 name="card-radio-group"
@@ -265,7 +279,7 @@ const SelectSeats: React.FC = () => {
               </Radio.Group>
             </FormItem>
             {/* 選擇回程座位 */}
-            {ticketState === "roundTripTicket" && (
+            {tabState === "roundTripTicket" && (
               <FormItem label="選擇回程座位" required>
                 <Radio.Group
                   name="card-radio-group"

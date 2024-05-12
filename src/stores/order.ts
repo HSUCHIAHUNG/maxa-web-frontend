@@ -39,7 +39,7 @@ interface BookingData {
 type ticketType = "oneWayTicket" | "roundTripTicket";
 
 // 訂購階段( 選擇站點、時間、座位 )
-type bookingStageType = "selectStation" | "selectTime" | "selectSeats";
+type bookingStageType = "selectStation" | "selectTime" | "selectSeats" | 'contract' | 'passengerData';
 
 const initialOrderState: {
   ticket: ticketType;
@@ -52,7 +52,7 @@ const initialOrderState: {
     stationData: {},
     timeData: {},
     passengerTicket: {},
-    seatsData: {},
+    seatsData: {oneWayTicket:[], roundTripTicket:[]},
   },
 };
 
@@ -93,7 +93,6 @@ const orderSlice = createSlice({
     setSeatsData(state, action: PayloadAction<[SeatDataType[], string]>) {
       const [newData, ticketType] = action.payload;
       state.bookingData.seatsData[ticketType] = newData;
-      console.log(state.bookingData.seatsData[ticketType]);
     },
     // 重設bookingData
     reseBbookingData(state) {

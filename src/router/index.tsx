@@ -9,8 +9,6 @@ const MemberCenterPage = lazy(() => import("../layout/MemberLayout"));
 const EditPasswordPage = lazy(() => import("../pages/Guest/EditPassword"));
 const OrderPage = lazy(() => import("../pages/Order/Order"));
 const ProductDetailPage = lazy(() => import("../pages/Order/ProductDetail"));
-const ContractPage = lazy(() => import("../pages/Order/Contract"));
-const PassengerDataPage = lazy(() => import("../pages/Order/PassengerData"));
 const CartPages = lazy(() => import("../pages/Cart"));
 const OrderContentPage = lazy(() => import("../pages/OrderContent"));
 const SearchOrderPage = lazy(() => import("../pages/SearchOrder"));
@@ -111,24 +109,6 @@ const routes = [
           </Suspense>
         ),
         path: "order/:productDetail",
-      },
-      // 購買契約
-      {
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <ContractPage />
-          </Suspense>
-        ),
-        path: "/contract",
-      },
-      // 乘客資料
-      {
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <PassengerDataPage />
-          </Suspense>
-        ),
-        path: "/passengerData",
       },
       // 購物車
       {

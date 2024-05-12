@@ -176,7 +176,7 @@ function Home() {
             </div>
           </div> */}
           {/* 熱門商品 */}
-          <div className={`md:w-[720px] xl:w-auto`}>
+          <div className={`md:w-[735px] xl:w-auto`}>
             <PhotoTitle text="熱門商品" subtitle="Popular product" readAll />
             <div className=" flex gap-[20px] flex-col md:flex-row ">
               {productList.map((productItem) => (
@@ -205,7 +205,7 @@ function Home() {
             </div>
           </div>
           {/* 為什麼選擇MAXA? */}
-          <div className={`md:w-[720px] xl:w-auto`} >
+          <div className={`md:w-[720px] xl:w-auto`}>
             <PhotoTitle text="為什麼選擇MAXA?" subtitle="Why choose MAXA?" />
             <div className="flex flex-col items-center md:flex-row">
               {choseList.map((choseItem) => (
@@ -218,7 +218,7 @@ function Home() {
             </div>
           </div>
           {/* 合作夥伴 */}
-          <div className={`md:w-[720px] xl:w-auto`} >
+          <div className={`md:w-[720px] xl:w-auto`}>
             <PhotoTitle text="合作夥伴?" subtitle="Partner" />
             <div className=" flex flex-col items-center md:flex-row gap-[8px] ">
               {parnerLisr.map(({ id, blackUrl, colorUrl }) => (

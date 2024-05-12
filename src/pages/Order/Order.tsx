@@ -1,6 +1,5 @@
 // react原生方法
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 // 匯入組件
 import Banner from "../../components/Carousel";
 import Product from "../../components/common/product";
@@ -128,11 +127,11 @@ const Order: React.FC = () => {
     },
   ];
 
-  // 取得產品
-  const getProduct = (pageNumber:number, pageSize:number) => {
-    console.log(pageNumber);
-    console.log(pageSize);
-  };
+  // 取得產品(pagination用)
+  // const getProduct = (pageNumber: number, pageSize: number) => {
+  //   console.log(pageNumber);
+  //   console.log(pageSize);
+  // };
 
   return (
     <div className=" relative ">
@@ -146,10 +145,10 @@ const Order: React.FC = () => {
       </Carousel>
       {/* 列表外層 */}
       <div
-        className={`xl:flex xl:flex-row-reverse xl:justify-center xl:gap-[24px] xl:pt-[60px] xl:pb-[80px] `}
+        className={` max-w-[1200px] px-[12px] md:px-[24px] xl:m-[0_auto] xl:flex xl:flex-row-reverse xl:gap-[24px] xl:pt-[60px] xl:pb-[80px] `}
       >
         <div
-          className={` w-[100%] h-[100%] px-[12px] pt-[16px] pb-[23px] md:pb-[40px] md:px-[24px]  md:w-[768px] xl:w-[940px] xl:p-[0] `}
+          className={` w-[100%] h-[100%] pt-[16px] pb-[23px] md:w-[720px] md:pb-[40px] md:m-[0_auto] xl:w-[940px] xl:p-[0] `}
         >
           {/* 上方選單 */}
           <div
@@ -189,20 +188,18 @@ const Order: React.FC = () => {
               </Dropdown>
             </div>
           </div>
-          {/* 商品列表分頁內容 */}
+          {/* 商品列表內容 */}
           <div
-            className={`flex flex-col gap-[12px] md:flex-row md:flex-wrap xl:justify-between `}
+            className={`flex flex-col gap-[12px] md:flex-row md:flex-wrap md:justify-between `}
           >
             {productList.map((productItem) => (
-              <Link key={productItem.id} to="/order/test">
-                <Product
-                  className={`xl:!w-[284px]`}
-                  url={productItem.url}
-                  title={productItem.title}
-                  money={productItem.money}
-                  tag={productItem.tag}
-                />
-              </Link>
+              <Product
+                className={`xl:!w-[276px]`}
+                url={productItem.url}
+                title={productItem.title}
+                money={productItem.money}
+                tag={productItem.tag}
+              />
             ))}
           </div>
         </div>
@@ -215,20 +212,20 @@ const Order: React.FC = () => {
       </div>
       <BackToTopButton />
       {/* 電腦版分頁 */}
-      <Pagination
+      {/* <Pagination
         onChange={getProduct}
         className={`justify-center hidden md:flex `}
         total={20}
-      />
+      /> */}
       {/* 手機版分頁 */}
-      <Pagination
+      {/* <Pagination
         onChange={getProduct}
         pageSize={9}
         simple
         total={500}
         size="small"
         className={`md:hidden justify-center`}
-      />
+      /> */}
     </div>
   );
 };

@@ -26,13 +26,6 @@ const SelectStation: React.FC<SelectStationProps> = ({ className }) => {
     (state: RootState) => state.order.bookingStage
   );
 
-  // 訂單資料
-  const bookingData = useSelector(
-    (state: RootState) => state.order.bookingData
-  );
-
-  console.log(bookingData);
-
   // ticket( 單程票、來回票 )狀態
   const ticketState = useSelector((state: RootState) => state.order.ticket);
 
@@ -42,9 +35,10 @@ const SelectStation: React.FC<SelectStationProps> = ({ className }) => {
   const options = ["南港高工", "南港", "南港軟體園區南站"];
 
   /** @func login表單提交 */
-  const loginSubmit = (value: object) => {
+  const submit = (value: object) => {
     // redux(切換tab全域狀態)
     dispatch(orderActions.switchStage("selectTime"));
+    // redux儲存起訖點與日期資料
     dispatch(orderActions.setStationData(["stationData", value]));
   };
 
@@ -57,7 +51,7 @@ const SelectStation: React.FC<SelectStationProps> = ({ className }) => {
       autoComplete="on"
       requiredSymbol={{ position: "start" }}
       layout="vertical"
-      onSubmit={loginSubmit}
+      onSubmit={submit}
       className={` ${className}`}
     >
       <div className={`md:flex md:gap-[20px] md:w-[420px] `}>

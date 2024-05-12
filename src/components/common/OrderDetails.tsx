@@ -1,11 +1,23 @@
 import React from "react";
 
 interface OrderDetailsProps {
-  title?: boolean
-  className?: string
+  title?: boolean;
+  className?: string;
+  totalTicketType?: { type: string; total: number }[];
 }
 
-const OrderDetails: React.FC<OrderDetailsProps> = ({ title = true, className }) => {
+const OrderDetails: React.FC<OrderDetailsProps> = ({
+  title = true,
+  className,
+  totalTicketType = [],
+}) => {
+  const isOpen = totalTicketType.every((item) => item === undefined);
+  function ticketName(type: string) {
+    if (type === "adult") return "成人票";
+    if (type === "child") return "兒童票";
+    if (type === "old") return "敬老票";
+  }
+  console.log(totalTicketType);
   return (
     <div
       className={`${className} overflow-hidden border border-solid border-[#E5E6EB] rounded-[8px] w-[100%] xl:h-[492px] xl:w-[320px]`}
@@ -27,20 +39,34 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ title = true, className }) 
         <div className={`pb-[20px]`}>
           格上租車券+阿里山門票+奮起湖經典三大美食三大美食三大美食三大奮起湖經典三大美食三大美食三大美食三大
         </div>
-        <div className={`flex justify-between`}>
-          <p>成人票*2</p>
-          <p>NT$ 399*2</p>
-        </div>
-        <div className={`flex justify-between`}>
-          <p>兒童票*2</p>
-          <p>NT$ 200*2</p>
-        </div>
+        {!isOpen && (
+          <>
+            {totalTicketType.map((item) => (
+              <>
+                {item !== undefined && (
+                  <div className={`flex justify-between `}>
+                    <p>
+                      {ticketName(item.type)}*{item.total}
+                    </p>
+                    <p>NT$ 399*{item.total}</p>
+                  </div>
+                )}
+              </>
+            ))}
+          </>
+        )}
+        {isOpen && (
+          <div className={`flex justify-between`}>
+            <p>成人票*2</p>
+            <p>NT$ 399*2</p>
+          </div>
+        )}
         <div
           className={`border-b border-solid border-[#E5E6EB] w-full my-[8px] `}
         ></div>
         <div className={`flex justify-between text-[20px]`}>
           <p>總金額</p>
-          <p>NT$1,100</p>
+          <p>NT$798</p>
         </div>
         <button
           className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] `}

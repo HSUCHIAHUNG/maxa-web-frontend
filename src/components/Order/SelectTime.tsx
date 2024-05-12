@@ -1,12 +1,11 @@
 // react原生方法
-import React, { useState } from "react";
+import React from "react";
 // redux
 import { useSelector } from "react-redux";
 import { orderActions } from "../../stores/order";
 import { RootState, useAppDispatch } from "../../stores/index";
 // ui kit
 import {
-  Alert,
   Button,
   Divider,
   Form,
@@ -96,9 +95,6 @@ const data = [
 ];
 
 const SelectTime: React.FC<SelectTimeProps> = () => {
-  // 訂車時間選擇狀態
-  const [timeIsSelect, setTimeIsSelect] = useState(false);
-
   // ticket( 單程票、來回票 )狀態
   const ticketState = useSelector((state: RootState) => state.order.ticket);
 
@@ -125,10 +121,8 @@ const SelectTime: React.FC<SelectTimeProps> = () => {
     console.log(Object.keys(bookingData.timeData).length);
     if (ticketState === "oneWayTicket") {
       if (Object.keys(bookingData.timeData).length === 0) {
-        setTimeIsSelect(Object.keys(bookingData.timeData).length === 0);
         Message.error("請選擇搭車時間");
       } else {
-        setTimeIsSelect(false);
         // redux(切換全域訂單階段)
         dispatch(orderActions.switchStage("selectSeats"));
       }
@@ -136,10 +130,8 @@ const SelectTime: React.FC<SelectTimeProps> = () => {
 
     if (ticketState === "roundTripTicket") {
       if (Object.keys(bookingData.timeData).length < 2) {
-        setTimeIsSelect(Object.keys(bookingData.timeData).length < 2);
         Message.error("請選擇搭車時間");
       } else {
-        setTimeIsSelect(false);
         // redux(切換全域訂單階段)
         dispatch(orderActions.switchStage("selectSeats"));
       }

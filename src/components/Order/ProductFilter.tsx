@@ -74,7 +74,7 @@ const ProductFilter: React.FC<ProductFilterProps> = ({
         } `}
       >
         {/* 篩選列表 */}
-        <form onSubmit={onSubmitForm} className={`p-[12px] xl:p-0 `}>
+        <form onSubmit={onSubmitForm} className={`p-[12px] xl:p-0 xl:w-[260px] `}>
           {/* 手機版標題 */}
           <div className={`h-[50px] flex items-center shadow-md xl:hidden`}>
             <span
