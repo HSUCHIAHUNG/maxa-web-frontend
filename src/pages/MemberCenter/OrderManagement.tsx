@@ -4,7 +4,7 @@ import {
   Alert,
   Divider,
   Link,
-  Pagination,
+  // Pagination,
   Tabs,
   Typography,
 } from "@arco-design/web-react";
@@ -163,7 +163,7 @@ const OrderManagement: React.FC = () => {
                   </div>
                 </div>
               ))}
-              <Pagination className={`justify-center`} total={200} />
+              {/* <Pagination className={`justify-center`} total={200} /> */}
             </Typography.Paragraph>
           </TabPane>
         ))}

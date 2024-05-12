@@ -13,12 +13,16 @@ import PhoneInput from "../common/Form/PhoneInput";
 const Option = Select.Option;
 
 interface PassengerDataFromProps {
-  title: string
-  fieldName: string
-  children?: ReactNode; 
+  title: string;
+  fieldName: string;
+  children?: ReactNode;
 }
 
-const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({title, fieldName, children}) => {
+const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({
+  title,
+  fieldName,
+  children,
+}) => {
   /** @func 全域狀態auth */
   const auth = useSelector((state: RootState) => state.auth.isMember);
 
@@ -49,7 +53,7 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({title, fieldName, 
         label="選擇常用旅客"
         field={`${fieldName}FrequentTravelers`}
         required
-        className={`h-[66px]`}
+        rules={[{ required: true, message: "必填" }]}
       >
         <Select placeholder="Please select" allowClear>
           {options.map((option, index) => (
@@ -60,7 +64,12 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({title, fieldName, 
         </Select>
       </FormItem>
       {/* 姓名 */}
-      <FormItem label="姓名" field={`${fieldName}Name`} required className={`h-[66px]`}>
+      <FormItem
+        label="姓名"
+        field={`${fieldName}Name`}
+        required
+        rules={[{ required: true, message: "必填" }]}
+      >
         <Input placeholder="請填寫姓名" allowClear />
       </FormItem>
       {/* 身分證 */}
@@ -68,7 +77,7 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({title, fieldName, 
         label="身分證或護照號碼"
         field={`${fieldName}Id`}
         required
-        className={`h-[66px]`}
+        rules={[{ required: true, message: "必填" }]}
       >
         <Input placeholder="請填寫身分證或護照號碼" allowClear />
       </FormItem>
@@ -77,7 +86,7 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({title, fieldName, 
         label="電話"
         field={`${fieldName}phone`}
         required
-        className={`h-[66px]`}
+        rules={[{ required: true, message: "必填" }]}
       >
         <PhoneInput />
       </Form.Item>
@@ -86,7 +95,7 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({title, fieldName, 
         label="Email"
         field={`${fieldName}Email`}
         required
-        className={`h-[66px]`}
+        rules={[{ required: true, message: "必填" }]}
       >
         <Input placeholder="請輸入信箱" />
       </FormItem>

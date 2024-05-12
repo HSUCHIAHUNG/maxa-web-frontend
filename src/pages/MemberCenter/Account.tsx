@@ -1,7 +1,11 @@
 import { Checkbox, Form, Input } from "@arco-design/web-react";
 import PhoneInput from "../../components/common/Form/PhoneInput";
+import { useState } from "react";
 
 function AccountPage() {
+  // 編輯資料顯示狀態管理
+  const [editData, setEditData] = useState(false);
+
   // ui kit
   const FormItem = Form.Item;
   const [form] = Form.useForm();
@@ -15,7 +19,9 @@ function AccountPage() {
     <>
       {/* 主要資料區 */}
       <div
-        className={`hidden xl:w-[800px] flex flex-col gap-[12px] md:gap-[20px]`}
+        className={` xl:w-[800px] flex-col gap-[12px] md:gap-[20px] ${
+          !editData ? "flex" : "hidden"
+        }`}
       >
         {/* 個人資料 */}
         <ul
@@ -100,63 +106,70 @@ function AccountPage() {
             </div>
           </li>
           <button
+            onClick={() => setEditData(true)}
             className={` self-end bg-[#3A57E8] rounded-[2px] text-[#fff] px-[16px] py-[3px] w-full md:w-fit md:py-[5px]`}
           >
             編輯資料
           </button>
         </ul>
-        {/* 快速登入方式 */}
-        <ul
-          className={`bg-[#fff] w-full border-y border-solid border-[#E5E6EB] py-[20px] px-[16px] flex flex-col md:border md:rounded-[16px] md:p-[40px] `}
-        >
-          <li className={`text-[16px] pb-[12px] md:pb-[20px] xl:text-[20px] `}>
-            快速登入方式
-          </li>
-          <div className={`flex flex-col gap-[12px] md:gap-[20px] md:flex-row`}>
-            {/* google */}
+        {/* 快速登入方式 - 暫時隱藏因為還沒辦法做第三方登入 */}
+        {false && (
+          <ul
+            className={` bg-[#fff] w-full border-y border-solid border-[#E5E6EB] py-[20px] px-[16px] flex flex-col md:border md:rounded-[16px] md:p-[40px] `}
+          >
             <li
-              className={` w-full flex justify-between items-center p-[12px] border border-solid border-[#E5E6EB] rounded-[4px] md:p-[16px]`}
+              className={`text-[16px] pb-[12px] md:pb-[20px] xl:text-[20px] `}
             >
-              <div className={`flex items-center gap-[8px]`}>
-                <div
-                  className={`bg-[#F2F3F5] p-[10px] w-[40px] h-[40px] rounded-[50%]`}
-                >
+              快速登入方式
+            </li>
+            <div
+              className={`flex flex-col gap-[12px] md:gap-[20px] md:flex-row`}
+            >
+              {/* google */}
+              <li
+                className={` w-full flex justify-between items-center p-[12px] border border-solid border-[#E5E6EB] rounded-[4px] md:p-[16px]`}
+              >
+                <div className={`flex items-center gap-[8px]`}>
+                  <div
+                    className={`bg-[#F2F3F5] p-[10px] w-[40px] h-[40px] rounded-[50%]`}
+                  >
+                    <span
+                      className={`icon-[ri--google-fill] text-[#4E5969] w-[20px] h-[20px] `}
+                    ></span>
+                  </div>
+                  <p>Google</p>
+                </div>
+                <div className={`flex gap-[12px] items-center text-[#3A57E8]`}>
+                  <p>解除綁定</p>
                   <span
-                    className={`icon-[ri--google-fill] text-[#4E5969] w-[20px] h-[20px] `}
+                    className={`icon-[gravity-ui--arrow-right] w-[15px] h-[15px]`}
                   ></span>
                 </div>
-                <p>Google</p>
-              </div>
-              <div className={`flex gap-[12px] items-center text-[#3A57E8]`}>
-                <p>解除綁定</p>
-                <span
-                  className={`icon-[gravity-ui--arrow-right] w-[15px] h-[15px]`}
-                ></span>
-              </div>
-            </li>
-            {/* Line */}
-            <li
-              className={` w-full flex justify-between items-center p-[12px] border border-solid border-[#E5E6EB] rounded-[4px] md:p-[16px]`}
-            >
-              <div className={`flex items-center gap-[8px]`}>
-                <div
-                  className={`bg-[#F2F3F5] p-[10px] w-[40px] h-[40px] rounded-[50%]`}
-                >
+              </li>
+              {/* Line */}
+              <li
+                className={` w-full flex justify-between items-center p-[12px] border border-solid border-[#E5E6EB] rounded-[4px] md:p-[16px]`}
+              >
+                <div className={`flex items-center gap-[8px]`}>
+                  <div
+                    className={`bg-[#F2F3F5] p-[10px] w-[40px] h-[40px] rounded-[50%]`}
+                  >
+                    <span
+                      className={`icon-[bi--line]  text-[#4E5969] w-[20px] h-[20px] `}
+                    ></span>
+                  </div>
+                  <p>Line</p>
+                </div>
+                <div className={`flex gap-[12px] items-center text-[#3A57E8]`}>
+                  <p>綁定</p>
                   <span
-                    className={`icon-[bi--line]  text-[#4E5969] w-[20px] h-[20px] `}
+                    className={`icon-[gravity-ui--arrow-right] w-[15px] h-[15px]`}
                   ></span>
                 </div>
-                <p>Line</p>
-              </div>
-              <div className={`flex gap-[12px] items-center text-[#3A57E8]`}>
-                <p>綁定</p>
-                <span
-                  className={`icon-[gravity-ui--arrow-right] w-[15px] h-[15px]`}
-                ></span>
-              </div>
-            </li>
-          </div>
-        </ul>
+              </li>
+            </div>
+          </ul>
+        )}
         {/* 修改密碼、刪除帳號 */}
         <ul
           className={`bg-[#fff] w-full border-y border-solid border-[#E5E6EB] py-[20px] px-[16px] flex flex-col gap-[12px] md:gap-[20px] md:border md:rounded-[16px] md:p-[40px] `}
@@ -210,10 +223,12 @@ function AccountPage() {
         requiredSymbol={{ position: "start" }}
         layout="vertical"
         onSubmit={editPersonalDataSubmit}
-        className={` flex flex-col m-[0_auto] gap-[16px] my-[18px] md:my-[20px] md:gap-[20px] xl:flex-row-reverse `}
+        className={` flex-col m-[0_auto] gap-[16px] my-[18px] md:my-[20px] md:gap-[20px] xl:flex-row-reverse xl:w-[800px] ${
+          editData ? "flex" : "hidden"
+        } `}
       >
         <div
-          className={` w-full border border-[#E5E6EB] border-solid rounded-[16px] py-[20px] px-[16px] md:px-[40px] md:py-[40px] `}
+          className={` w-full border-y border-[#E5E6EB] border-solid py-[20px] px-[16px] md:border md:rounded-[16px] md:px-[40px] md:py-[40px] `}
         >
           {/* 同步更新至會員中心選項 */}
           <div
@@ -248,17 +263,14 @@ function AccountPage() {
           >
             <PhoneInput />
           </Form.Item>
-          <FormItem
-            field="updateNotify"
-            required
-            className={`w-auto mb-0`}
-          >
+          <FormItem field="updateNotify" required className={`w-auto mb-0`}>
             <Checkbox value="折扣通知" className={`p-0`}>
               接收活動、優惠碼、折扣通知
             </Checkbox>
           </FormItem>
           <div className={`flex gap-[8px] md:justify-end `}>
             <button
+              onClick={() => setEditData(false)}
               type="button"
               className={` mt-[12px] px-[16px] py-[5px] w-[80px] text-[#4E5969] bg-[#F2F3F5] rounded-[2px] `}
             >

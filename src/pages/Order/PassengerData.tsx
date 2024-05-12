@@ -95,7 +95,7 @@ const PassengerData: React.FC = () => {
               label="姓名"
               field="orderName"
               required
-              className={`h-[66px]`}
+              rules={[{required:true, message:'必填'}]}
             >
               <Input placeholder="請填寫姓名" allowClear />
             </FormItem>
@@ -104,7 +104,7 @@ const PassengerData: React.FC = () => {
               label="身分證或護照號碼"
               field="orderId"
               required
-              className={`h-[66px]`}
+              rules={[{required:true, message:'必填'}]}
             >
               <Input placeholder="請填寫身分證或護照號碼" allowClear />
             </FormItem>
@@ -113,7 +113,7 @@ const PassengerData: React.FC = () => {
               label="電話"
               field="orderphone"
               required
-              className={`h-[66px]`}
+              rules={[{required:true, message:'必填'}]}
             >
               <PhoneInput />
             </Form.Item>
@@ -122,9 +122,21 @@ const PassengerData: React.FC = () => {
               label="Email"
               field="orderEmail"
               required
-              className={`h-[66px]`}
+              rules={[{required:true, message:'必填'}]}
             >
               <Input placeholder="請輸入信箱" />
+            </FormItem>
+            {/* 清空表單 */}
+            <FormItem className={`md:flex md:justify-end `}>
+              <button
+                type="button"
+                onClick={() => form.resetFields(
+                  ['orderName', 'orderId', 'orderphone', 'orderEmail']
+                )}
+                className={`bg-[#F2F3F5] w-full py-[5px] text-[#4E5969] md:w-[88px] rounded-[2px] `}
+              >
+                清空表單
+              </button>
             </FormItem>
           </div>
           {/* 取票人資料 */}
@@ -132,7 +144,15 @@ const PassengerData: React.FC = () => {
             <FormItem className={`md:flex md:justify-end `}>
               <button
                 type="button"
-                onClick={() => form.resetFields()}
+                onClick={() =>
+                  form.resetFields([
+                    "takerFrequentTravelers",
+                    "takerName",
+                    "takerId",
+                    "takerphone",
+                    "takerEmail",
+                  ])
+                }
                 className={`bg-[#F2F3F5] w-full py-[5px] text-[#4E5969] md:w-[88px] rounded-[2px] `}
               >
                 清空表單
@@ -142,11 +162,20 @@ const PassengerData: React.FC = () => {
           {/* 搭乘人資料 */}
           {Object.values(passengerTicket).map((_item, index) => (
             <>
-              <PassengerDataFrom title={`搭乘人資料_${index+1}`} fieldName={`passenger${index+1}`}>
+              <PassengerDataFrom
+                title={`搭乘人資料_${index + 1}`}
+                fieldName={`passenger${index + 1}`}
+              >
                 <FormItem className={`md:flex md:justify-end `}>
                   <button
                     type="button"
-                    onClick={() => form.resetFields()}
+                    onClick={() => form.resetFields([
+                      `passenger${index + 1}FrequentTravelers`,
+                      `passenger${index + 1}Name`,
+                      `passenger${index + 1}Id`,
+                      `passenger${index + 1}phone`,
+                      `passenger${index + 1}Email`,
+                    ])}
                     className={`bg-[#F2F3F5] w-full py-[5px] text-[#4E5969] md:w-[88px] rounded-[2px] `}
                   >
                     清空表單

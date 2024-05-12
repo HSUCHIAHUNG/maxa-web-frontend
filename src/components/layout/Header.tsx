@@ -93,7 +93,7 @@ const Header: React.FC = () => {
   const getIconClassName = (lable: string) => {
     switch (lable) {
       case "帳號管理":
-        return "solar--cart-large-minimalistic-bold-duotone";
+        return "solar--user-circle-bold-duotone";
       case "訂單管理":
         return "solar--clipboard-text-bold-duotone";
       case "常用旅客":
@@ -202,6 +202,34 @@ const Header: React.FC = () => {
             } w-[95px] h-[32px] rounded-[100px] bg-[#3A57E8] text-center leading-[32px] text-[#fff]`}
           >
             登入/註冊
+          </button>
+          {/* 電腦版會員選單 */}
+          <button
+            onClick={
+              auth ? () => toggleOpen("memberList") : () => setGuestIsOpen()
+            }
+            className={`group ${!auth ? "md:hidden" : "md:block"}`}
+          >
+            {/* 登入icon */}
+            <img
+              src={auth ? memberIcon : ""}
+              alt="會員"
+              className={` w-[24px] h-[24px] cursor-pointer ${
+                auth ? "block" : "hidden"
+              }`}
+            />
+            {/* 未登入icon */}
+            <span
+              className={`icon-[solar--user-circle-bold-duotone] w-[24px] h-[24px] group-hover:bg-[#3A57E8]  ${
+                auth ? "hidden" : "block"
+              } `}
+            ></span>
+            {/* active 樣式 */}
+            <div
+              className={`absolute w-[24px] h-[5px] bottom-[0px] bg-[#3A57E8] group-hover:block ${
+                currentPathName.includes("/memberCenter") ? "block" : "hidden"
+              }`}
+            ></div>
           </button>
         </div>
 
