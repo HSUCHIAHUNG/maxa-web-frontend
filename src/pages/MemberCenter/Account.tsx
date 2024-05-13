@@ -1,18 +1,54 @@
-import { Checkbox, Form, Input } from "@arco-design/web-react";
+import { Checkbox, Form, Input, Message, Modal } from "@arco-design/web-react";
 import PhoneInput from "../../components/common/Form/PhoneInput";
 import { useState } from "react";
 
 function AccountPage() {
   // 編輯資料顯示狀態管理
-  const [editData, setEditData] = useState(false);
+  const [editData, setEditData] = useState("account");
+  const [visible, setVisible] = useState(false);
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
+  // 刪除帳號提交密碼確認(密碼驗證階段)
+  function onOk() {
+    form.validate().then((res) => {
+      console.log(res);
+      setConfirmLoading(true);
+      setTimeout(() => {
+        Message.success("驗證成功");
+        setVisible(false);
+        setConfirmLoading(false);
+        setDeleteVisible(true);
+      }, 1500);
+    });
+  }
+
+  const formItemLayout = {
+    labelCol: {
+      span: 4,
+    },
+    wrapperCol: {
+      span: 20,
+    },
+  };
 
   // ui kit
   const FormItem = Form.Item;
   const [form] = Form.useForm();
 
   // 編輯個人資料送出
-  const editPersonalDataSubmit = (value: object) => {
+  const editProfile = (value: object) => {
+    Message.success("更改成功");
+    setEditData("account");
     console.log(value);
+  };
+
+  // 修改密碼
+  const editPasswordSubmit = (value: object) => {
+    console.log(123);
+    console.log(value);
+    Message.success("更改成功");
+    setEditData("account");
   };
 
   return (
@@ -20,7 +56,7 @@ function AccountPage() {
       {/* 主要資料區 */}
       <div
         className={` xl:w-[800px] flex-col gap-[12px] md:gap-[20px] ${
-          !editData ? "flex" : "hidden"
+          editData === "account" ? "flex" : "hidden"
         }`}
       >
         {/* 個人資料 */}
@@ -106,7 +142,7 @@ function AccountPage() {
             </div>
           </li>
           <button
-            onClick={() => setEditData(true)}
+            onClick={() => setEditData("editProfile")}
             className={` self-end bg-[#3A57E8] rounded-[2px] text-[#fff] px-[16px] py-[3px] w-full md:w-fit md:py-[5px]`}
           >
             編輯資料
@@ -171,13 +207,16 @@ function AccountPage() {
           </ul>
         )}
         {/* 修改密碼、刪除帳號 */}
-        <ul
+        <div
           className={`bg-[#fff] w-full border-y border-solid border-[#E5E6EB] py-[20px] px-[16px] flex flex-col gap-[12px] md:gap-[20px] md:border md:rounded-[16px] md:p-[40px] `}
         >
-          <li className={`text-[16px] xl:text-[20px] `}>修改密碼、刪除帳號</li>
+          <div className={`text-[16px] xl:text-[20px] `}>
+            修改密碼、刪除帳號
+          </div>
           <div className={`flex flex-col gap-[12px] md:gap-[20px] md:flex-row`}>
             {/* 修改密碼 */}
-            <li
+            <button
+              onClick={() => setEditData("editPassword")}
               className={` w-full flex justify-between items-center p-[12px] border border-solid border-[#E5E6EB] rounded-[4px] md:p-[16px]`}
             >
               <div className={`flex items-center gap-[8px]`}>
@@ -194,9 +233,10 @@ function AccountPage() {
               <span
                 className={`icon-[gravity-ui--arrow-right] text-[#1D2129] w-[15px] h-[15px]`}
               ></span>
-            </li>
+            </button>
             {/* 刪除帳號 */}
-            <li
+            <button
+              onClick={() => setVisible(true)}
               className={` w-full flex justify-between items-center p-[12px] border border-solid border-[#E5E6EB] rounded-[4px] md:p-[16px]`}
             >
               <div className={`flex items-center gap-[8px]`}>
@@ -212,78 +252,211 @@ function AccountPage() {
               <span
                 className={`icon-[gravity-ui--arrow-right] text-[#1D2129] w-[15px] h-[15px]`}
               ></span>
-            </li>
-          </div>
-        </ul>
-      </div>
-      {/* 編輯個人資料 */}
-      <Form
-        form={form}
-        autoComplete="on"
-        requiredSymbol={{ position: "start" }}
-        layout="vertical"
-        onSubmit={editPersonalDataSubmit}
-        className={` flex-col m-[0_auto] gap-[16px] my-[18px] md:my-[20px] md:gap-[20px] xl:flex-row-reverse xl:w-[800px] ${
-          editData ? "flex" : "hidden"
-        } `}
-      >
-        <div
-          className={` w-full border-y border-[#E5E6EB] border-solid py-[20px] px-[16px] md:border md:rounded-[16px] md:px-[40px] md:py-[40px] `}
-        >
-          {/* 同步更新至會員中心選項 */}
-          <div
-            className={` flex flex-col w-full gap-[12px] mb-[12px] md:flex-row md:justify-between md:items-center md:mb-[20px]`}
-          >
-            <p className={`text-[16px] md:text-[20px] `}>編輯個人資料</p>
-          </div>
-          {/* 姓名 */}
-          <FormItem
-            label="姓名"
-            field="updateName"
-            required
-            className={`h-[66px]`}
-          >
-            <Input placeholder="請填寫姓名" allowClear />
-          </FormItem>
-          {/* 身分證 */}
-          <FormItem
-            label="身分證或護照號碼"
-            field="updateId"
-            required
-            className={`h-[66px]`}
-          >
-            <Input placeholder="請填寫身分證或護照號碼" allowClear />
-          </FormItem>
-          {/* 電話 */}
-          <Form.Item
-            label="電話"
-            field="updatePhone"
-            required
-            className={`h-[66px]`}
-          >
-            <PhoneInput />
-          </Form.Item>
-          <FormItem field="updateNotify" required className={`w-auto mb-0`}>
-            <Checkbox value="折扣通知" className={`p-0`}>
-              接收活動、優惠碼、折扣通知
-            </Checkbox>
-          </FormItem>
-          <div className={`flex gap-[8px] md:justify-end `}>
-            <button
-              onClick={() => setEditData(false)}
-              type="button"
-              className={` mt-[12px] px-[16px] py-[5px] w-[80px] text-[#4E5969] bg-[#F2F3F5] rounded-[2px] `}
-            >
-              取消
-            </button>
-            <button
-              className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] rounded-[2px] md:w-fit `}
-            >
-              確認付款
             </button>
           </div>
         </div>
-      </Form>
+      </div>
+
+      {/* 編輯個人資料 */}
+      {editData === "editProfile" && (
+        <Form
+          onSubmit={editProfile}
+          form={form}
+          autoComplete="on"
+          requiredSymbol={{ position: "start" }}
+          layout="vertical"
+          className={` flex-col m-[0_auto] gap-[16px] my-[18px] md:my-[20px] md:gap-[20px] xl:flex-row-reverse xl:w-[800px] ${
+            editData === "editProfile" ? "flex" : "hidden"
+          } `}
+        >
+          <div
+            className={` w-full border-y border-[#E5E6EB] border-solid py-[20px] px-[16px] md:border md:rounded-[16px] md:px-[40px] md:py-[40px] `}
+          >
+            {/* 同步更新至會員中心選項 */}
+            <div
+              className={` flex flex-col w-full gap-[12px] mb-[12px] md:flex-row md:justify-between md:items-center md:mb-[20px]`}
+            >
+              <p className={`text-[16px] md:text-[20px] `}>編輯個人資料</p>
+            </div>
+            {/* 姓名 */}
+            <FormItem
+              label="姓名"
+              field="updateName"
+              required
+              rules={[{ required: true, message: "必填" }]}
+            >
+              <Input placeholder="請填寫姓名" allowClear />
+            </FormItem>
+            {/* 身分證 */}
+            <FormItem
+              label="身分證或護照號碼"
+              field="updateId"
+              required
+              rules={[{ required: true, message: "必填" }]}
+            >
+              <Input placeholder="請填寫身分證或護照號碼" allowClear />
+            </FormItem>
+            {/* 電話 */}
+            <Form.Item
+              label="電話"
+              field="updatePhone"
+              required
+              rules={[{ required: true, message: "必填" }]}
+            >
+              <PhoneInput />
+            </Form.Item>
+            <FormItem field="updateNotify" required className={``}>
+              <Checkbox value="折扣通知" className={``}>
+                接收活動、優惠碼、折扣通知
+              </Checkbox>
+            </FormItem>
+            <div className={`flex gap-[8px] md:justify-end `}>
+              <button
+                onClick={() => setEditData("account")}
+                type="button"
+                className={` mt-[12px] px-[16px] py-[5px] w-[80px] text-[#4E5969] bg-[#F2F3F5] rounded-[2px] `}
+              >
+                取消
+              </button>
+              <button
+                className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] rounded-[2px] md:w-fit `}
+              >
+                確認送出
+              </button>
+            </div>
+          </div>
+        </Form>
+      )}
+
+      {/* 修改密碼 */}
+      {editData === "editPassword" && (
+        <Form
+          onSubmit={editPasswordSubmit}
+          form={form}
+          autoComplete="on"
+          requiredSymbol={{ position: "start" }}
+          layout="vertical"
+          className={` flex-col m-[0_auto] gap-[16px] my-[18px] md:my-[20px] md:gap-[20px] xl:flex-row-reverse xl:w-[800px] ${
+            editData === "editPassword" ? "flex" : "hidden"
+          } `}
+        >
+          <div
+            className={` w-full border-y border-[#E5E6EB] border-solid py-[20px] px-[16px] md:border md:rounded-[16px] md:px-[40px] md:py-[40px] `}
+          >
+            {/* 同步更新至會員中心選項 */}
+            <div
+              className={` flex flex-col w-full gap-[12px] mb-[12px] md:flex-row md:justify-between md:items-center md:mb-[20px]`}
+            >
+              <p className={`text-[16px] md:text-[20px] `}>修改密碼</p>
+            </div>
+            <FormItem
+              label="舊密碼"
+              field="oldPassword"
+              required
+              rules={[{ required: true, message: "必填" }]}
+            >
+              <Input.Password placeholder="請輸入舊密碼" autoComplete="on" />
+            </FormItem>
+            <FormItem
+              label="新密碼"
+              field="password"
+              required
+              rules={[{ required: true, message: "必填" }]}
+            >
+              <Input.Password placeholder="請輸入新密碼" autoComplete="on" />
+            </FormItem>
+            <FormItem
+              label="確認新密碼"
+              field="checkPassword"
+              required
+              rules={[
+                {
+                  validator: (v, cb) => {
+                    if (!v) {
+                      return cb("新密碼欄位為必填");
+                    } else if (form.getFieldValue("password") !== v) {
+                      return cb("新密碼不同");
+                    }
+                    cb(null);
+                  },
+                },
+              ]}
+            >
+              <Input.Password placeholder="請確認新密碼" autoComplete="on" />
+            </FormItem>
+            <div className={`flex gap-[8px] md:justify-end `}>
+              <button
+                onClick={() => setEditData("account")}
+                type="button"
+                className={` mt-[12px] px-[16px] py-[5px] w-[80px] text-[#4E5969] bg-[#F2F3F5] rounded-[2px] `}
+              >
+                取消
+              </button>
+              <button
+                className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] rounded-[2px] md:w-fit `}
+              >
+                確認送出
+              </button>
+            </div>
+          </div>
+        </Form>
+      )}
+
+      {/* 刪除帳號-驗證密碼 */}
+      <Modal
+        title="請輸入密碼以驗證MAXA帳號"
+        visible={visible}
+        okText="下一步"
+        cancelText="取消"
+        onOk={onOk}
+        confirmLoading={confirmLoading}
+        onCancel={() => setVisible(false)}
+      >
+        <Form
+          {...formItemLayout}
+          form={form}
+          // labelCol={{
+          //   style: { flexBasis: 90 },
+          // }}
+          wrapperCol={{
+            style: { flexBasis: "100%" },
+          }}
+        >
+          <FormItem
+            field="confirmPassword"
+            rules={[{ required: true, message: "必填" }]}
+            className={`w-full`}
+          >
+            <Input.Password placeholder="請輸入舊密碼" autoComplete="on" />
+          </FormItem>
+        </Form>
+      </Modal>
+
+      {/* 刪除帳號-確定刪除帳號 */}
+      <Modal
+        title="是否確定要刪除MAXA帳號?"
+        visible={deleteVisible}
+        okText="取消"
+        cancelText="確定刪除"
+        onOk={() => setDeleteVisible(false)}
+        okButtonProps={{
+          style: { backgroundColor: 'red' },
+        }}
+        onCancel={() => setDeleteVisible(false)}
+      >
+        <p className={`pb-[4px]`}>
+          1.
+          提醒您，刪除帳號後，您將無法再以該帳號瀏覽及查詢先前的訂單紀錄，未使用的優惠券也會一併刪除，無法再補發或移轉。
+        </p>
+        <p className={`pb-[4px]`}>
+          2.
+          如您有尚未完成的訂單，為避免無法順利提供商品或服務給您，將拒絕刪除帳號的申請，並會請您等待至訂單完成後再申請刪除會員。
+        </p>
+        <p className={`pb-[4px]`}>
+          3. 刪除會員申請通過後將於 XX
+          個工作天內完整刪除所有個人資料。如對於作業期間或方式有任何問題，您可以直接洽example@chanjui.com詢問。
+        </p>
+      </Modal>
     </>
   );
 }

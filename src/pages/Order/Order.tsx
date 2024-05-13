@@ -11,7 +11,7 @@ import {
   Dropdown,
   Menu,
   Button,
-  Pagination,
+  // Pagination,
 } from "@arco-design/web-react";
 import { IconDown } from "@arco-design/web-react/icon";
 
@@ -194,6 +194,7 @@ const Order: React.FC = () => {
           >
             {productList.map((productItem) => (
               <Product
+                key={productItem.id}
                 className={`xl:!w-[276px]`}
                 url={productItem.url}
                 title={productItem.title}

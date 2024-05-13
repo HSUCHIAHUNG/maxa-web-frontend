@@ -25,13 +25,13 @@ const Header: React.FC = () => {
   // redux方法呼叫
   const dispatch = useAppDispatch();
 
-  /** @func 全域狀態auth */
+  // 全域狀態auth
   const auth = useSelector((state: RootState) => state.auth.isMember);
 
-  /** @func 當前路由方法 */
+  // 當前路由方法
   const location = useLocation();
 
-  /** @func 動態切換路由 */
+  // 動態切換路由
   const navigate = useNavigate();
 
   /** @const {string} 當前路由path */
