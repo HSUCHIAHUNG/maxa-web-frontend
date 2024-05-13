@@ -7,24 +7,24 @@ const MemberCenter: React.FC = () => {
   // 當前路由方法
   const location = useLocation();
 
-  const memberMenu = [
-    { id: 1, label: "帳號管理", route: "/memberCenter" },
-    { id: 2, label: "訂單管理", route: "/memberCenter/orderManagementPage" },
-    { id: 3, label: "常用旅客", route: "/memberCenter/frequentTravelers" },
-  ];
+  // const memberMenu = [
+  //   { id: 1, label: "帳號管理", route: "/memberCenter" },
+  //   { id: 2, label: "訂單管理", route: "/memberCenter/orderManagementPage" },
+  //   { id: 3, label: "常用旅客", route: "/memberCenter/frequentTravelers" },
+  // ];
 
-  const getIconClassName = (label: string) => {
-    switch (label) {
-      case "帳號管理":
-        return "solar--user-bold-duotone";
-      case "訂單管理":
-        return "solar--clipboard-text-bold-duotone";
-      case "常用旅客":
-        return "solar--user-id-bold-duotone";
-      default:
-        return "";
-    }
-  };
+  // const getIconClassName = (label: string) => {
+  //   switch (label) {
+  //     case "帳號管理":
+  //       return "solar--user-bold-duotone";
+  //     case "訂單管理":
+  //       return "solar--clipboard-text-bold-duotone";
+  //     case "常用旅客":
+  //       return "solar--user-id-bold-duotone";
+  //     default:
+  //       return "";
+  //   }
+  // };
 
   return (
     <div className={`max-w-[1920px]`}>
@@ -54,28 +54,66 @@ const MemberCenter: React.FC = () => {
           <div
             className={`hidden flex-col gap-[4px] px-[8px] py-[4px] xl:flex xl:border xl:border-solid xl:border-[#E5E6EB] xl:rounded-[16px]`}
           >
-            {memberMenu.map((memberRoute) => (
-              <NavLink
-                to={memberRoute.route}
-                end
-                key={memberRoute.route}
-                className={({ isActive }) =>
-                  [
-                    "flex gap-[16px] py-[9px] px-[12px] rounded-[12px]",
-                    isActive ? "bg-[#F2F3F5] text-[#3A57E8]" : null,
-                  ].join(" ")
-                }
-              >
-                <span
-                  className={`icon-[${getIconClassName(memberRoute.label)}] ${
-                    location.pathname === memberRoute.route
-                      ? "text-[#3A57E8]"
-                      : "text-[#4E5969]"
-                  } w-[24px] h-[24px]`}
-                ></span>
-                <div>{memberRoute.label}</div>
-              </NavLink>
-            ))}
+            {/* 帳號管理 */}
+            <NavLink
+              to={"/memberCenter"}
+              end
+              className={({ isActive }) =>
+                [
+                  "flex gap-[16px] py-[9px] px-[12px] rounded-[12px]",
+                  isActive ? "bg-[#F2F3F5] text-[#3A57E8]" : null,
+                ].join(" ")
+              }
+            >
+              <span
+                className={`icon-[solar--user-bold-duotone] ${
+                  location.pathname === "/memberCenter"
+                    ? "text-[#3A57E8]"
+                    : "text-[#4E5969]"
+                } w-[24px] h-[24px]`}
+              ></span>
+              <div>帳號管理</div>
+            </NavLink>
+
+            {/* 訂單管理 */}
+            <NavLink
+              to={"/memberCenter/orderManagementPage"}
+              className={({ isActive }) =>
+                [
+                  "flex gap-[16px] py-[9px] px-[12px] rounded-[12px]",
+                  isActive ? "bg-[#F2F3F5] text-[#3A57E8]" : null,
+                ].join(" ")
+              }
+            >
+              <span
+                className={`icon-[solar--clipboard-text-bold-duotone] ${
+                  location.pathname === "/memberCenter/orderManagementPage"
+                    ? "text-[#3A57E8]"
+                    : "text-[#4E5969]"
+                } w-[24px] h-[24px]`}
+              ></span>
+              <div>訂單管理</div>
+            </NavLink>
+
+            {/* 常用旅客 */}
+            <NavLink
+              to={"/memberCenter/frequentTravelers"}
+              className={({ isActive }) =>
+                [
+                  "flex gap-[16px] py-[9px] px-[12px] rounded-[12px]",
+                  isActive ? "bg-[#F2F3F5] text-[#3A57E8]" : null,
+                ].join(" ")
+              }
+            >
+              <span
+                className={`icon-[solar--user-id-bold-duotone] ${
+                  location.pathname === "/memberCenter/frequentTravelers"
+                    ? "text-[#3A57E8]"
+                    : "text-[#4E5969]"
+                } w-[24px] h-[24px]`}
+              ></span>
+              <div>常用旅客</div>
+            </NavLink>
           </div>
         </div>
         <Outlet />

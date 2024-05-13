@@ -14,6 +14,7 @@ const OrderContentPage = lazy(() => import("../pages/OrderContent"));
 const SearchOrderPage = lazy(() => import("../pages/SearchOrder"));
 const AccountPage = lazy(() => import("../pages/MemberCenter/Account"));
 const CollectionPage = lazy(() => import("../pages/Collection"));
+const DeleteAccountPage = lazy(() => import("../pages/DeleteAccount"))
 const FrequentTravelersPage = lazy(
   () => import("../pages/MemberCenter/FrequentTravelers")
 );
@@ -145,6 +146,15 @@ const routes = [
           </Suspense>
         ),
         path: "/collection",
+      },
+      // 刪除帳號完成頁
+      {
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <DeleteAccountPage />
+          </Suspense>
+        ),
+        path: "/deleteAccount",
       },
     ],
   },

@@ -77,15 +77,15 @@ const Header: React.FC = () => {
 
   /** @const {Array} 未登入routes */
   const menuList = [
-    { id: "1", lable: "收藏商品", route: "/collection" },
-    { id: "2", lable: "訂單查詢", route: "/searchOrder" },
+    { id: 1, lable: "收藏商品", route: "/collection" },
+    { id: 2, lable: "訂單查詢", route: "/searchOrder" },
   ];
 
   /** @const {Array} 會員登入routes */
   const memberMenu = [
     { id: 1, lable: "帳號管理", route: "/memberCenter" },
-    { id: 2, lable: "訂單管理", route: "/memberCenter/frequentTravelers" },
-    { id: 3, lable: "常用旅客", route: "/memberCenter/orderManagementPage" },
+    { id: 2, lable: "訂單管理", route: "/memberCenter/orderManagementPage" },
+    { id: 3, lable: "常用旅客", route: "/memberCenter/frequentTravelers" },
     { id: 4, lable: "登出", route: "memberCenter/logout" },
   ];
 
@@ -103,7 +103,7 @@ const Header: React.FC = () => {
       case "收藏商品":
         return "solar--star-bold-duotone";
       case "訂單查詢":
-        return "solar--cart-large-minimalistic-bold-duotone";
+        return "solar--clipboard-text-bold-duotone";
       default:
         return "";
     }
@@ -127,6 +127,13 @@ const Header: React.FC = () => {
   const searchProduct = (value: string) => {
     console.log(value);
     navigate("order");
+  };
+
+  // 登出
+  const signOut = () => {
+    setCloseList();
+    dispatch(authActions.isLogin());
+    navigate("/");
   };
 
   return (
@@ -171,10 +178,10 @@ const Header: React.FC = () => {
               }`}
             ></div>
           </div>
-          {/* 購物車 */}
+          {/* 收藏商品 */}
           <div
             onClick={() => toggleOpen("collection")}
-            className={`group hidden md:block`}
+            className={`group  ${auth ? "hidden md:block" : "hidden"} `}
           >
             <NavLink
               to={"/collection"}
@@ -321,7 +328,9 @@ const Header: React.FC = () => {
             onClick={() => setCloseList()}
             to={menuRoute.route}
             key={menuRoute.id}
-            className="group p-[9px] block"
+            className={`group p-[9px] ${
+              menuRoute.lable === "收藏商品" && !auth ? "hidden" : "block"
+            } `}
           >
             <div className="flex items-center gap-[16px]">
               <span
@@ -354,34 +363,66 @@ const Header: React.FC = () => {
         } absolute z-[999] w-[100%] md:w-[200px] top-[56px] md:top-[60px] md:right-[20px] bg-[#fff] px-[8px] py-[4px] shadow-md `}
       >
         {memberMenu.map((memberRoute) => (
-          <NavLink
-            onClick={() => setCloseList()}
-            to={memberRoute.route}
-            key={memberRoute.id}
-            className="group p-[9px] block"
-          >
-            <div className="flex items-center gap-[16px]">
-              <span
-                className={`icon-[${getIconClassName(
-                  memberRoute.lable
-                )}] w-[24px] h-[24px] cursor-pointer group-hover:text-[#3A57E8] ${
-                  currentPathName === `${memberRoute.route}`
-                    ? "text-[#3A57E8]"
-                    : "text-[#4E5969]"
-                } `}
-              ></span>
-
-              <span
-                className={`group-hover:text-[#3A57E8] ${
-                  currentPathName === `${memberRoute.route}`
-                    ? "text-[#3A57E8]"
-                    : "text-[#4E5969]"
-                }`}
+          <React.Fragment key={memberRoute.id}>
+            {memberRoute.lable !== "登出" && (
+              <NavLink
+                onClick={() => setCloseList()}
+                to={memberRoute.route}
+                className="group p-[9px] block"
               >
-                {memberRoute.lable}
-              </span>
-            </div>
-          </NavLink>
+                <div
+                  className="flex items-center gap-[16px]"
+                >
+                  <span
+                    className={`icon-[${getIconClassName(
+                      memberRoute.lable
+                    )}] w-[24px] h-[24px] cursor-pointer group-hover:text-[#3A57E8] ${
+                      currentPathName === `${memberRoute.route}`
+                        ? "text-[#3A57E8]"
+                        : "text-[#4E5969]"
+                    } `}
+                  ></span>
+
+                  <span
+                    className={`group-hover:text-[#3A57E8] ${
+                      currentPathName === `${memberRoute.route}`
+                        ? "text-[#3A57E8]"
+                        : "text-[#4E5969]"
+                    }`}
+                  >
+                    {memberRoute.lable}
+                  </span>
+                </div>
+              </NavLink>
+            )}
+            {memberRoute.lable === "登出" && (
+              <div
+                onClick={signOut}
+                className="group p-[9px] block"
+              >
+                <div className="flex items-center gap-[16px]">
+                  <span
+                    className={`icon-[${getIconClassName(
+                      memberRoute.lable
+                    )}] w-[24px] h-[24px] cursor-pointer group-hover:text-[#3A57E8] ${
+                      currentPathName === `${memberRoute.route}`
+                        ? "text-[#3A57E8]"
+                        : "text-[#4E5969]"
+                    } `}
+                  ></span>
+                  <span
+                    className={`group-hover:text-[#3A57E8] ${
+                      currentPathName === `${memberRoute.route}`
+                        ? "text-[#3A57E8]"
+                        : "text-[#4E5969]"
+                    }`}
+                  >
+                    {memberRoute.lable}
+                  </span>
+                </div>
+              </div>
+            )}
+          </React.Fragment>
         ))}
       </ul>
     </>

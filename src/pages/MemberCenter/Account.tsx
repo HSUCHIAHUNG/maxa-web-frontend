@@ -1,13 +1,38 @@
-import { Checkbox, Form, Input, Message, Modal } from "@arco-design/web-react";
-import PhoneInput from "../../components/common/Form/PhoneInput";
+// react原生方法
 import { useState } from "react";
+// router
+import { useNavigate } from "react-router-dom";
+// redux
+import { useAppDispatch } from "../../stores/index.ts";
+import { authActions } from "../../stores/auth.ts";
+// 匯入組件
+import PhoneInput from "../../components/common/Form/PhoneInput";
+// ui kit
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Message,
+  Modal,
+} from "@arco-design/web-react";
 
 function AccountPage() {
   // 編輯資料顯示狀態管理
   const [editData, setEditData] = useState("account");
+  const [deleteDisable, setDeleteDisable] = useState(true);
   const [visible, setVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+
+  // redux方法
+  const dispatch = useAppDispatch();
+  // 動態切換路由
+  const navigate = useNavigate();
+
+  // ui kit
+  const FormItem = Form.Item;
+  const [form] = Form.useForm();
 
   // 刪除帳號提交密碼確認(密碼驗證階段)
   function onOk() {
@@ -32,10 +57,6 @@ function AccountPage() {
     },
   };
 
-  // ui kit
-  const FormItem = Form.Item;
-  const [form] = Form.useForm();
-
   // 編輯個人資料送出
   const editProfile = (value: object) => {
     Message.success("更改成功");
@@ -49,6 +70,14 @@ function AccountPage() {
     console.log(value);
     Message.success("更改成功");
     setEditData("account");
+  };
+
+  // 確定刪除會員
+  const deleteSubmit = () => {
+    setDeleteVisible(false);
+    Message.success("刪除帳號成功");
+    dispatch(authActions.isLogin());
+    navigate("/deleteAccount");
   };
 
   return (
@@ -148,6 +177,7 @@ function AccountPage() {
             編輯資料
           </button>
         </ul>
+        
         {/* 快速登入方式 - 暫時隱藏因為還沒辦法做第三方登入 */}
         {false && (
           <ul
@@ -206,6 +236,7 @@ function AccountPage() {
             </div>
           </ul>
         )}
+        
         {/* 修改密碼、刪除帳號 */}
         <div
           className={`bg-[#fff] w-full border-y border-solid border-[#E5E6EB] py-[20px] px-[16px] flex flex-col gap-[12px] md:gap-[20px] md:border md:rounded-[16px] md:p-[40px] `}
@@ -306,9 +337,7 @@ function AccountPage() {
               <PhoneInput />
             </Form.Item>
             <FormItem field="updateNotify" required className={``}>
-              <Checkbox value="折扣通知" className={``}>
-                接收活動、優惠碼、折扣通知
-              </Checkbox>
+              <Checkbox value="折扣通知">接收活動、優惠碼、折扣通知</Checkbox>
             </FormItem>
             <div className={`flex gap-[8px] md:justify-end `}>
               <button
@@ -403,60 +432,94 @@ function AccountPage() {
       )}
 
       {/* 刪除帳號-驗證密碼 */}
-      <Modal
-        title="請輸入密碼以驗證MAXA帳號"
-        visible={visible}
-        okText="下一步"
-        cancelText="取消"
-        onOk={onOk}
-        confirmLoading={confirmLoading}
-        onCancel={() => setVisible(false)}
-      >
-        <Form
-          {...formItemLayout}
-          form={form}
-          // labelCol={{
-          //   style: { flexBasis: 90 },
-          // }}
-          wrapperCol={{
-            style: { flexBasis: "100%" },
+      {visible === true && (
+        <Modal
+          title="請輸入密碼以驗證MAXA帳號"
+          visible={visible}
+          okText="下一步"
+          cancelText="取消"
+          onOk={onOk}
+          confirmLoading={confirmLoading}
+          onCancel={() => setVisible(false)}
+          okButtonProps={{
+            style: { backgroundColor: "#EC4A58" },
           }}
+          className={`w-[90%] md:w-[500px]`}
         >
-          <FormItem
-            field="confirmPassword"
-            rules={[{ required: true, message: "必填" }]}
-            className={`w-full`}
+          <Form
+            {...formItemLayout}
+            form={form}
+            // labelCol={{
+            //   style: { flexBasis: 90 },
+            // }}
+            wrapperCol={{
+              style: { flexBasis: "100%" },
+            }}
           >
-            <Input.Password placeholder="請輸入舊密碼" autoComplete="on" />
-          </FormItem>
-        </Form>
-      </Modal>
+            <FormItem
+              field="confirmPassword"
+              rules={[{ required: true, message: "必填" }]}
+              className={`w-full`}
+            >
+              <Input.Password placeholder="請輸入舊密碼" autoComplete="on" />
+            </FormItem>
+          </Form>
+        </Modal>
+      )}
 
       {/* 刪除帳號-確定刪除帳號 */}
-      <Modal
-        title="是否確定要刪除MAXA帳號?"
-        visible={deleteVisible}
-        okText="取消"
-        cancelText="確定刪除"
-        onOk={() => setDeleteVisible(false)}
-        okButtonProps={{
-          style: { backgroundColor: 'red' },
-        }}
-        onCancel={() => setDeleteVisible(false)}
-      >
-        <p className={`pb-[4px]`}>
-          1.
-          提醒您，刪除帳號後，您將無法再以該帳號瀏覽及查詢先前的訂單紀錄，未使用的優惠券也會一併刪除，無法再補發或移轉。
-        </p>
-        <p className={`pb-[4px]`}>
-          2.
-          如您有尚未完成的訂單，為避免無法順利提供商品或服務給您，將拒絕刪除帳號的申請，並會請您等待至訂單完成後再申請刪除會員。
-        </p>
-        <p className={`pb-[4px]`}>
-          3. 刪除會員申請通過後將於 XX
-          個工作天內完整刪除所有個人資料。如對於作業期間或方式有任何問題，您可以直接洽example@chanjui.com詢問。
-        </p>
-      </Modal>
+      {deleteVisible === true && (
+        <Modal
+          title="是否確定要刪除MAXA帳號?"
+          visible={deleteVisible}
+          onCancel={() => setDeleteVisible(false)}
+          footer={
+            <div
+              className={` flex flex-col gap-[10px] md:flex-row md:gap-0 md:justify-between md:items-center`}
+            >
+              <Checkbox
+                onChange={() => setDeleteDisable((state) => (state = !state))}
+                value="折扣通知"
+                className={``}
+              >
+                接收活動、優惠碼、折扣通知
+              </Checkbox>
+              <div className={`flex gap-[8px]`}>
+                <Button
+                  onClick={() => setDeleteVisible(false)}
+                  className={`w-full`}
+                >
+                  取消
+                </Button>
+                <Button
+                  onClick={deleteSubmit}
+                  type="primary"
+                  disabled={deleteDisable}
+                  className={` w-full ${
+                    deleteDisable ? "!bg-[#F7A7A6]" : "!bg-[#EC4A58]"
+                  }`}
+                >
+                  確定刪除
+                </Button>
+              </div>
+            </div>
+          }
+          className={`w-[90%] md:w-[520px]`}
+        >
+          <p className={`pb-[4px]`}>
+            1.
+            提醒您，刪除帳號後，您將無法再以該帳號瀏覽及查詢先前的訂單紀錄，未使用的優惠券也會一併刪除，無法再補發或移轉。
+          </p>
+          <p className={`pb-[4px]`}>
+            2.
+            如您有尚未完成的訂單，為避免無法順利提供商品或服務給您，將拒絕刪除帳號的申請，並會請您等待至訂單完成後再申請刪除會員。
+          </p>
+          <p className={`pb-[4px]`}>
+            3. 刪除會員申請通過後將於 XX
+            個工作天內完整刪除所有個人資料。如對於作業期間或方式有任何問題，您可以直接洽example@chanjui.com詢問。
+          </p>
+        </Modal>
+      )}
     </>
   );
 }
