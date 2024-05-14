@@ -482,7 +482,7 @@ function AccountPage() {
                 value="折扣通知"
                 className={``}
               >
-                接收活動、優惠碼、折扣通知
+                我已閱讀並同意以上注意事項
               </Checkbox>
               <div className={`flex gap-[8px]`}>
                 <Button

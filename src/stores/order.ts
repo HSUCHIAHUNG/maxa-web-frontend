@@ -11,8 +11,8 @@ interface TimeDataType {
 
 // 票數、座位
 interface PassengerTicketType {
-  type: string
-  total: number
+  type: string;
+  total: number;
 }
 
 // 儲存劃位資料
@@ -23,7 +23,7 @@ interface SeatDataType {
 }
 
 // 儲存劃位資料
-interface SeatsData  {
+interface SeatsData {
   [key: string]: SeatDataType[];
 }
 
@@ -39,20 +39,30 @@ interface BookingData {
 type ticketType = "oneWayTicket" | "roundTripTicket";
 
 // 訂購階段( 選擇站點、時間、座位 )
-type bookingStageType = "selectStation" | "selectTime" | "selectSeats" | 'contract' | 'passengerData';
+type bookingStageType =
+  | "selectStation"
+  | "selectTime"
+  | "selectSeats"
+  | "contract"
+  | "passengerData";
+
+// 付款狀態 
+type orderContentType ={type: "pendingPayment" | "alreadyPaid" | "expired" , title: string | number};
 
 const initialOrderState: {
   ticket: ticketType;
   bookingStage: bookingStageType;
+  orderContent: orderContentType;
   bookingData: BookingData;
 } = {
   ticket: "oneWayTicket",
   bookingStage: "selectStation",
+  orderContent: {type: 'pendingPayment', title: ''},
   bookingData: {
     stationData: {},
     timeData: {},
     passengerTicket: {},
-    seatsData: {oneWayTicket:[], roundTripTicket:[]},
+    seatsData: { oneWayTicket: [], roundTripTicket: [] },
   },
 };
 
@@ -87,7 +97,6 @@ const orderSlice = createSlice({
     setPassengerTicket(state, action: PayloadAction<PassengerTicketType>) {
       const { type, total } = action.payload;
       state.bookingData.passengerTicket[type] = { type, total };
-      // console.log(state.bookingData.passengerTicket);
     },
     // 儲存劃位資料
     setSeatsData(state, action: PayloadAction<[SeatDataType[], string]>) {
@@ -98,6 +107,12 @@ const orderSlice = createSlice({
     reseBbookingData(state) {
       state.bookingData = initialOrderState.bookingData;
       state.bookingStage = "selectStation";
+    },
+    // 訂單狀態頁面狀態切換
+    orderContentStateChenge(state, action: PayloadAction<orderContentType>) {
+      const { type, title } = action.payload;
+      state.orderContent.type = type;
+      state.orderContent.title = title;
     },
   },
 });

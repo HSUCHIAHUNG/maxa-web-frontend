@@ -370,9 +370,7 @@ const Header: React.FC = () => {
                 to={memberRoute.route}
                 className="group p-[9px] block"
               >
-                <div
-                  className="flex items-center gap-[16px]"
-                >
+                <div className="flex items-center gap-[16px]">
                   <span
                     className={`icon-[${getIconClassName(
                       memberRoute.lable
@@ -396,15 +394,10 @@ const Header: React.FC = () => {
               </NavLink>
             )}
             {memberRoute.lable === "登出" && (
-              <div
-                onClick={signOut}
-                className="group p-[9px] block"
-              >
+              <div onClick={signOut} className="group p-[9px] block">
                 <div className="flex items-center gap-[16px]">
                   <span
-                    className={`icon-[${getIconClassName(
-                      memberRoute.lable
-                    )}] w-[24px] h-[24px] cursor-pointer group-hover:text-[#3A57E8] ${
+                    className={`icon-[solar--logout-3-bold-duotone] w-[24px] h-[24px] cursor-pointer group-hover:text-[#3A57E8] ${
                       currentPathName === `${memberRoute.route}`
                         ? "text-[#3A57E8]"
                         : "text-[#4E5969]"

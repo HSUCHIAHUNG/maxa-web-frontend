@@ -2,6 +2,7 @@ import React from "react";
 
 interface OrderDetailsProps {
   title?: boolean;
+  buttonState?: string;
   className?: string;
   totalTicketType?: { type: string; total: number }[];
 }
@@ -10,6 +11,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   title = true,
   className,
   totalTicketType = [],
+  buttonState = "",
 }) => {
   const isOpen = totalTicketType.every((item) => item === undefined);
   function ticketName(type: string) {
@@ -20,7 +22,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   console.log(totalTicketType);
   return (
     <div
-      className={`${className} overflow-hidden border border-solid border-[#E5E6EB] rounded-[8px] w-[100%] xl:h-[492px] xl:w-[320px]`}
+      className={`${className} overflow-hidden border border-solid border-[#E5E6EB] rounded-[8px] w-[100%] xl:h-[444px] xl:w-[320px]`}
     >
       {title && (
         <div className={`flex justify-between py-[11px] px-[16px]`}>
@@ -68,11 +70,22 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
           <p>總金額</p>
           <p>NT$798</p>
         </div>
-        <button
-          className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] `}
-        >
-          確認付款
-        </button>
+        {/* 已付款 */}
+        {buttonState === "pendingPayment" && (
+          <button
+            className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] `}
+          >
+            確認付款
+          </button>
+        )}
+        {/* 已失效 */}
+        {buttonState === 'expired' && (
+          <button
+            className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] `}
+          >
+            再次預定
+          </button>
+        )}
       </div>
     </div>
   );
