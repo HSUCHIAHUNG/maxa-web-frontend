@@ -54,6 +54,7 @@ const initialOrderState: {
   bookingStage: bookingStageType;
   orderContent: orderContentType;
   bookingData: BookingData;
+  parner: string
 } = {
   ticket: "oneWayTicket",
   bookingStage: "selectStation",
@@ -64,6 +65,7 @@ const initialOrderState: {
     passengerTicket: {},
     seatsData: { oneWayTicket: [], roundTripTicket: [] },
   },
+  parner: ''
 };
 
 const orderSlice = createSlice({
@@ -113,6 +115,10 @@ const orderSlice = createSlice({
       const { type, title } = action.payload;
       state.orderContent.type = type;
       state.orderContent.title = title;
+    },
+    // 設定合作夥伴
+    setParner(state, action: PayloadAction<string>) {
+      state.parner = action.payload
     },
   },
 });

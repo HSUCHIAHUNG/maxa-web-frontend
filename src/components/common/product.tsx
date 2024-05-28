@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 interface ProductProps {
   url: string;
   title: string;
-  money: string;
+  money?: string;
   tag: string[];
   className?: string;
   mask?: boolean;
@@ -13,23 +13,37 @@ interface ProductProps {
 }
 
 const Carousel: React.FC<ProductProps> = (props) => {
-  const { url, title, money, tag, className, mask } = props;
+  const { url, title, tag, className, mask } = props;
 
   const [isCollect, setIsCollect] = useState(true);
 
   // 動態生成 tag 的內聯樣式
   const getTagStyle = (tag: string) => {
     const styles: React.CSSProperties = {};
-    if (tag === "國旅卡適用") {
+    if (tag === "可攜折疊式/拆解式自行車") {
       styles.color = "#EC4A58";
       styles.backgroundColor = "#FFEAE8";
       styles.padding = "0 8px";
       styles.borderRadius = "2px";
     }
 
-    if (tag === "組合套票") {
+    if (tag === "可攜寵物") {
       styles.color = "#FF7D00";
       styles.backgroundColor = "#FFF7E8";
+      styles.padding = "0 8px";
+      styles.borderRadius = "2px";
+    }
+
+    if (tag === "部分無障礙班車") {
+      styles.color = "#F5319D";
+      styles.backgroundColor = "#FFE8F1";
+      styles.padding = "0 8px";
+      styles.borderRadius = "2px";
+    }
+
+    if (tag === "預約車位") {
+      styles.color = "#0FC6C2";
+      styles.backgroundColor = "#E8FFFB";
       styles.padding = "0 8px";
       styles.borderRadius = "2px";
     }
@@ -82,22 +96,22 @@ const Carousel: React.FC<ProductProps> = (props) => {
         className="w-[100%] h-[50%] p-[16px] flex flex-col justify-between "
       >
         <div>
-          <p className=" ">{title}</p>
-          <div className=" flex gap-[8px] pt-[8px] ">
+          <p className=" text-[20px] ">{title}</p>
+          <div className=" flex flex-wrap gap-[8px] pt-[8px]  ">
             {tag.map((tag) => (
-              <div style={getTagStyle(tag)} key={tag}>
+              <div className={``} style={getTagStyle(tag)} key={tag}>
                 {tag}
               </div>
             ))}
           </div>
         </div>
-        <div className="text-right">
+        {/* <div className="text-right">
           <div className=" relative ">
             <div className=" absolute w-[60px] border-b border-solid border-[#86909C] right-[-2px] top-[10px]"></div>
             <p className="text-[#86909C]">NT$ 600</p>
           </div>
           <p className=" text-[20px]">NT${money}</p>
-        </div>
+        </div> */}
       </Link>
     </div>
   );

@@ -14,6 +14,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   buttonState = "",
 }) => {
   const isOpen = totalTicketType.every((item) => item === undefined);
+  
+  // 票種&票數
   function ticketName(type: string) {
     if (type === "adult") return "成人票";
     if (type === "child") return "兒童票";

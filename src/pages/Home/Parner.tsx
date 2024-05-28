@@ -4,63 +4,23 @@ import Banner from "../../components/Carousel";
 // ui kit
 import { Carousel } from "@arco-design/web-react";
 // 匯入圖片
+import * as parnerImage from "./parnerImg";
 import parnerImg from "../../assets/images/homePage/Partner_color_1.svg";
 import PhotoTitle from "../../components/Home/PhotoTitle";
-// import News from "../..//components/common/News";
 import Product from "../..//components/common/product";
+// json
+import parterList from '../../assets/parner.json' 
 
 const Patner: React.FC = () => {
-  const imageSrc = [
-    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/cd7a1aaea8e1c5e3d26fe2591e561798.png~tplv-uwbnlip3yd-webp.webp",
-    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/6480dbc69be1b5de95010289787d64f1.png~tplv-uwbnlip3yd-webp.webp",
-    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/0265a04fddbd77a19602a15d9d55d797.png~tplv-uwbnlip3yd-webp.webp",
-    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/24e0dd27418d2291b65db1b21aa62254.png~tplv-uwbnlip3yd-webp.webp",
-  ];
+  // 定義 parnerImg 的類型
+  type ParnerImgType = {
+    [key: string]: string;
+  };
 
-  // const newsList = [
-  //   {
-  //     id: 1,
-  //     url: "https://tabiiro.travel/img/articles/21032501/main.jpg",
-  //     title: "櫻花季優惠來嘍!!",
-  //     date: "活動至 2024/12/26 23;59 止",
-  //   },
-  //   {
-  //     id: 2,
-  //     url: "https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_144240/20230519001422_pi5Eo/jpg",
-  //     title: "暑假暢玩沖繩",
-  //     date: "活動至 2024/12/26 23;59 止",
-  //   },
-  //   {
-  //     id: 3,
-  //     url: "https://pic.amwaynet.com.tw/PR/ishare/article/2023061903d50269c264453eac3e8ce071016b06.jpg",
-  //     title: "暑假暢玩沖繩",
-  //     date: "活動至 2024/12/26 23;59 止",
-  //   },
-  // ];
+  const imageSrc: ParnerImgType = parnerImage;
 
-  const productList = [
-    {
-      id: 1,
-      url: "https://ohh.okinawa/wpdir/wp-content/uploads/2018/07/59827ddcc6f8f06485fad8836fb30162.jpg",
-      title: "格上租車券+阿里山門票+奮起湖經典三大美食",
-      money: "399",
-      tag: ["國旅卡適用", "組合套票"],
-    },
-    {
-      id: 2,
-      url: "https://ohh.okinawa/wpdir/wp-content/uploads/2018/07/59827ddcc6f8f06485fad8836fb30162.jpg",
-      title: "格上租車券+阿里山門票+奮起湖經典三大美食",
-      money: "399",
-      tag: ["國旅卡適用", "組合套票"],
-    },
-    {
-      id: 3,
-      url: "https://ohh.okinawa/wpdir/wp-content/uploads/2018/07/59827ddcc6f8f06485fad8836fb30162.jpg",
-      title: "格上租車券+阿里山門票+奮起湖經典三大美食",
-      money: "399",
-      tag: ["國旅卡適用", "組合套票"],
-    },
-  ];
+  console.log(parterList.AC010001.route);
+
 
   return (
     <section>
@@ -68,8 +28,8 @@ const Patner: React.FC = () => {
         className={`overflow-x-hidden max-w-[1920px] h-[320px] md:h-[500px] `}
         autoPlay={true}
       >
-        {imageSrc.map((src) => (
-          <Banner key={src} src={src} />
+        {Object.keys(imageSrc).map((key) => (
+          <Banner key={key} src={imageSrc[key]} />
         ))}
       </Carousel>
 
@@ -124,12 +84,11 @@ const Patner: React.FC = () => {
             className={`py-[16px]`}
           />
           <div className=" flex gap-[20px] flex-col md:flex-row ">
-            {productList.map((productItem) => (
+            {parterList.AC010001.route.map((productItem) => (
               <Product
                 key={productItem.id}
                 url={productItem.url}
                 title={productItem.title}
-                money={productItem.money}
                 tag={productItem.tag}
               />
             ))}

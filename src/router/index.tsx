@@ -82,7 +82,7 @@ const routes = [
             <ParnerPage />
           </Suspense>
         ),
-        path: "/parner",
+        path: "/parner/:id",
       },
       // 註冊登入(密碼更改)
       {

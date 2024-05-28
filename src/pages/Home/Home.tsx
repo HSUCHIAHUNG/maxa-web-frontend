@@ -7,7 +7,7 @@ import stateColor from "@/assets/images/homePage/Partner_color_2.svg";
 import stateBlack from "@/assets/images/homePage/Partner_black_2.svg";
 import ubusColor from "@/assets/images/homePage/Partner_color_3.svg";
 import ubusBlack from "@/assets/images/homePage/Partner_black_3.svg";
-
+import buildIng from "../../assets/images/header/buildIng.png";
 // 匯入組件
 import Banner from "../../components/Carousel";
 // import News from "../../components/common/News";
@@ -20,31 +20,10 @@ import ParnerImg from "../../components/common/ParnerImg";
 function Home() {
   const imageSrc = [
     "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/cd7a1aaea8e1c5e3d26fe2591e561798.png~tplv-uwbnlip3yd-webp.webp",
-    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/6480dbc69be1b5de95010289787d64f1.png~tplv-uwbnlip3yd-webp.webp",
+    buildIng,
     "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/0265a04fddbd77a19602a15d9d55d797.png~tplv-uwbnlip3yd-webp.webp",
     "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/24e0dd27418d2291b65db1b21aa62254.png~tplv-uwbnlip3yd-webp.webp",
   ];
-
-  // const newsList = [
-  //   {
-  //     id: 1,
-  //     url: "https://tabiiro.travel/img/articles/21032501/main.jpg",
-  //     title: "櫻花季優惠來嘍!!",
-  //     date: "活動至 2024/12/26 23;59 止",
-  //   },
-  //   {
-  //     id: 2,
-  //     url: "https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_144240/20230519001422_pi5Eo/jpg",
-  //     title: "暑假暢玩沖繩",
-  //     date: "活動至 2024/12/26 23;59 止",
-  //   },
-  //   {
-  //     id: 3,
-  //     url: "https://pic.amwaynet.com.tw/PR/ishare/article/2023061903d50269c264453eac3e8ce071016b06.jpg",
-  //     title: "暑假暢玩沖繩",
-  //     date: "活動至 2024/12/26 23;59 止",
-  //   },
-  // ];
 
   const productList = [
     {
@@ -121,31 +100,39 @@ function Home() {
     },
   ];
 
-  const parnerLisr = [
+  // 合作夥伴
+  const parnerList = [
     {
-      id: 1,
+      id: 'AC010001',
       colorUrl: tpeColor,
       blackUrl: tpeBlack,
+      industry: '屏東客運'
+      
     },
     {
-      id: 2,
+      id: 'AC010002',
       colorUrl: stateColor,
       blackUrl: stateBlack,
+      industry: '國光客運'
     },
     {
-      id: 3,
+      id: 'AC010003',
       colorUrl: ubusColor,
       blackUrl: ubusBlack,
+      industry: '桃園客運'
     },
     {
-      id: 4,
+      id: 'AC010004',
       colorUrl: tpeColor,
       blackUrl: tpeBlack,
+      industry: '金門縣公共車船管理處'
+
     },
     {
-      id: 5,
+      id: 'AC010005',
       colorUrl: stateColor,
       blackUrl: stateBlack,
+      industry: '國光客運'
     },
   ];
 
@@ -175,6 +162,7 @@ function Home() {
               ))}
             </div>
           </div> */}
+
           {/* 熱門商品 */}
           <div className={`md:w-[735px] xl:w-auto`}>
             <PhotoTitle text="熱門商品" subtitle="Popular product" readAll />
@@ -191,6 +179,7 @@ function Home() {
               ))}
             </div>
           </div>
+
           {/* 推薦城市 */}
           <div className={`md:w-[720px] xl:w-auto`}>
             <PhotoTitle text="推薦城市" subtitle="Recommended Cities" />
@@ -204,6 +193,7 @@ function Home() {
               ))}
             </div>
           </div>
+
           {/* 為什麼選擇MAXA? */}
           <div className={`md:w-[720px] xl:w-auto`}>
             <PhotoTitle text="為什麼選擇MAXA?" subtitle="Why choose MAXA?" />
@@ -217,12 +207,13 @@ function Home() {
               ))}
             </div>
           </div>
+
           {/* 合作夥伴 */}
           <div className={`md:w-[720px] xl:w-auto`}>
             <PhotoTitle text="合作夥伴?" subtitle="Partner" />
             <div className=" flex flex-col items-center md:flex-row gap-[8px] ">
-              {parnerLisr.map(({ id, blackUrl, colorUrl }) => (
-                <ParnerImg key={id} colorUrl={colorUrl} blackUrl={blackUrl} />
+              {parnerList.map(({ id, blackUrl, colorUrl, industry }) => (
+                <ParnerImg key={id} id={id} colorUrl={colorUrl} blackUrl={blackUrl} industry={industry} />
               ))}
             </div>
           </div>

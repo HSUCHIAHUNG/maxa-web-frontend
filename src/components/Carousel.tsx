@@ -9,11 +9,10 @@ interface CarouseProps {
 const Carousel:React.FC<CarouseProps> = (props) => {
     const { src, style, className } = props;
     return (
-      <div style={style} className={className}>
+      <div style={style} className={`${className}`}>
         <img
           src={src}
-          className='w-[100%] h-[100%]'
-          style={{ width: '100%', objectFit: 'cover' }}
+          className=' w-full h-full object-cover'
           alt='Banner'
         />
       </div>

@@ -1,6 +1,7 @@
 // 原生方法
 import React, { useState } from "react";
 import { useLocation, NavLink, useNavigate } from "react-router-dom";
+// ui kit
 import { Input } from "@arco-design/web-react";
 // css樣式
 import "../../assets/Guest.css";
@@ -22,6 +23,15 @@ interface IsOpenType {
 }
 
 const Header: React.FC = () => {
+  // 選單開關狀態控制
+  const [isOpen, setOpen] = useState<IsOpenType>({
+    search: false,
+    list: false,
+    memberList: false,
+    langue: false,
+    collection: false,
+  });
+
   // redux方法呼叫
   const dispatch = useAppDispatch();
 
@@ -39,6 +49,9 @@ const Header: React.FC = () => {
 
   // ui ki( 搜尋框 )
   const InputSearch = Input.Search;
+
+  // 選單開關狀態控制
+  const { search, list, memberList } = isOpen;
 
   // 開啟登入註冊選單
   const setGuestIsOpen = () => {
@@ -64,16 +77,6 @@ const Header: React.FC = () => {
       collection: false,
     }));
   };
-
-  // 選單開關狀態控制
-  const [isOpen, setOpen] = useState<IsOpenType>({
-    search: false,
-    list: false,
-    memberList: false,
-    langue: false,
-    collection: false,
-  });
-  const { search, list, memberList } = isOpen;
 
   /** @const {Array} 未登入routes */
   const menuList = [
