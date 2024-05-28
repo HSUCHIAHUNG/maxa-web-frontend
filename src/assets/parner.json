@@ -5,8 +5,8 @@
     "route": [
       {
         "id": "U1V2W3X4Y5",
-        "url": "https://ohh.okinawa/wpdir/wp-content/uploads/2018/07/59827ddcc6f8f06485fad8836fb30162.jpg",
-        "title": "9127-D 大鵬灣琉球線",
+        "url": "https://jdanews.com/blog/wp-content/uploads/2018/07/IMG_3479.jpg",
+        "title": "9189 墾丁快線",
         "tag": [
           "可攜折疊式/拆解式自行車",
           "可攜寵物",
@@ -16,11 +16,183 @@
       },
       {
         "id": "Z6A7B8C9D0",
-        "url": "https://ohh.okinawa/wpdir/wp-content/uploads/2018/07/59827ddcc6f8f06485fad8836fb30162.jpg",
+        "url": "https://www.taiwantrip.com.tw/public/upload//201218034204644105ZYJ3M.jpg",
         "title": "9127-D 大鵬灣琉球線",
         "tag": [
           "可攜折疊式/拆解式自行車",
           "可攜寵物",
+          "部分無障礙班車",
+          "預約車位"
+        ]
+      }
+    ]
+  },
+
+  "AC010003": {
+    "industry": "桃園客運",
+    "describetion": "桃園客運成立於1903年，是桃園市主要的公共交通公司，提供市區公車和跨縣市客運服務。市區公車路線遍布桃園市內，跨縣市路線連接台北、新北、新竹等地。桃園客運設有多個主要客運站，提供便民設施和電子票證支付，並推動電動公車和智慧交通管理系統，以提升乘客體驗和環保效益。",
+    "route": [
+      {
+        "id": "A1B2C3D4E5",
+        "url": "https://www.funtime.com.tw/blog/wp-content/uploads/2020/08/guide-to-taoyuan-daxi2.jpg",
+        "title": "503 大溪快線",
+        "tag": [
+          "可攜折疊式/拆解式自行車",
+          "可攜寵物",
+          "語音報站",
+          "部分無障礙班車"
+        ]
+      },
+      {
+        "id": "F6G7H8I9J0",
+        "url": "https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_115072/20210105065204_BGRXs/jpg",
+        "title": "502 小烏來線(假日行駛)",
+        "tag": ["可攜寵物", "語音報站", "導覽服務"]
+      },
+      {
+        "id": "K1L2M3N4O5",
+        "url": "https://travel.tycg.gov.tw/content/images/2022/static/banner-2-2-5.jpg",
+        "title": "503 石門水庫線(假日行駛)",
+        "tag": [
+          "可攜折疊式/拆解式自行車",
+          "可攜寵物",
+          "語音報站",
+          "部分無障礙班車",
+          "導覽服務"
+        ]
+      },
+      {
+        "id": "P6Q7R8S9T0",
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWTKTGyoscKBXdpuRlAIEDogpMeCsMJU0XZEB-JSyl_g&s",
+        "title": "506 東眼山線",
+        "tag": ["可攜寵物"]
+      }
+    ]
+  },
+  "AC010004": {
+    "industry": "金門縣公共車船管理處",
+    "describetion": "金門縣公共車船管理處負責金門縣內的公共交通運輸，包括公車和渡輪服務。該處提供的服務涵蓋金門主要城鎮之間的交通連接，並致力於提升乘客的便利性和舒適度。管理處積極推動綠色運輸，致力於降低環境影響。",
+    "route": [
+      {
+        "id": "E1F2G3H4I5",
+        "url": "https://static.liontech.com.tw/ConsoleAPData/PublicationStatic/lion_tw_b2c/zh-tw/taiwan/_ModelFile/PrimaryVisual/905438/c08987dc5ddc4b9d81f827491e25d32c.jpg",
+        "title": "85 E線-風獅爺主題(上午)路線(週六行駛，郵輪式公車)",
+        "tag": [
+          "部分無障礙班車",
+          "導覽服務",
+          "預約車位"
+        ]
+      },
+      {
+        "id": "J6K7L8M9N0",
+        "url": "https://kuolife.com/wp-content/uploads/2021/03/c23b7a26378726051e5cc566899377798_62745916_210324_23.jpg",
+        "title": "86 E線-風獅爺主題(下午)路線(週六行駛，郵輪式公車)",
+        "tag": [
+          "部分無障礙班車",
+          "導覽服務",
+          "預約車位"
+        ]
+      },
+      {
+        "id": "O1P2Q3R4S5",
+        "url": "https://today-obs.line-scdn.net/0hVVZ03FDBCXlnSSE9anV2Ll0fChZUJRp6A39YeiQnV00eekwuWigVTEtJUkAde04nDi9BGkNMEkgZfRksXSsV/w644",
+        "title": "88 F線-尋城趣文化小旅行線(週日，郵輪式公車)",
+        "tag": [
+          "可攜寵物",
+          "導覽服務",
+          "預約車位"
+        ]
+      },
+      {
+        "id": "O1P2Q3R4S6",
+        "url": "https://kinmen.travel/tours/36711/1024x768_tours-image-nu2360eopeostfjcpro3wa.jpg",
+        "title": "881 G線-金門大橋烈嶼線(週六、日行駛)",
+        "tag": [
+          "可攜寵物",
+          "語音報站",
+          "部分無障礙班車"
+        ]
+      }
+    ]
+  },
+  "AC010002": {
+    "industry": "國光客運",
+    "describetion": "國光客運是一家提供全台灣長途及跨區客運服務的公司。公司擁有多條長途路線，連接台灣各主要城市及觀光景點。國光客運致力於提供安全、舒適和便捷的運輸服務，並不斷提升車輛和服務品質，以滿足乘客需求。",
+    "route": [
+      {
+        "id": "O1P2Q3R4S7",
+        "url": "https://storage.googleapis.com/futurecity-cms-cwg-tw/article/202207/article-62e0f0589a8b7.jpg",
+        "title": "1828 臺北 ⇋ 彰化",
+        "tag": [
+          "部分無障礙班車",
+          "預約車位"
+        ]
+      },
+      {
+        "id": "O1P2Q3R4S8",
+        "url": "https://img.jatraveling.tw/2023/04/20230413134829_17.jpg",
+        "title": "1829 臺北 ⇋ 員林",
+        "tag": [
+          "部分無障礙班車",
+          "預約車位"
+        ]
+      },
+      {
+        "id": "O1P2Q3R4S9",
+        "url": "https://img.jatraveling.tw/2022/04/20230208122119_94.jpg",
+        "title": "1830 臺北 ⇋ 斗六",
+        "tag": [
+          "部分無障礙班車",
+          "預約車位"
+        ]
+      },
+      {
+        "id": "O1P2Q3R4T0",
+        "url": "https://lohanpush.files.wordpress.com/2020/07/1_han5298.jpg?w=1600",
+        "title": "1833 臺北 ⇋ 日月潭",
+        "tag": [
+          "部分無障礙班車",
+          "預約車位"
+        ]
+      }
+    ]
+  },
+  "AC010005": {
+    "industry": "國光客運",
+    "describetion": "國光客運是一家提供全台灣長途及跨區客運服務的公司。公司擁有多條長途路線，連接台灣各主要城市及觀光景點。國光客運致力於提供安全、舒適和便捷的運輸服務，並不斷提升車輛和服務品質，以滿足乘客需求。",
+    "route": [
+      {
+        "id": "O1P2Q3R4S7",
+        "url": "https://storage.googleapis.com/futurecity-cms-cwg-tw/article/202207/article-62e0f0589a8b7.jpg",
+        "title": "1828 臺北 ⇋ 彰化",
+        "tag": [
+          "部分無障礙班車",
+          "預約車位"
+        ]
+      },
+      {
+        "id": "O1P2Q3R4S8",
+        "url": "https://img.jatraveling.tw/2023/04/20230413134829_17.jpg",
+        "title": "1829 臺北 ⇋ 員林",
+        "tag": [
+          "部分無障礙班車",
+          "預約車位"
+        ]
+      },
+      {
+        "id": "O1P2Q3R4S9",
+        "url": "https://img.jatraveling.tw/2022/04/20230208122119_94.jpg",
+        "title": "1830 臺北 ⇋ 斗六",
+        "tag": [
+          "部分無障礙班車",
+          "預約車位"
+        ]
+      },
+      {
+        "id": "O1P2Q3R4T0",
+        "url": "https://lohanpush.files.wordpress.com/2020/07/1_han5298.jpg?w=1600",
+        "title": "1833 臺北 ⇋ 日月潭",
+        "tag": [
           "部分無障礙班車",
           "預約車位"
         ]

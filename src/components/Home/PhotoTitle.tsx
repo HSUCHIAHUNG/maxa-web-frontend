@@ -27,7 +27,7 @@ const Carousel: React.FC<CarouseProps> = (props) => {
       </div>
       {/* Read all */}
       <div
-        className={` pb-[18px] flex justify-between ${!readAll && "hidden"} ${className}`}
+        className={` pb-[18px] flex justify-between ${!readAll && "hidden"} `}
       >
         <div
           className={`flex gap-[12px] justify-center items-center md:justify-normal `}

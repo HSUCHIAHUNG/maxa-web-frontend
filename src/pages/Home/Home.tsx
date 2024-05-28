@@ -148,21 +148,6 @@ function Home() {
       </Carousel>
       <div className=" w-[100%] m-[0_auto] pt-[20px] pb-[40px] md:pt-[56px] md:pb-[60px] xl:pt-[96px] xl:pb-[100px] ">
         <div className=" w-[100%] max-w-[1200px] m-[0_auto] flex flex-col gap-[80px] px-[12px] md:px-[24px] ">
-          {/* 最新消息 */}
-          {/* <div>
-            <PhotoTitle text="最新消息" subtitle="Latest News" />
-            <div className=" flex gap-[20px] flex-col md:flex-row ">
-              {newsList.map((newsList) => (
-                <News
-                  key={newsList.id}
-                  url={newsList.url}
-                  title={newsList.title}
-                  date={newsList.date}
-                />
-              ))}
-            </div>
-          </div> */}
-
           {/* 熱門商品 */}
           <div className={`md:w-[735px] xl:w-auto`}>
             <PhotoTitle text="熱門商品" subtitle="Popular product" readAll />
