@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 interface ProductProps {
   url: string;
   title: string;
-  money?: string;
+  // money?: string;
   tag: string[];
   className?: string;
   mask?: boolean;
-  // key: number
+  id: string
 }
 
 const Carousel: React.FC<ProductProps> = (props) => {
-  const { url, title, tag, className, mask } = props;
+  const { url, title, tag, className, mask, id } = props;
 
   const [isCollect, setIsCollect] = useState(true);
 
@@ -98,7 +98,7 @@ const Carousel: React.FC<ProductProps> = (props) => {
         {/* 收藏商品頁面(商品下架用樣式) - 結束 */}
       </div>
       <Link
-        to={`/order/test`}
+        to={`/order/${id}`}
         className="w-[100%] h-[50%] p-[16px] flex flex-col justify-between "
       >
         <div>

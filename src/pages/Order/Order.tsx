@@ -17,7 +17,7 @@ const imageSrc = [
   "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/24e0dd27418d2291b65db1b21aa62254.png~tplv-uwbnlip3yd-webp.webp",
 ];
 
-// Ensure the product list is typed
+// 產品列表-初始資料
 const productList: ProductList = productListData as ProductList;
 
 const Order: React.FC = () => {
@@ -153,6 +153,7 @@ const Order: React.FC = () => {
             {currentProductList.map((productItem) => (
               <Product
                 key={productItem.id}
+                id={productItem.id}
                 className="xl:!w-[284px]"
                 url={productItem.imageUrl}
                 title={productItem.name}

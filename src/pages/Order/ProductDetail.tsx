@@ -36,8 +36,11 @@ const ProductDetail: React.FC = () => {
   );
 
   // 控制訂車階段顯示
-  const isOpen = () => ((bookingStage === "contract" || bookingStage === "passengerData") ? "hidden" : "block");
-  
+  const isOpen = () =>
+    bookingStage === "contract" || bookingStage === "passengerData"
+      ? "hidden"
+      : "block";
+
   // 初始化訂購流程狀態
   useEffect(() => {
     dispatch(orderActions.reseBbookingData());
@@ -116,9 +119,7 @@ const ProductDetail: React.FC = () => {
             <p className={`text-[20px]`}>
               506A屏市假日觀光公車
               <span className={`text-[14px] text-[#86909C] px-[14px]`}>|</span>
-              <span className={`text-[14px] text-[#86909C]`}>
-                屏東客運(業者名稱)
-              </span>
+              <span className={`text-[14px] text-[#86909C]`}>屏東客運</span>
             </p>
           </div>
         </div>
@@ -179,8 +180,9 @@ const ProductDetail: React.FC = () => {
               現場請出示電子憑證，於上、下車時感應車機(下車未感應會被鎖卡)
             </p>
           </BorderBox>
+
           {/* 付款方式 */}
-          <BorderBox
+          {/* <BorderBox
             className={`rounded-[8px] p-[12px] xl:p-[16px] mt-[8px] md:w-full xl:mt-0 `}
           >
             <span
@@ -188,7 +190,8 @@ const ProductDetail: React.FC = () => {
             ></span>
             <p className={`text-[16px] pt-[15px]`}>付款方式</p>
             <p className={`text-[12px] pt-[4px]`}>信用卡</p>
-          </BorderBox>
+          </BorderBox> */}
+
           {/* 商品金額 (寬度) > 1200 */}
           <BorderBox
             className={`rounded-[8px] p-[12px] w-full hidden xl:block xl:p-[16px]`}
