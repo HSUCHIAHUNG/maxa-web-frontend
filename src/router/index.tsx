@@ -109,7 +109,7 @@ const routes = [
             <ProductDetailPage />
           </Suspense>
         ),
-        path: "order/:productDetail",
+        path: "order/:id",
       },
       // 購物車
       {

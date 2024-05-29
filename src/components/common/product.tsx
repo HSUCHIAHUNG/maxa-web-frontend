@@ -9,7 +9,7 @@ interface ProductProps {
   tag: string[];
   className?: string;
   mask?: boolean;
-  id: string
+  id?: string
 }
 
 const Carousel: React.FC<ProductProps> = (props) => {
@@ -98,7 +98,7 @@ const Carousel: React.FC<ProductProps> = (props) => {
         {/* 收藏商品頁面(商品下架用樣式) - 結束 */}
       </div>
       <Link
-        to={`/order/${id}`}
+        to={`/order/${id || 'test'}`}
         className="w-[100%] h-[50%] p-[16px] flex flex-col justify-between "
       >
         <div>

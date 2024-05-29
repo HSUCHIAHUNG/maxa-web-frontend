@@ -24,13 +24,15 @@
     "content": [
       {
         "title": "商品說明",
-        "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
-        "routeImgTitle": "",
-        "routeImgContent": [""]
+        "titleContent": "台灣好行大溪快線從高鐵桃園站天天發車，行經快速道路直達大溪、慈湖，沿線好吃好玩又好逛，像是大溪老街除了有全臺聞名豆干美食，木藝文化及百年建築歷史也是本區必看重點，每年農曆6月24日關公生日更是在地慶典盛事，以及慈湖是著名兩蔣文化保存地，也是相當適合優閒漫步景區，除了前慈湖、後慈湖優美的風景外，鄰近還有許多特色休閒農場。此外這條路線沿線還有打鐵寮古道、原住民文化會館、大江購物中心，高鐵桃園站周邊則有Xpark八景島水族館、Outlet、橫山書法藝術館等，歡迎搭乘此路線，帶您快速前往，體驗桃園多元之美。",
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "https://travel.tycg.gov.tw/content/images/attractions/89733/1024x768_attractions-image-ennx_jbexuoyp2-xvpdohw.jpg",
+        "routeImgTitle": "大溪老街｜下車站點：大溪站",
+        "routeImgContent": [
+          "大溪老街是大溪最富盛名的景點之一熱鬧的大溪老街主要位於和平街上，街上多為日治時代的大正年間建築，除了可以逛街、吃小吃與家人朋友同樂外，傳統懷舊建築外觀保持得十分完整。裝潢融合巴洛克與閩南傳統裝飾圖案，居民以牌樓立面裝飾石材，有些街屋的加工材料以紅磚為主體搭配；前者有希臘山頭、羅馬柱子，後者則可見魚、扁蝠等祈求吉慶的圖案，凸顯老街巴洛克式牌樓立面上頭華麗精采的裝飾圖案，旅客可停下腳步觀察欣賞。",
+          "走在大溪老街中，仿如走進了時光隧道，特別有種時空轉換的感動。街道上最負盛名的，有傳統滋味的「三角湯圓」、當地人最愛的早餐麵店「達摩麵店」，伴手禮則有傳統製作的「萬里香豆干」、網路爆紅的「AMY起司乳酪」，以及有60年歷史的「永珍香」等小吃甜點，一邊遊逛歷史悠久的家具行、木雕行、中藥行一邊享用特色美味，感受大溪濃濃的復古風情。此外，大溪老街附近的知名景點眾多，可從普濟堂行經大溪公園，漫步百年碼頭石板古道、武德殿等，為美好的小鎮之旅留下更豐富的回憶。"
+        ]
       }
     ]
   },
@@ -56,19 +58,14 @@
       "大溪站(G04)",
       "桃客桃園總站"
     ],
-    "tags": [
-      "可攜寵物",
-      "語音報站",
-      "導覽服務"
-    ],
+    "tags": ["可攜寵物", "語音報站", "導覽服務"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -107,10 +104,9 @@
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -135,17 +131,14 @@
       "大溪站",
       "大溪總站"
     ],
-    "tags": [
-      "可攜寵物"
-    ],
+    "tags": ["可攜寵物"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -176,10 +169,9 @@
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -207,10 +199,9 @@
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -238,19 +229,14 @@
       "溪邊",
       "山外車站"
     ],
-    "tags": [
-      "部分無障礙班車",
-      "導覽服務",
-      "預約車位"
-    ],
+    "tags": ["部分無障礙班車", "導覽服務", "預約車位"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -281,19 +267,14 @@
       "南雄",
       "山外車站"
     ],
-    "tags": [
-      "部分無障礙班車",
-      "導覽服務",
-      "預約車位"
-    ],
+    "tags": ["部分無障礙班車", "導覽服務", "預約車位"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -320,19 +301,14 @@
       "魯王疑塚",
       "金城車站"
     ],
-    "tags": [
-      "可攜寵物",
-      "導覽服務",
-      "預約車位"
-    ],
+    "tags": ["可攜寵物", "導覽服務", "預約車位"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -352,19 +328,14 @@
       "后麟步槍模擬射擊館",
       "金城車站"
     ],
-    "tags": [
-      "可攜寵物",
-      "語音報站",
-      "部分無障礙班車"
-    ],
+    "tags": ["可攜寵物", "語音報站", "部分無障礙班車"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -383,18 +354,14 @@
       "車路口",
       "彰化站"
     ],
-    "tags": [
-      "部分無障礙班車",
-      "預約車位"
-    ],
+    "tags": ["部分無障礙班車", "預約車位"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -421,18 +388,14 @@
       "北員林",
       "員林轉運站"
     ],
-    "tags": [
-      "部分無障礙班車",
-      "預約車位"
-    ],
+    "tags": ["部分無障礙班車", "預約車位"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -463,18 +426,14 @@
       "北斗",
       "明道大學"
     ],
-    "tags": [
-      "部分無障礙班車",
-      "預約車位"
-    ],
+    "tags": ["部分無障礙班車", "預約車位"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -493,18 +452,14 @@
       "魚池",
       "日月潭"
     ],
-    "tags": [
-      "部分無障礙班車",
-      "預約車位"
-    ],
+    "tags": ["部分無障礙班車", "預約車位"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }
@@ -523,18 +478,14 @@
       "民族路口(七賢一路)",
       "高雄站(國光)"
     ],
-    "tags": [
-      "部分無障礙班車",
-      "預約車位"
-    ],
+    "tags": ["部分無障礙班車", "預約車位"],
     "content": [
       {
         "title": "商品說明",
         "titleContent": "",
-        "subTitle": [""],
-        "subTitleLink": [""],
-        "subTitleContent": [""],
-        "routeImg": [],
+        "subTitle": [{ "title": "", "subTitleContent": "" }],
+        "subTitleLink": "",
+        "routeImg": "",
         "routeImgTitle": "",
         "routeImgContent": [""]
       }

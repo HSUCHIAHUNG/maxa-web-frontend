@@ -12,12 +12,18 @@ import {
   Select,
   DatePicker,
 } from "@arco-design/web-react";
+// 匯入型別
+import { ProductListType } from "../../pages/Order/type";
 
 interface SelectStationProps {
   className?: string;
+  productList: ProductListType;
 }
 
-const SelectStation: React.FC<SelectStationProps> = ({ className }) => {
+const SelectStation: React.FC<SelectStationProps> = ({
+  className,
+  productList,
+}) => {
   // redux(方法調用)
   const dispatch = useAppDispatch();
 
@@ -32,7 +38,6 @@ const SelectStation: React.FC<SelectStationProps> = ({ className }) => {
   // ui kit
   const FormItem = Form.Item;
   const [form] = Form.useForm();
-  const options = ["南港高工", "南港", "南港軟體園區南站"];
 
   /** @func login表單提交 */
   const submit = (value: object) => {
@@ -58,20 +63,20 @@ const SelectStation: React.FC<SelectStationProps> = ({ className }) => {
         <FormItem
           label="選擇起點"
           field="startStation"
-          disabled = {bookingStage !== "selectStation"}
+          disabled={bookingStage !== "selectStation"}
           required
           rules={[{ required: true, message: "必填" }]}
         >
           <Select
             placeholder="選擇起點"
-            options={options}
+            options={productList.stations}
             allowClear
           />
         </FormItem>
         <FormItem
           label="選擇迄點"
           field="endStation"
-          disabled = {bookingStage !== "selectStation"}
+          disabled={bookingStage !== "selectStation"}
           required
           dependencies={["startStation"]}
           rules={[
@@ -90,14 +95,18 @@ const SelectStation: React.FC<SelectStationProps> = ({ className }) => {
             },
           ]}
         >
-          <Select placeholder="選擇迄點" options={options} allowClear />
+          <Select
+            placeholder="選擇迄點"
+            options={productList.stations}
+            allowClear
+          />
         </FormItem>
       </div>
       <div className={`md:flex md:gap-[20px] md:w-[420px] `}>
         <FormItem
           label="去程日期"
           field="startDate"
-          disabled = {bookingStage !== "selectStation"}
+          disabled={bookingStage !== "selectStation"}
           rules={[{ required: true, message: "必填" }]}
           className={`${ticketState === "oneWayTicket" && "md:w-[200px]"} `}
         >
@@ -107,7 +116,7 @@ const SelectStation: React.FC<SelectStationProps> = ({ className }) => {
           <FormItem
             label="回程日期"
             field="endDate"
-            disabled = {bookingStage !== "selectStation"}
+            disabled={bookingStage !== "selectStation"}
             rules={[
               {
                 message: "必填",
