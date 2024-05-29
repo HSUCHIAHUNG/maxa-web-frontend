@@ -14,11 +14,11 @@ import Pingtung_logo from "@/assets/images/parner/Pingtung_logo.png";
 import Guoguang_logo from "@/assets/images/parner/Guoguang_logo.png";
 
 // 匯入組件
-import Banner from "../../components/Carousel";
+// import Banner from "../../components/Carousel";
 import PhotoTitle from "../../components/Home/PhotoTitle";
 import Product from "../../components/common/product";
 // json
-import parterList from "../../assets/parner.json";
+import parterList from "../../assets/API/parner.json";
 
 const Patner: React.FC = () => {
   // 取得動態參數
@@ -27,6 +27,7 @@ const Patner: React.FC = () => {
   // 定義 parterList 的類型
   type ParterListType = typeof parterList;
 
+  // logo map參照
   const logoGroups = {
     AC010001: Pingtung_logo,
     AC010002: Guoguang_logo,
@@ -35,6 +36,7 @@ const Patner: React.FC = () => {
     AC010005: Guoguang_logo,
   };
 
+  // logo背景顏色
   const backgroundColors = {
     AC010001: "#ADE5F5",
     AC010002: "#EDC6C9",
@@ -43,17 +45,20 @@ const Patner: React.FC = () => {
     AC010005: "#EDC6C9",
   };
 
-  // 根據不同的城市動態設置圖片資源
+  // 根據不同的城市動態設置圖片
   let imageSrc: { [key: string]: string } = {};
+
+  // logo圖片依照id參照回傳對應圖片 
   const logoSrc = params.id
     ? logoGroups[params.id as keyof typeof logoGroups]
     : "";
+
+  // logo背景顏色依照id參照回傳對應圖片
   const backgroundColor = params.id
     ? backgroundColors[params.id as keyof typeof backgroundColors]
     : "#FFFFFF";
 
-  
-
+  // 路線圖片列表
   switch (params.id) {
     case "AC010001":
       imageSrc = PingtungImages;
@@ -75,9 +80,9 @@ const Patner: React.FC = () => {
       imageSrc = {};
   }
 
-  // 確認 parterList 的鍵是 params.id
+  // 確認 parterList 的key是 params.id
   const parterData = params.id
-    ? (parterList as ParterListType)[params.id as keyof ParterListType]
+    ? (parterList)[params.id as keyof ParterListType]
     : null;
 
   if (!parterData) {
@@ -86,14 +91,15 @@ const Patner: React.FC = () => {
 
   return (
     <section>
-      <Carousel
-        className={`overflow-x-hidden max-w-[1920px] h-[320px] md:h-[500px] `}
-        autoPlay={true}
-      >
-        {Object.keys(imageSrc).map((key) => (
-          <Banner key={key} src={imageSrc[key]} />
-        ))}
-      </Carousel>
+      <div className={`w-full max-w-[1920px] `}>
+        <Carousel className={``} autoPlay={true}>
+          {Object.keys(imageSrc).map((key) => (
+            <div key={key} className={`  overflow-hidden `}>
+              <img src={imageSrc[key]} alt="Slide" className=" w-full h-full " />
+            </div>
+          ))}
+        </Carousel>
+      </div>
 
       <div className="w-[301px] max-w-[1200px] flex flex-col mx-[12px] pb-[20px] pt-[12px] md:mx-[24px] md:w-[720px] md:pt-[40px] md:pb-[40px] md:gap-[40px] xl:w-[1152px] xl:pb-[80px] xl:m-[0_auto] ">
         {/* parner */}
@@ -108,7 +114,7 @@ const Patner: React.FC = () => {
             className={`flex flex-col justify-center items-center gap-[12px] md:gap-[24px] xl:gap-[40px] md:text-left xl:flex-row`}
           >
             <div
-              className={`relative flex justify-center items-center w-full h-[232px] rounded-[20px_80px] md:h-[360px] `}
+              className={`relative flex justify-center items-center w-full h-[232px] rounded-[8px] xl:rounded-[20px_80px] md:h-[360px] `}
               style={{ backgroundColor: backgroundColor }}
             >
               <img
@@ -139,7 +145,7 @@ const Patner: React.FC = () => {
             readAll
             className={`py-[16px]`}
           />
-          <div className="flex gap-[20px] flex-col md:flex-row">
+          <div className="flex gap-[20px] flex-col md:gap-[12px] md:flex-row md:flex-wrap">
             {parterData.route.map((productItem) => (
               <Product
                 key={productItem.id}

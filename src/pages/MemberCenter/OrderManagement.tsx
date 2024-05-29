@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../stores/index.ts";
 import { orderActions } from "../../stores/order";
 // router
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // css樣式
 import "../../assets/OrderManagement.css";
 // ui kit
