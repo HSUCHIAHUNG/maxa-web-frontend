@@ -421,7 +421,7 @@ const ProductDetail: React.FC = () => {
                       <Step
                         key={station.id}
                         title={station.name}
-                        // description={item.Comment || ""}
+                          // description={item.Comment || ""}
                       />
                     ))}
                   </Steps>
