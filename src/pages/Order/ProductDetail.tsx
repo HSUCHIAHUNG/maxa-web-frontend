@@ -32,21 +32,6 @@ const BreadcrumbItem = Breadcrumb.Item;
 const TabPane = Tabs.TabPane;
 const Step = Steps.Step;
 
-// banner
-const imageSrc = [
-  "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/cd7a1aaea8e1c5e3d26fe2591e561798.png~tplv-uwbnlip3yd-webp.webp",
-  "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/6480dbc69be1b5de95010289787d64f1.png~tplv-uwbnlip3yd-webp.webp",
-  "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/0265a04fddbd77a19602a15d9d55d797.png~tplv-uwbnlip3yd-webp.webp",
-  "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/24e0dd27418d2291b65db1b21aa62254.png~tplv-uwbnlip3yd-webp.webp",
-];
-
-// 標籤
-const tagList = [
-  { tagName: "國旅卡適用" },
-  { tagName: "可預約車位" },
-  { tagName: "交通票券" },
-];
-
 const ProductDetail: React.FC = () => {
   // redux(方法調用)
   const dispatch = useAppDispatch();
@@ -73,21 +58,22 @@ const ProductDetail: React.FC = () => {
 
   // 初始化訂購流程狀態
   useEffect(() => {
-    dispatch(orderActions.reseBbookingData());
+    dispatch(orderActions.resetBookingData());
   }, [dispatch]);
 
   // (單程票、來回票)切換狀態
   const switchTab = () => {
     dispatch(orderActions.switchTab());
-    dispatch(orderActions.reseBbookingData());
+    dispatch(orderActions.resetBookingData());
   };
 
   if (id === undefined || !productData[id]) {
     return <div>合作夥伴 ID 無效或找不到資料</div>;
   }
 
+  // 對應產品id資料
   const productList: ProductListType = productData[id];
-  console.log(productList);
+
   return (
     <>
       {/* 4. 購買契約 */}
@@ -103,7 +89,7 @@ const ProductDetail: React.FC = () => {
             to={"/order"}
             className={`icon-[iconamoon--arrow-left-2-thin] w-[24px] h-[24px] `}
           ></Link>
-          <p className={`m-[0_auto] text-[16px]`}>506A屏市假日觀光公車</p>
+          <p className={`m-[0_auto] text-[16px]`}>{productList.name}</p>
         </div>
 
         {/* 電腦版麵包屑 */}
@@ -118,13 +104,15 @@ const ProductDetail: React.FC = () => {
             <BreadcrumbItem>
               <Link to={"/order"}>所有商品</Link>
             </BreadcrumbItem>
-            <BreadcrumbItem>506A屏市假日觀光公車</BreadcrumbItem>
+            <BreadcrumbItem>{productList.name}</BreadcrumbItem>
           </Breadcrumb>
           <div>
             <p className={`text-[20px]`}>
-              506A屏市假日觀光公車
+              {productList.name}
               <span className={`text-[14px] text-[#86909C] px-[14px]`}>|</span>
-              <span className={`text-[14px] text-[#86909C]`}>屏東客運</span>
+              <span className={`text-[14px] text-[#86909C]`}>
+                {productList.industry}
+              </span>
             </p>
           </div>
         </div>
@@ -134,20 +122,20 @@ const ProductDetail: React.FC = () => {
           className={`overflow-x-hidden max-w-[1920px] h-[200px] rounded-[16px] md:h-[320px] xl:h-[500px] `}
           autoPlay={true}
         >
-          {imageSrc.map((src) => (
-            <Banner key={src} src={src} />
+          {productList.banner.map((src) => (
+            <Banner key={src.id} src={src.url} />
           ))}
         </Carousel>
 
         {/* 標籤 */}
-        <ColorButton tagList={tagList} />
+        <ColorButton tagList={productList.tags} />
 
         <div
           className={`flex flex-col-reverse xl:justify-between xl:flex-row xl:gap-[20px]`}
         >
           {/* 訂購流程(主要內容) */}
           <div className={`xl:w-[70%]`}>
-            {/* payment */}
+            {/* 使用方式、付款方式 */}
             <div
               className={`md:flex gap-[8px] mb-[20px] md:mb-[40px] xl:mb-0 `}
             >
@@ -201,10 +189,10 @@ const ProductDetail: React.FC = () => {
                       current={productList.stations.length}
                       style={{ maxWidth: 780 }}
                     >
-                      {productList.stations.map((station, index) => (
+                      {productList.stations.map((station) => (
                         <Step
-                          key={index}
-                          title={station}
+                          key={station.id}
+                          title={station.name}
                           // description={item.Comment || ""}
                         />
                       ))}
@@ -220,10 +208,10 @@ const ProductDetail: React.FC = () => {
                       current={productList.stations.length}
                       style={{ maxWidth: 780 }}
                     >
-                      {productList.stations.reverse().map((station, index) => (
+                      {[...productList.stations].reverse().map((station) => (
                         <Step
-                          key={index}
-                          title={station}
+                          key={station.id}
+                          title={station.name}
                           // description={item.Comment || ""}
                         />
                       ))}
@@ -233,17 +221,19 @@ const ProductDetail: React.FC = () => {
               </Tabs>
             </div>
 
-            <div className="">
-              {/* 選擇日期與票數 */}
-              {/* 標題 */}
+            {/* 訂票流程-內容 */}
+            <div>
               <div
                 className={` flex gap-[8px] py-[20px] md:pt-[40px] xl:pt-[60px]`}
               >
+                {/* 標題 */}
                 <span
                   className={`icon-[solar--ticket-bold-duotone] w-[24px] h-[24px] md:w-[32px] md:h-[32px] text-[#86909C]`}
                 ></span>
                 <p className={`text-[16px] md:text-[20px]`}>選擇日期與票數</p>
               </div>
+
+              {/* 訂票流程-階段切換顯示區 */}
               <Tabs
                 defaultActiveTab={ticketState}
                 type="card-gutter"
@@ -275,267 +265,117 @@ const ProductDetail: React.FC = () => {
                 </TabPane>
               </Tabs>
 
+              {/* 路線詳情說明內容 */}
               <div>
                 {productList.content.map((content) => (
-                  <>
-                    {/* 商品說明 */}
+                  <div key={content.id}>
+                    {/* 主標題 */}
                     <div
-                      className={`flex items-center gap-[8px] py-[20px] md:pt-[40px] xl:pt-[60]  `}
+                      className={`flex items-center gap-[8px] pt-[20px] md:pt-[40px] xl:pt-[60]  `}
                     >
                       <span
                         className={`icon-[solar--ticket-bold-duotone] w-[24px] h-[24px] md:w-[32px] md:h-[32px] text-[#86909C]`}
                       ></span>
                       <p className={`text-[16px] md:text-[20px]`}>
-                        {content.title}
+                        {content.mainTitle.title}
                       </p>
                     </div>
-                    <p className={`leading-snug text-[13px] md:text-[16px]`}>
-                      {content.titleContent}
-                    </p>
-                    {content.subTitle.map((subTitle) => (
-                      <>
-                        <div className={`flex gap-[8px] pt-[20px] text-[16px] ${subTitle.title.length < 1 && 'hidden' }`}>
-                          <p>￮</p>
-                          <p className={``}>{subTitle.title}</p>
-                        </div>
-                        <p
-                          className={`pt-[8px] pl-[20px] text-[13px] md:text-[16px] `}
+
+                    {/* 主標題-內容 */}
+                    {content.mainTitle.content && (
+                      <p
+                        className={`leading-snug text-[13px] md:text-[16px] pt-[20px]`}
+                      >
+                        {content.mainTitle.content}
+                      </p>
+                    )}
+
+                    {/* 子標題 */}
+                    {content?.subTitle?.map((subTitle) => (
+                      <div key={subTitle.id}>
+                        {/* 子標題-title */}
+                        <div
+                          className={`flex gap-[8px] text-[13px] md:text-[16px] md:pt-[20px] ${
+                            subTitle.title.length < 1 ? "hidden" : ""
+                          }`}
                         >
-                          {subTitle.subTitleContent}
-                        </p>
-                      </>
+                          <p>￮</p>
+                          {subTitle?.link.length < 1 ? (
+                            <p>{subTitle.title}</p>
+                          ) : (
+                            <a
+                              href={subTitle.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`text-[#3A57E8]`}
+                            >
+                              {subTitle.title}
+                            </a>
+                          )}
+                        </div>
+
+                        {/* 子標題-content */}
+                        {subTitle?.content?.map((content) => (
+                          <div
+                            key={content.id}
+                            className={`pl-[20px] pt-[8px] ${content.text.length < 1 && 'hidden'}`}
+                          >
+                            <p className="text-[13px] md:text-[16px] ">
+                              {content.text}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     ))}
 
-                    <div className={`pt-[20px]`}>
-                      <img
-                        className=" w-[301px] h-[200px] rounded-2xl md:h-[420px] md:w-full "
-                        src="https://images.chinatimes.com/newsphoto/2023-12-14/656/20231214005794.png"
-                        alt="巴士"
-                      />
-                      <p className={`pt-[4px] text-[13px] md:text-[16px] `}>
-                        時尚城中城線｜高鐵左營站往返墾丁巴士，輕鬆直達國境之南
-                      </p>
-                    </div>
-                    <div className={`pt-[20px]`}>
-                      <img
-                        className=" h-[200px] w-[301px] rounded-2xl md:h-[420px] md:w-full "
-                        src="https://media.istockphoto.com/id/182344013/zh/%E7%85%A7%E7%89%87/sheep.jpg?s=612x612&w=0&k=20&c=kLbflurljlLQ_disXAcCwxlJoQ6Qc-iRHqJE3OjK6N0="
-                        alt="羊"
-                      />
-                      <p className={`] pt-[4px] text-[13px] md:text-[16px]`}>
-                        綠世界生態農場｜採用生態工法使雨水能重覆循環、滋養大地，園內並復育許多瀕臨絕種的台灣特有種，如：台灣萍蓬草、台灣山羌等，許多國內外學者都曾蒞臨觀摩。
-                      </p>
-                    </div>
-                    <div className={`pt-[20px]`}>
-                      <img
-                        className=" h-[200px] w-[301px] rounded-2xl md:h-[420px] md:w-full"
-                        src="https://images.pexels.com/photos/18591317/pexels-photo-18591317.jpeg"
-                        alt="花"
-                      />
-                      <p className={` pt-[4px] text-[13px] md:text-[16px]`}>
-                        豐后線｜中社觀光花市，中社自產栽植的各種花卉任君採，全年皆有繽紛花海盛開,在花香中洗去所有的煩燥與疲憊，在群花中展現自我的風采!
-                      </p>
-                    </div>
-                    {/* 使用說明 */}
-                    <div
-                      className={`flex items-center gap-[8px] py-[20px] md:pt-[40px] xl:pt-[60] text-[13px] md:text-[16px]`}
-                    >
-                      <span
-                        className={`icon-[solar--ticket-bold-duotone] w-[24px] h-[24px] md:w-[32px] md:h-[32px] text-[#86909C]`}
-                      ></span>
-                      <p className={`text-[16px] md:text-[20px]`}>使用說明</p>
-                    </div>
-                    <div
-                      className={`flex gap-[8px] pb-[20px] text-[13px] md:text-[16px]`}
-                    >
-                      <p>￮</p>
-                      <p className={``}>
-                        此為電子憑證(QR Code)，不另外寄送紙本票券。
-                      </p>
-                    </div>
-                    <div
-                      className={`flex gap-[8px] pb-[20px] text-[13px] md:text-[16px]`}
-                    >
-                      <p>￮</p>
-                      <p className={``}>
-                        付款完成後，請至您的信箱收取【付款成功通知信】，憑信件內附之QR
-                        Code進行核銷；或至網站的【會員中心】→【我的訂單】→【已付款】分頁
-                        → 點選【查看】內附之 QR Code 進行核銷。
-                      </p>
-                    </div>
-                    <div
-                      className={`flex flex-col gap-[8px] pt-[20px] text-[13px] md:text-[16px]`}
-                    >
-                      <div className={`flex gap-[8px] text-[16px]`}>
-                        <p>￮</p>
-                        <p>核銷方式：</p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          台灣好行獅山線一日券：上車時前請先向司機出示產品電子憑證(QR
-                          code)來核銷；若已核銷過，請出示當日核銷畫面供司機確認以享一日票券權益。
+                    {/* 圖片 */}
+                    {content?.route?.map((route) => (
+                      <div key={route.id} className={`pt-[20px]`}>
+                        {/* 圖片 */}
+                        {route.images && (
+                          <img
+                            className=" w-[301px] h-[200px] rounded-2xl md:h-[420px] md:w-full "
+                            src={route.images}
+                            alt="巴士"
+                          />
+                        )}
+
+                        {/* 彈性高度圖片 */}
+                        {route.customImages && (
+                          <img
+                            className=" w-[301px] rounded-2xl md:w-full "
+                            src={route.customImages}
+                            alt="巴士"
+                          />
+                        )}
+
+                        {/* 圖片標題 */}
+                        <p
+                          className={` pt-[5px] pb-[10px] text-[13px] md:text-[16px] `}
+                        >
+                          {route.title}
                         </p>
+
+                        {/* 圖片內容 */}
+                        <div className={`flex flex-col gap-[20px]`}>
+                          {route.content.map((content) => (
+                            <p
+                              key={content.id}
+                              className={` text-[13px] md:text-[16px] `}
+                            >
+                              {content.text}
+                            </p>
+                          ))}
+                        </div>
                       </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          綠世界生態農場：入館前請先至園區剪票口出示產品電子憑證(QR
-                          code)供工作人員來核銷。
-                        </p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          北埔商圈消費券：至消費券合作店家示產品電子憑證(QR
-                          code)供工作人員來核銷。
-                        </p>
-                      </div>
-                    </div>
-                    {/* 注意事項 */}
-                    <div
-                      className={`flex items-center gap-[8px] pt-[20px] pb-[16px] md:pt-[40px] xl:pt-[60px]`}
-                    >
-                      <span
-                        className={`icon-[solar--ticket-bold-duotone] w-[24px] h-[24px] md:w-[32px] md:h-[32px] text-[#86909C]`}
-                      ></span>
-                      <p className={`text-[16px] md:text-[20px]`}>注意事項</p>
-                    </div>
-                    {/* 注意事項 - 系統訂單注意事項：*/}
-                    <div
-                      className={`flex flex-col gap-[8px] text-[13px] md:text-[16px]`}
-                    >
-                      <div className={`flex gap-[8px]`}>
-                        <p>￮</p>
-                        <p className={``}>系統訂單注意事項：</p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          訂單成立一小時內要完成付款，超過付款期限系統會自動取消訂單。
-                        </p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          系統無提供修改訂單功能，如欲變更數量，需退票重訂。
-                        </p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>任一商品經兌換使用後，恕不接受退款退費。</p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          凡商品未使用，請至「本網站」會員中心→我的訂單(已付款訂單)→申請退款作業。
-                        </p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          如有系統或訂單問題，請於客服時間：週一~週五(不含國定例假日)上午9:00~12:00
-                          / 下午13:00~17:00(中午休息一小時)，來電03-5910052。
-                        </p>
-                      </div>
-                    </div>
-                    {/* 注意事項 - 乘車票卡注意事項：*/}
-                    <div
-                      className={`flex flex-col gap-[8px] pt-[20px] text-[13px] md:text-[16px]`}
-                    >
-                      <div className={`flex gap-[8px]`}>
-                        <p>￮</p>
-                        <p className={``}>乘車票卡注意事項：</p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          <span className={`text-[#EC4A58]`}>
-                            來回車卡無保留座位功能
-                          </span>
-                          ，請至客運櫃台換票並領取號碼牌依序排隊搭乘車埕線。
-                        </p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>此票券為成人票卡，如欲購買其他票種請至現場購買。</p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          於核銷兌換完成後，請妥善保管票證，若遺失、破損或無法辨識，恕無法補發及搭乘。
-                        </p>
-                      </div>
-                      <div className={`flex gap-[8px] pl-[20px]`}>
-                        <p>￮</p>
-                        <p>
-                          <span className={`text-[#EC4A58]`}>
-                            票證內含60元儲值金
-                          </span>
-                          ，僅供搭乘車埕線乘車使用，如您將儲值金使用完畢，請您自行加值後方可搭乘。
-                        </p>
-                      </div>
-                    </div>
-                    {/* 使用限制 */}
-                    <div
-                      className={`flex items-center gap-[8px] pt-[20px] md:pt-[40px] xl:pt-[60px]`}
-                    >
-                      <span
-                        className={`icon-[solar--ticket-bold-duotone] w-[24px] h-[24px] md:w-[32px] md:h-[32px] text-[#86909C]`}
-                      ></span>
-                      <p className={`text-[16px] md:text-[20px]`}>使用限制</p>
-                    </div>
-                    <div
-                      className={`flex flex-col gap-[20px] pt-[20px] text-[13px] md:text-[16px]`}
-                    >
-                      <div className={`flex gap-[8px] `}>
-                        <p>￮</p>
-                        <p className={`text-[#EC4A58]`}>每一個商品限用一次。</p>
-                      </div>
-                      <div className={`flex gap-[8px] `}>
-                        <p>￮</p>
-                        <p>
-                          本券有2天效期限制，即於任一票券開票使用後之2天內（含第一次門票使用當日），需使用完畢。例：第一個商品於2020年10月1日啟用者，最晚使用期限皆至2020年10月2日止。
-                        </p>
-                      </div>
-                      <div className={`flex gap-[8px] `}>
-                        <p>￮</p>
-                        <p>
-                          消費券可折抵消費金額100元(內含50元面額2張)，可於同一店家一次使用完畢。
-                        </p>
-                      </div>
-                      <div className={`flex gap-[8px] `}>
-                        <p>￮</p>
-                        <p>全店商品不分品項，均可使用。</p>
-                      </div>
-                      <div className={`flex gap-[8px] `}>
-                        <p>￮</p>
-                        <p>
-                          消費券合作店家「化石先生(綠世界劇場店/大探奇店)」，一張消費券(50元)限折抵一項商品，不可累積折抵。
-                        </p>
-                      </div>
-                      <div className={`flex gap-[8px] `}>
-                        <p>￮</p>
-                        <p>消費券不可兌換現金及找零。</p>
-                      </div>
-                      <div className={`flex gap-[8px] `}>
-                        <p>￮</p>
-                        <p>使用消費券之金額現場將不額外開立發票或收據證明。</p>
-                      </div>
-                      <div className={`flex gap-[8px] `}>
-                        <p>￮</p>
-                        <p>
-                          除依「天然災害停止辦公及上課作業辦法」規定，縣市政府決定停止公告或上課之起止時間；或其他經營管理單位視園區實際狀況，足以影響遊客安全時必須全部或部分封閉，主辦單位得辦理延期或取消活動，並提前公告及聯繫，如有未盡事宜，主辦單位保留修改、終止、變更活動內容細節之權利。出發前請確認官方網站。
-                        </p>
-                      </div>
-                    </div>
-                  </>
+                    ))}
+                  </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* 乘車路線圖-1200以上 */}
+          {/* 乘車路線圖-寬度1200以上 */}
           <div className={` hidden xl:block xl:w-[30%]`}>
             <div className={`flex items-center gap-[8px] pb-[20px] xl:hidden`}>
               <span
@@ -558,10 +398,10 @@ const ProductDetail: React.FC = () => {
                     current={productList.stations.length}
                     style={{ maxWidth: 780 }}
                   >
-                    {productList.stations.map((station, index) => (
+                    {productList.stations.map((station) => (
                       <Step
-                        key={index}
-                        title={station}
+                        key={station.id}
+                        title={station.name}
                         // description={item.Comment || ""}
                       />
                     ))}
@@ -577,10 +417,10 @@ const ProductDetail: React.FC = () => {
                     current={productList.stations.length}
                     style={{ maxWidth: 780 }}
                   >
-                    {productList.stations.reverse().map((station, index) => (
+                    {productList.stations.reverse().map((station) => (
                       <Step
-                        key={index}
-                        title={station}
+                        key={station.id}
+                        title={station.name}
                         // description={item.Comment || ""}
                       />
                     ))}

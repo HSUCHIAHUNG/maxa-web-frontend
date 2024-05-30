@@ -21,6 +21,9 @@ import {
 } from "@arco-design/web-react";
 import { DatePicker } from "@arco-design/web-react";
 import dayjs from "dayjs";
+// 匯入型別
+import { OrderContentType } from "src/stores/type/OrderType.ts";
+
 
 // 待付款票狀項目
 interface pendingPaymentType {
@@ -29,9 +32,6 @@ interface pendingPaymentType {
   selected: boolean;
   paymentState: string;
 }
-
-// 付款狀態
-type orderContentType = "pendingPayment" | "alreadyPaid" | "expired";
 
 const TabPane = Tabs.TabPane;
 const { RangePicker } = DatePicker;
@@ -72,7 +72,7 @@ const OrderManagement: React.FC = () => {
   const orderContent = useSelector(
     (state: RootState) => state.order.orderContent
   );
-  const { type } = orderContent;
+  const { title } = orderContent;
 
   // redux方法呼叫
   const dispatch = useAppDispatch();
@@ -103,7 +103,7 @@ const OrderManagement: React.FC = () => {
 
   // 待付款-如果狀態是待付款就啟用倒數計時器
   useEffect(() => {
-    if (type !== "pendingPayment") return;
+    if (title !== "pendingPayment") return;
     const timer = setInterval(() => {
       setRemainingTime((prevTime) => {
         if (prevTime === 0) {
@@ -116,7 +116,7 @@ const OrderManagement: React.FC = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [type]);
+  }, [title]);
 
   // 待付款-將付款剩餘時間轉成時分秒
   const formatTime = (time: number): string => {
@@ -144,13 +144,13 @@ const OrderManagement: React.FC = () => {
 
   // 前往付款詳情頁
   const navigateOrderContent = (
-    type: orderContentType,
-    title: string | number
+    type: Pick<OrderContentType, 'title'>['title'],
+    time: number
   ) => {
     dispatch(
       orderActions.orderContentStateChenge({
-        type,
-        title,
+        title: type,
+        remainingTime: time,
       })
     );
 

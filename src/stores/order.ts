@@ -1,71 +1,62 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  TicketType,
+  BookingStageType,
+  OrderContentType,
+  BookingData,
+  TimeDataType,
+  PassengerTicketType,
+  SeatDataType,
+  StationDataType,
+  SeatsData,
+} from "./type/OrderType";
 
-// selectTime階段
-interface TimeDataType {
-  id: string;
-  startStation: string;
-  endStation: string;
-  seats: string;
-  Vehicles: string;
-}
-
-// 票數、座位
-interface PassengerTicketType {
-  type: string;
-  total: number;
-}
-
-// 儲存劃位資料
-interface SeatDataType {
-  id: number;
-  type: string;
-  name: string | null;
-}
-
-// 儲存劃位資料
-interface SeatsData {
-  [key: string]: SeatDataType[];
-}
-
-// 儲存定單資料型別
-interface BookingData {
-  stationData: { [key: string]: object };
-  timeData: { [key: string]: TimeDataType }; // 將 timeData 介面應用於 timeData 物件
-  seatsData: SeatsData;
-  passengerTicket: { [key: string]: PassengerTicketType };
-}
-
-// 訂單票種(單程票、來回票)
-type ticketType = "oneWayTicket" | "roundTripTicket";
-
-// 訂購階段( 選擇站點、時間、座位 )
-type bookingStageType =
-  | "selectStation"
-  | "selectTime"
-  | "selectSeats"
-  | "contract"
-  | "passengerData";
-
-// 付款狀態 
-type orderContentType ={type: "pendingPayment" | "alreadyPaid" | "expired" , title: string | number};
 
 const initialOrderState: {
-  ticket: ticketType;
-  bookingStage: bookingStageType;
-  orderContent: orderContentType;
+  ticket: TicketType;
+  bookingStage: BookingStageType;
+  orderContent: OrderContentType;
   bookingData: BookingData;
-  parner: string
+  parner: string;
 } = {
   ticket: "oneWayTicket",
   bookingStage: "selectStation",
-  orderContent: {type: 'pendingPayment', title: ''},
+  orderContent: {
+    paymentState: "pendingPayment",
+    title: "reserve",
+    remarks: "",
+    industryName: "",
+    routeName: "",
+    totalAmount: 0,
+    paymentMethod: "",
+    remainingTime: 0,
+  },
   bookingData: {
-    stationData: {},
-    timeData: {},
-    passengerTicket: {},
+    stationData: { endStation: "", startDate: "", startStation: "" },
+    timeData: {
+      startTime: {
+        id: "",
+        startStation: "",
+        endStation: "",
+        seats: "",
+        Vehicles: "",
+      },
+      endTime: {
+        id: "",
+        startStation: "",
+        endStation: "",
+        seats: "",
+        Vehicles: "",
+      },
+    },
+    passengerTicket: {
+      adult: { total: 0, type: "adult" },
+      child: { total: 0, type: "child" },
+      old: { total: 0, type: "old" },
+    },
     seatsData: { oneWayTicket: [], roundTripTicket: [] },
   },
-  parner: ''
+  parner: "",
 };
 
 const orderSlice = createSlice({
@@ -82,16 +73,30 @@ const orderSlice = createSlice({
       };
     },
     // 切換訂購階段
-    switchStage(state, action: PayloadAction<bookingStageType>) {
+    switchStage(state, action: PayloadAction<BookingStageType>) {
       state.bookingStage = action.payload;
     },
+    // 重設bookingData
+    resetBookingData(state) {
+      state.bookingData = initialOrderState.bookingData;
+      state.bookingStage = "selectStation";
+    },
+    // 訂單狀態頁面狀態切換
+    orderContentStateChenge(state, action: PayloadAction<OrderContentType>) {
+      state.orderContent = {
+        ...state.orderContent,
+        ...action.payload,
+      };
+    },
     // 儲存搭車車站、日期
-    setStationData(state, action: PayloadAction<[string, object]>) {
-      const [keyToUpdate, newData] = action.payload;
-      state.bookingData.stationData[keyToUpdate] = newData;
+    setStationData(state, action: PayloadAction<StationDataType>) {
+      state.bookingData.stationData = action.payload;
     },
     // 儲存搭車時間
-    setTimeData(state, action: PayloadAction<[string, TimeDataType]>) {
+    setTimeData(
+      state,
+      action: PayloadAction<[keyof BookingData["timeData"], TimeDataType]>
+    ) {
       const [keyToUpdate, newData] = action.payload;
       state.bookingData.timeData[keyToUpdate] = newData;
     },
@@ -101,24 +106,13 @@ const orderSlice = createSlice({
       state.bookingData.passengerTicket[type] = { type, total };
     },
     // 儲存劃位資料
-    setSeatsData(state, action: PayloadAction<[SeatDataType[], string]>) {
+    setSeatsData(state, action: PayloadAction<[SeatDataType[], keyof SeatsData]>) {
       const [newData, ticketType] = action.payload;
       state.bookingData.seatsData[ticketType] = newData;
     },
-    // 重設bookingData
-    reseBbookingData(state) {
-      state.bookingData = initialOrderState.bookingData;
-      state.bookingStage = "selectStation";
-    },
-    // 訂單狀態頁面狀態切換
-    orderContentStateChenge(state, action: PayloadAction<orderContentType>) {
-      const { type, title } = action.payload;
-      state.orderContent.type = type;
-      state.orderContent.title = title;
-    },
     // 設定合作夥伴
     setParner(state, action: PayloadAction<string>) {
-      state.parner = action.payload
+      state.parner = action.payload;
     },
   },
 });

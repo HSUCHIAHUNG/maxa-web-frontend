@@ -22,16 +22,25 @@ export type ProductAPIType = {
     id: string;
     industry: string;
     name: string;
-    stations: string[];
+    banner: { id: string; url: string }[];
+    stations: { id: string; name: string }[];
     tags: string[];
     content: {
-      title: string;
-      titleContent: string;
-      subTitle: { title: string; subTitleContent: string }[];
-      subTitleLink: string;
-      routeImg: string;
-      routeImgTitle: string;
-      routeImgContent: string[];
+      id: string;
+      mainTitle: { title: string; content: string };
+      subTitle?: {
+        id: string;
+        title: string;
+        content: { id: string; text: string }[];
+        link: string;
+      }[];
+      route?: {
+        id: string;
+        images: string;
+        customImages: string;
+        title: string;
+        content: { id: string; text: string }[];
+      }[];
     }[];
   };
 };
@@ -40,15 +49,24 @@ export type ProductListType = {
   id: string;
   industry: string;
   name: string;
-  stations: string[];
+  banner: { id: string; url: string }[];
+  stations: { id: string; name: string }[];
   tags: string[];
   content: {
-    title: string;
-    titleContent: string;
-    subTitle: { title: string; subTitleContent: string }[];
-    subTitleLink: string;
-    routeImg: string;
-    routeImgTitle: string;
-    routeImgContent: string[];
+    id: string;
+    mainTitle: { title: string; content: string };
+    subTitle?: {
+      id: string;
+      title: string;
+      content: { id: string; text: string }[];
+      link: string;
+    }[];
+    route?: {
+      id: string;
+      images: string;
+      customImages: string;
+      title: string;
+      content: { id: string; text: string }[];
+    }[];
   }[];
 };

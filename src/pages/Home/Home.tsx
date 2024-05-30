@@ -27,25 +27,42 @@ function Home() {
 
   const productList = [
     {
-      id: 1,
-      url: "https://ohh.okinawa/wpdir/wp-content/uploads/2018/07/59827ddcc6f8f06485fad8836fb30162.jpg",
-      title: "格上租車券+阿里山門票+奮起湖經典三大美食",
-      money: "399",
-      tag: ["國旅卡適用", "組合套票"],
+      id: "A1B2C3D4E5",
+      industry: "桃園客運",
+      name: "503 大溪快線",
+      imageUrl:
+        "https://www.funtime.com.tw/blog/wp-content/uploads/2020/08/guide-to-taoyuan-daxi2.jpg",
+      description: "桃園客運中壢總站 ⇋ 石門水庫(坪林收費站)",
+      tags: [
+        "可攜折疊式/拆解式自行車",
+        "可攜寵物",
+        "語音報站",
+        "部分無障礙班車",
+      ],
     },
     {
-      id: 2,
-      url: "https://ohh.okinawa/wpdir/wp-content/uploads/2018/07/59827ddcc6f8f06485fad8836fb30162.jpg",
-      title: "格上租車券+阿里山門票+奮起湖經典三大美食",
-      money: "399",
-      tag: ["國旅卡適用", "組合套票"],
+      id: "F6G7H8I9J0",
+      industry: "桃園客運",
+      name: "502 小烏來線(假日行駛)",
+      imageUrl:
+        "https://image.kkday.com/v2/image/get/w_960%2Cc_fit%2Cq_55%2Ct_webp/s1.kkday.com/product_115072/20210105065204_BGRXs/jpg",
+      description: "基隆－石牌－臺北護理健康大學",
+      tags: ["可攜寵物", "語音報站", "導覽服務"],
     },
     {
-      id: 3,
-      url: "https://ohh.okinawa/wpdir/wp-content/uploads/2018/07/59827ddcc6f8f06485fad8836fb30162.jpg",
-      title: "格上租車券+阿里山門票+奮起湖經典三大美食",
-      money: "399",
-      tag: ["國旅卡適用", "組合套票"],
+      id: "K1L2M3N4O5",
+      industry: "桃園客運",
+      name: "503 石門水庫線(假日行駛)",
+      imageUrl:
+        "https://travel.tycg.gov.tw/content/images/2022/static/banner-2-2-5.jpg",
+      description: "基隆－新竹",
+      tags: [
+        "可攜折疊式/拆解式自行車",
+        "可攜寵物",
+        "語音報站",
+        "部分無障礙班車",
+        "導覽服務",
+      ],
     },
   ];
 
@@ -103,36 +120,34 @@ function Home() {
   // 合作夥伴
   const parnerList = [
     {
-      id: 'AC010001',
+      id: "AC010001",
       colorUrl: tpeColor,
       blackUrl: tpeBlack,
-      industry: '屏東客運'
-      
+      industry: "屏東客運",
     },
     {
-      id: 'AC010002',
+      id: "AC010002",
       colorUrl: stateColor,
       blackUrl: stateBlack,
-      industry: '國光客運'
+      industry: "國光客運",
     },
     {
-      id: 'AC010003',
+      id: "AC010003",
       colorUrl: ubusColor,
       blackUrl: ubusBlack,
-      industry: '桃園客運'
+      industry: "桃園客運",
     },
     {
-      id: 'AC010004',
+      id: "AC010004",
       colorUrl: tpeColor,
       blackUrl: tpeBlack,
-      industry: '金門縣公共車船管理處'
-
+      industry: "金門縣公共車船管理處",
     },
     {
-      id: 'AC010005',
+      id: "AC010005",
       colorUrl: stateColor,
       blackUrl: stateBlack,
-      industry: '國光客運'
+      industry: "國光客運",
     },
   ];
 
@@ -156,10 +171,10 @@ function Home() {
                 <Product
                   className={`xl:w-[284px]}`}
                   key={productItem.id}
-                  url={productItem.url}
-                  title={productItem.title}
-                  money={productItem.money}
-                  tag={productItem.tag}
+                  url={productItem.imageUrl}
+                  title={productItem.name}
+                  tag={productItem.tags}
+                  id={productItem.id}
                 />
               ))}
             </div>
@@ -198,7 +213,13 @@ function Home() {
             <PhotoTitle text="合作夥伴?" subtitle="Partner" />
             <div className=" flex flex-col items-center md:flex-row gap-[8px] ">
               {parnerList.map(({ id, blackUrl, colorUrl, industry }) => (
-                <ParnerImg key={id} id={id} colorUrl={colorUrl} blackUrl={blackUrl} industry={industry} />
+                <ParnerImg
+                  key={id}
+                  id={id}
+                  colorUrl={colorUrl}
+                  blackUrl={blackUrl}
+                  industry={industry}
+                />
               ))}
             </div>
           </div>

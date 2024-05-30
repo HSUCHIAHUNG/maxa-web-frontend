@@ -152,6 +152,7 @@ const Patner: React.FC = () => {
                 url={productItem.url}
                 title={productItem.title}
                 tag={productItem.tag}
+                id={productItem.id}
               />
             ))}
           </div>
