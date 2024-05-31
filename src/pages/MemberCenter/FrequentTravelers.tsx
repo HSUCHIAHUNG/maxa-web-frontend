@@ -11,7 +11,7 @@ import PhoneInput from "../../components/common/Form/PhoneInput";
 interface FrequentTravelersType {
   updateName: string;
   updateId: string;
-  updatePhone: { input: string; phone: string };
+  updatePhone: { input: string; select: string };
 }
 
 interface UpdateEditTravelersDataType {
@@ -38,7 +38,10 @@ const FrequentTravelers: React.FC = () => {
   const [updateEditTravelersData, setUpdateEditTravelersData] = useState({
     id: "",
     name: "",
-    phone: "",
+    phone: {
+      areaCoden: "",
+      number: "",
+    },
   });
 
   // ui kit
@@ -46,13 +49,17 @@ const FrequentTravelers: React.FC = () => {
   const [form] = Form.useForm();
 
   // 新增旅客
-  const addFrequentTravelersSubmit = (value: FrequentTravelersType) => {
+  const addFrequentTravelersSubmit = (value: {
+    addName: string;
+    addId: string;
+    addPhone: { input: string; select: string };
+  }) => {
     Message.success("更改成功");
     const newData = [...frequentTravelersData];
     newData.push({
-      id: value.updateId,
-      name: value.updateName,
-      phone: value.updatePhone.input,
+      id: value.addId,
+      name: value.addName,
+      phone: value.addPhone.input,
     });
     setFrequentTravelersData(newData);
     setEditData("frequentTravelers");
@@ -62,13 +69,23 @@ const FrequentTravelers: React.FC = () => {
   const editFrequentTravelers = (item: UpdateEditTravelersDataType) => {
     console.log(item);
     setEditData("editFrequentTravelers");
-    setUpdateEditTravelersData(item);
+    setUpdateEditTravelersData((state) => ({
+      ...state,
+      id: item.id,
+      name: item.name,
+      phone: { areaCoden: "+886", number: item.phone },
+    }));
   };
 
   // 開啟刪除常用旅客彈窗
   const deleteFrequentTravelers = (item: UpdateEditTravelersDataType) => {
-    setUpdateEditTravelersData(item);
-    setDeleteVisible(true)
+    setUpdateEditTravelersData((state) => ({
+      ...state,
+      id: item.id,
+      name: item.name,
+      phone: { areaCoden: "", number: item.phone },
+    }));
+    setDeleteVisible(true);
   };
 
   // 編輯旅客表單提交
@@ -193,7 +210,7 @@ const FrequentTravelers: React.FC = () => {
             {/* 姓名 */}
             <FormItem
               label="姓名"
-              field="updateName"
+              field="addName"
               required
               rules={[{ required: true, message: "必填" }]}
             >
@@ -202,7 +219,7 @@ const FrequentTravelers: React.FC = () => {
             {/* 身分證 */}
             <FormItem
               label="身分證或護照號碼"
-              field="updateId"
+              field="addId"
               required
               rules={[{ required: true, message: "必填" }]}
             >
@@ -211,7 +228,7 @@ const FrequentTravelers: React.FC = () => {
             {/* 電話 */}
             <Form.Item
               label="電話"
-              field="updatePhone"
+              field="addPhone"
               required
               rules={[{ required: true, message: "必填" }]}
             >
@@ -244,8 +261,8 @@ const FrequentTravelers: React.FC = () => {
             updateName: updateEditTravelersData.name,
             updateId: "H124***062",
             updatePhone: {
-              input: updateEditTravelersData.phone,
-              phone: "+886",
+              input: updateEditTravelersData.phone.number,
+              select: updateEditTravelersData.phone.areaCoden,
             },
           }}
           autoComplete="on"

@@ -11,6 +11,7 @@ import memberIcon from "@/assets/images/header/memberAvatar.svg";
 // redux
 import { useSelector } from "react-redux";
 import { authActions } from "../../stores/auth.ts";
+import { orderActions } from "../../stores/order.ts";
 import { useAppDispatch, RootState } from "../../stores/index.ts";
 
 // 選單開關狀態型別
@@ -126,17 +127,17 @@ const Header: React.FC = () => {
     }));
   };
 
-  /** @func 搜尋商品 */
-  const searchProduct = (value: string) => {
-    console.log(value);
-    navigate("order");
-  };
-
   // 登出
   const signOut = () => {
     setCloseList();
     dispatch(authActions.isLogin());
     navigate("/");
+  };
+
+  // 搜尋商品
+  const searchProduct = (value: string) => {
+    dispatch(orderActions.setSearchProduct(value));
+    navigate("/order");
   };
 
   return (
@@ -164,13 +165,13 @@ const Header: React.FC = () => {
           {/* 查詢訂單 */}
           <div
             onClick={() => toggleOpen("collection")}
-            className={`group hidden md:block`}
+            className={`group ${auth ? "hidden" : "block"} flex flex-col items-center justify-center `}
           >
             <NavLink
               to={"/searchOrder"}
               className={({ isActive }) =>
                 [
-                  `icon-[solar--clipboard-text-bold-duotone] w-[24px] h-[24px] cursor-pointer hidden md:block group-hover:text-[#3A57E8] `,
+                  `icon-[solar--clipboard-text-bold-duotone] w-[24px] h-[24px] cursor-pointer group-hover:text-[#3A57E8] `,
                   isActive ? "text-[#3A57E8]" : "text-[#4E5969]",
                 ].join(" ")
               }
@@ -333,6 +334,8 @@ const Header: React.FC = () => {
             key={menuRoute.id}
             className={`group p-[9px] ${
               menuRoute.lable === "收藏商品" && !auth ? "hidden" : "block"
+            } ${
+              menuRoute.lable === "訂單查詢" && auth ? "hidden" : "block"
             } `}
           >
             <div className="flex items-center gap-[16px]">

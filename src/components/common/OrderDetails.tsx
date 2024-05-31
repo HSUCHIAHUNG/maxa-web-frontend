@@ -24,7 +24,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   console.log(totalTicketType);
   return (
     <div
-      className={`${className} overflow-hidden border border-solid border-[#E5E6EB] rounded-[8px] w-[100%] xl:h-[444px] xl:w-[320px]`}
+      className={`${className} overflow-hidden border border-solid border-[#E5E6EB] rounded-[8px] w-[100%] xl:h-fit xl:w-[320px]`}
     >
       {title && (
         <div className={`flex justify-between py-[11px] px-[16px]`}>
@@ -34,14 +34,14 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
       )}
       <img
         src={
-          "https://ohh.okinawa/wpdir/wp-content/uploads/2018/07/59827ddcc6f8f06485fad8836fb30162.jpg"
+          "https://www.funtime.com.tw/blog/wp-content/uploads/2020/08/guide-to-taoyuan-daxi2.jpg"
         }
         alt={"productDetail"}
         className=" w-[100%] object-cover h-[200px]"
       />
       <div className="w-[100%] p-[16px] flex flex-col justify-between ">
-        <div className={`pb-[20px]`}>
-          格上租車券+阿里山門票+奮起湖經典三大美食三大美食三大美食三大奮起湖經典三大美食三大美食三大美食三大
+        <div className={`pb-[20px] text-[24px]`}>
+          503 大溪快線
         </div>
         {!isOpen && (
           <>

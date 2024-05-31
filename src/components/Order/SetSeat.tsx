@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../stores/index";
 import Mask from "../common/Mask";
@@ -32,7 +32,7 @@ const SetSeat: React.FC<SetSeatProps> = ({ isSetSeats, setIsSetSeats, ticketStat
   const dispatch = useAppDispatch();
   const [tempSelectSeats, setTempSelectSeats] = useState(0);
   const tempSelectSeatsRef = useRef<SeatDataType[]>([]);
-  // 座位列表的狀態
+  const [tempSelectSeatsArr, setTempSelectSeatsArr] = useState<SeatDataType[]>([]);
   const [seatArr, setSeatArr] = useState([
     { id: 1, type: "driver", name: null },
     { id: 2, type: "null", name: null },
@@ -145,14 +145,14 @@ const SetSeat: React.FC<SetSeatProps> = ({ isSetSeats, setIsSetSeats, ticketStat
             Message.error("訂位數超過票數");
             return { ...seat };
           }
-          tempSelectSeatsRef.current = [...tempSelectSeatsRef.current, seat];
+          setTempSelectSeatsArr((prev) => [...prev, seat]);
           setTempSelectSeats((state) => state + 1);
           return { ...seat, type: "seat_s" };
         }
         if (seat.id === id && seat.type === "seat_s") {
-          tempSelectSeatsRef.current = tempSelectSeatsRef.current.filter(
+          setTempSelectSeatsArr((prev) => prev.filter(
             (selectedSeat: SeatDataType) => selectedSeat.id !== id
-          );
+          ));
           setTempSelectSeats((state) => state - 1);
           return { ...seat, type: "sear_n" };
         }
@@ -160,6 +160,11 @@ const SetSeat: React.FC<SetSeatProps> = ({ isSetSeats, setIsSetSeats, ticketStat
       });
     });
   };
+
+  useEffect(() => {
+    tempSelectSeatsRef.current = [...tempSelectSeatsArr];
+  }, [tempSelectSeatsArr]);
+  
 
   return (
     <>

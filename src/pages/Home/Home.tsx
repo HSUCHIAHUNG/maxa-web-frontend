@@ -1,13 +1,27 @@
 import { Carousel } from "@arco-design/web-react";
 // 匯入圖片
-import choseImg from "@/assets/images/homePage/chose.svg";
-import tpeColor from "@/assets/images/homePage/Partner_color_1.svg";
-import tpeBlack from "@/assets/images/homePage/Partner_black_1.svg";
-import stateColor from "@/assets/images/homePage/Partner_color_2.svg";
-import stateBlack from "@/assets/images/homePage/Partner_black_2.svg";
-import ubusColor from "@/assets/images/homePage/Partner_color_3.svg";
-import ubusBlack from "@/assets/images/homePage/Partner_black_3.svg";
-import buildIng from "../../assets/images/header/buildIng.png";
+// import buildIng from "../../assets/images/header/buildIng.png";
+import select_1 from "../../assets/images/homePage/select_1.png";
+import select_2 from "../../assets/images/homePage/select_2.png";
+import select_3 from "../../assets/images/homePage/select_3.png";
+import select_4 from "../../assets/images/homePage/select_4.png";
+import tb_bkImg from "../../assets/images/homePage/TB_bk.png";
+import tb_Img from "../../assets/images/homePage/TB.png";
+import pt_bkImg from "../../assets/images/homePage/PT_bk.png";
+import pt_Img from "../../assets/images/homePage/PT.png";
+import kk_bkimg from "../../assets/images/homePage/KK_bk.png";
+import kk_img from "../../assets/images/homePage/KK.png";
+import kb_bkimg from "../../assets/images/homePage/KB_bk.png";
+import kb_img from "../../assets/images/homePage/KB.png";
+import cj_bkimg from "../../assets/images/homePage/CJ_bk.png";
+import cj_img from "../../assets/images/homePage/CJ.png";
+import PT_CITY from "../../assets/images/homePage/PT_CITY.png";
+import TY_CITY from "../../assets/images/homePage/TY_CITY.png";
+import LT_CITY from "../../assets/images/homePage/LT_CITY.png";
+import CH_CITY from "../../assets/images/homePage/CH_CITY.png";
+import KK_CITY from "../../assets/images/homePage/KK_CITY.png";
+import banner_1 from "../../assets/images/homePage/banner_1.png";
+import banner_2 from "../../assets/images/homePage/banner_2.png";
 // 匯入組件
 import Banner from "../../components/Carousel";
 // import News from "../../components/common/News";
@@ -18,13 +32,10 @@ import Chose from "../../components/common/chose";
 import ParnerImg from "../../components/common/ParnerImg";
 
 function Home() {
-  const imageSrc = [
-    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/cd7a1aaea8e1c5e3d26fe2591e561798.png~tplv-uwbnlip3yd-webp.webp",
-    buildIng,
-    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/0265a04fddbd77a19602a15d9d55d797.png~tplv-uwbnlip3yd-webp.webp",
-    "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/24e0dd27418d2291b65db1b21aa62254.png~tplv-uwbnlip3yd-webp.webp",
-  ];
+  // banner
+  const imageSrc = [banner_1, banner_2];
 
+  // 熱門商品
   const productList = [
     {
       id: "A1B2C3D4E5",
@@ -66,54 +77,56 @@ function Home() {
     },
   ];
 
+  // 推薦城市
   const cityList = [
     {
       id: 1,
-      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgtAtBw1QFsn0UW6xYaxh2ToXOYYasZ91c0FmcLX-mQ&s",
-      title: "苗栗",
+      url: PT_CITY,
+      title: "屏東",
     },
     {
       id: 2,
-      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgtAtBw1QFsn0UW6xYaxh2ToXOYYasZ91c0FmcLX-mQ&s",
-      title: "苗栗",
+      url: TY_CITY,
+      title: "桃園",
     },
     {
       id: 3,
-      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgtAtBw1QFsn0UW6xYaxh2ToXOYYasZ91c0FmcLX-mQ&s",
-      title: "苗栗",
+      url: LT_CITY,
+      title: "南投",
     },
     {
       id: 4,
-      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgtAtBw1QFsn0UW6xYaxh2ToXOYYasZ91c0FmcLX-mQ&s",
-      title: "苗栗",
+      url: CH_CITY,
+      title: "彰化",
     },
     {
       id: 5,
-      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMgtAtBw1QFsn0UW6xYaxh2ToXOYYasZ91c0FmcLX-mQ&s",
-      title: "苗栗",
+      url: KK_CITY,
+      title: "金門",
     },
   ];
 
+  // 為什麼選擇MAXA
   const choseList = [
     {
       id: 1,
-      url: choseImg,
+      url: select_1,
       title: "多元化的目的地和行程選擇",
     },
     {
       id: 2,
-      url: choseImg,
-      title: "多元化的目的地和行程選擇",
+      url: select_2,
+      title: "隨時查詢訂單狀態更新",
     },
     {
       id: 3,
-      url: choseImg,
-      title: "多元化的目的地和行程選擇",
+      url: select_3,
+      title: "輕鬆收藏訂單與管理",
     },
     {
       id: 4,
-      url: choseImg,
-      title: "多元化的目的地和行程選擇",
+      url: select_4,
+      title: "交通票訂票劃位簡單快速",
     },
   ];
 
@@ -121,32 +134,32 @@ function Home() {
   const parnerList = [
     {
       id: "AC010001",
-      colorUrl: tpeColor,
-      blackUrl: tpeBlack,
+      colorUrl: pt_Img,
+      blackUrl: pt_bkImg,
       industry: "屏東客運",
     },
     {
-      id: "AC010002",
-      colorUrl: stateColor,
-      blackUrl: stateBlack,
-      industry: "國光客運",
-    },
-    {
       id: "AC010003",
-      colorUrl: ubusColor,
-      blackUrl: ubusBlack,
+      colorUrl: tb_Img,
+      blackUrl: tb_bkImg,
       industry: "桃園客運",
     },
     {
       id: "AC010004",
-      colorUrl: tpeColor,
-      blackUrl: tpeBlack,
+      colorUrl: kb_img,
+      blackUrl: kb_bkimg,
       industry: "金門縣公共車船管理處",
     },
     {
+      id: "AC010002",
+      colorUrl: kk_img,
+      blackUrl: kk_bkimg,
+      industry: "國光客運",
+    },
+    {
       id: "AC010005",
-      colorUrl: stateColor,
-      blackUrl: stateBlack,
+      colorUrl: cj_img,
+      blackUrl: cj_bkimg,
       industry: "國光客運",
     },
   ];
@@ -154,7 +167,7 @@ function Home() {
   return (
     <div>
       <Carousel
-        className={`overflow-x-hidden max-w-[1920px] h-[320px] md:h-[500px] `}
+        className={`w-full max-w-[1920px] `}
         autoPlay={true}
       >
         {imageSrc.map((src) => (
@@ -162,9 +175,9 @@ function Home() {
         ))}
       </Carousel>
       <div className=" w-[100%] m-[0_auto] pt-[20px] pb-[40px] md:pt-[56px] md:pb-[60px] xl:pt-[96px] xl:pb-[100px] ">
-        <div className=" w-[100%] max-w-[1200px] m-[0_auto] flex flex-col gap-[80px] px-[12px] md:px-[24px] ">
+        <div className=" w-[100%] max-w-[1200px] m-[0_auto] px-[12px] flex flex-col gap-[45px] md:gap-[80px] md:w-[720px] xl:w-[90%] md:px-0 ">
           {/* 熱門商品 */}
-          <div className={`md:w-[735px] xl:w-auto`}>
+          <div className={` xl:w-auto`}>
             <PhotoTitle text="熱門商品" subtitle="Popular product" readAll />
             <div className=" flex gap-[20px] flex-col md:flex-row ">
               {productList.map((productItem) => (
@@ -181,9 +194,9 @@ function Home() {
           </div>
 
           {/* 推薦城市 */}
-          <div className={`md:w-[720px] xl:w-auto`}>
+          <div className={` xl:w-auto`}>
             <PhotoTitle text="推薦城市" subtitle="Recommended Cities" />
-            <div className="flex gap-[20px] flex-col md:flex-row">
+            <div className="flex flex-col items-center gap-[20px] md:flex-row">
               {cityList.map((cityItem) => (
                 <CityCard
                   url={cityItem.url}
@@ -195,9 +208,9 @@ function Home() {
           </div>
 
           {/* 為什麼選擇MAXA? */}
-          <div className={`md:w-[720px] xl:w-auto`}>
+          <div className={` xl:w-auto`}>
             <PhotoTitle text="為什麼選擇MAXA?" subtitle="Why choose MAXA?" />
-            <div className="flex flex-col items-center md:flex-row">
+            <div className="flex flex-col items-center md:flex-row gap-[8px] md:gap-0">
               {choseList.map((choseItem) => (
                 <Chose
                   url={choseItem.url}
@@ -209,7 +222,7 @@ function Home() {
           </div>
 
           {/* 合作夥伴 */}
-          <div className={`md:w-[720px] xl:w-auto`}>
+          <div className={` xl:w-auto `}>
             <PhotoTitle text="合作夥伴?" subtitle="Partner" />
             <div className=" flex flex-col items-center md:flex-row gap-[8px] ">
               {parnerList.map(({ id, blackUrl, colorUrl, industry }) => (

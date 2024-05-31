@@ -18,6 +18,7 @@ const initialOrderState: {
   orderContent: OrderContentType;
   bookingData: BookingData;
   parner: string;
+  searchProduct: string;
 } = {
   ticket: "oneWayTicket",
   bookingStage: "selectStation",
@@ -57,6 +58,7 @@ const initialOrderState: {
     seatsData: { oneWayTicket: [], roundTripTicket: [] },
   },
   parner: "",
+  searchProduct: "" ,
 };
 
 const orderSlice = createSlice({
@@ -88,6 +90,10 @@ const orderSlice = createSlice({
         ...action.payload,
       };
     },
+    // 儲存搜尋路線
+    setSearchProduct(state, action:PayloadAction<string>) {
+      state.searchProduct = action.payload
+     },
     // 儲存搭車車站、日期
     setStationData(state, action: PayloadAction<StationDataType>) {
       state.bookingData.stationData = action.payload;

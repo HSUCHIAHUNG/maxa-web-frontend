@@ -15,10 +15,14 @@ export default {
       fontFamily: {
         "Noto Sans TC": ["Noto Sans TC", "sans-serif"],
       },
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.00) 100%)',
+      },
       transitionProperty: {
         height: "height",
       },
     },
+    
   },
   plugins: [addDynamicIconSelectors()],
 };

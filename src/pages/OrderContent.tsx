@@ -265,7 +265,7 @@ const OrderContent: React.FC = () => {
                     <p className={`w-[112px]`}>信用卡卡號</p>
                   </div>
                   <div className={`md:py-[9px] md:px-[20px] md:w-full `}>
-                    <p className={``}>123456*****2222</p>
+                    <p className={``}>510******468</p>
                   </div>
                 </div>
               </li>

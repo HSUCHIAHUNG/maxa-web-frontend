@@ -40,7 +40,7 @@ const Patner: React.FC<parnerProps> = ({ colorUrl, blackUrl, industry, id }) => 
       {/* 手機版 */}
       <NavLink
         to={`parner/${id}`}
-        className="w-[200px] h-[200px] bg-center md:hidden "
+        className="w-[200px] h-[200px] bg-contain md:hidden  "
         style={{ backgroundImage: `url(${colorUrl})` }}
       ></NavLink>
     </>

@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+// redux
+import { orderActions } from "../../stores/order";
+import { useAppDispatch } from "../../stores/index";
 import Banner from "../../components/Carousel";
 import Product from "../../components/common/product";
 import BackToTopButton from "../../components/common/BackToTopButton";
 import Mask from "../../components/common/Mask";
-import productListData from "../../assets/API/AllProduct.json";
 import { Carousel, Pagination, Select } from "@arco-design/web-react";
-import { ProductList, Filters, SubMenuKeys } from './type'; 
+import { ProductList, Filters, SubMenuKeys } from "./type";
+import { RootState } from "../../stores/index";
+import { useSelector } from "react-redux";
+// json
+import allProduct from "../../assets/API/AllProduct.json";
 
 const Option = Select.Option;
 const recommendOptions = ["最推薦", "最新上架"];
@@ -18,9 +24,10 @@ const imageSrc = [
 ];
 
 // 產品列表-初始資料
-const productList: ProductList = productListData as ProductList;
-
 const Order: React.FC = () => {
+  // redux(方法調用)
+  const dispatch = useAppDispatch();
+
   const [mainMenu, setMainMenu] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(9);
@@ -39,6 +46,7 @@ const Order: React.FC = () => {
       ...prevFilters,
       [type]: values,
     }));
+    setCurrentPage(1); // Reset to the first page whenever filters change
   };
 
   const applyFilters = (products: ProductList) => {
@@ -53,7 +61,29 @@ const Order: React.FC = () => {
     });
   };
 
-  const filteredProducts = applyFilters(productList);
+  //
+  useEffect(() => {
+    dispatch(orderActions.resetBookingData());
+  }, [dispatch]);
+
+  // header搜尋產品條件
+  const searchProduct = useSelector(
+    (state: RootState) => state.order.searchProduct
+  );
+
+  // 產品列表狀態
+  const [filterProductList, setFilterProductList] = useState(allProduct);
+
+  // 產品列表篩選
+  useEffect(() => {
+    const filtered = allProduct.filter((item) =>
+      item.name.includes(searchProduct)
+    );
+    console.log(filtered);
+    setFilterProductList(filtered);
+  }, [searchProduct]);
+
+  const filteredProducts = applyFilters(filterProductList);
 
   const currentProductList = filteredProducts.slice(
     (currentPage - 1) * pageSize,
@@ -67,7 +97,13 @@ const Order: React.FC = () => {
   });
 
   const orderFilterList: SubMenuKeys[] = ["業者", "車種設施"];
-  const industryList = ["屏東客運", "南投客運", "國光客運", "桃園客運", "金門縣公共車船管理處"];
+  const industryList = [
+    "屏東客運",
+    "南投客運",
+    "國光客運",
+    "桃園客運",
+    "金門縣公共車船管理處",
+  ];
   const ticketTag = [
     "可攜寵物",
     "語音報站",
@@ -97,7 +133,10 @@ const Order: React.FC = () => {
   const renderCheckboxList = (items: string[], type: keyof Filters) => (
     <div className="bg-[#F7F8FA] pl-[34px] pr-[12px] flex flex-col">
       {items.map((item) => (
-        <div key={item} className="flex gap-[8px] border-b border-solid border-[#E5E6EB] py-[9px]">
+        <div
+          key={item}
+          className="flex gap-[8px] border-b border-solid border-[#E5E6EB] py-[9px]"
+        >
           <input
             type="checkbox"
             name={item}
@@ -166,7 +205,9 @@ const Order: React.FC = () => {
         {/* ProductFilter section */}
         {mainMenu && (
           <Mask
-            className={` ${!mainMenu ? "hidden xl:hidden" : "md:block xl:hidden"} `}
+            className={` ${
+              !mainMenu ? "hidden xl:hidden" : "md:block xl:hidden"
+            } `}
           ></Mask>
         )}
         <div
@@ -187,7 +228,9 @@ const Order: React.FC = () => {
               <div
                 key={orderFilterItem}
                 className={`m-[12px] border-[2px] border-solid border-[#E5E6EB] rounded-[8px] mb-[12px] overflow-hidden duration-300 ${
-                  subMenu[orderFilterItem] ? "h-auto duration-300" : "h-[42px] duration-300"
+                  subMenu[orderFilterItem]
+                    ? "h-auto duration-300"
+                    : "h-[42px] duration-300"
                 }`}
               >
                 <div
@@ -199,8 +242,10 @@ const Order: React.FC = () => {
                 </div>
 
                 <div className="bg-[#F7F8FA] flex flex-col overflow-auto">
-                  {orderFilterItem === "業者" && renderCheckboxList(industryList, "industry")}
-                  {orderFilterItem === "車種設施" && renderCheckboxList(ticketTag, "facility")}
+                  {orderFilterItem === "業者" &&
+                    renderCheckboxList(industryList, "industry")}
+                  {orderFilterItem === "車種設施" &&
+                    renderCheckboxList(ticketTag, "facility")}
                 </div>
               </div>
             ))}
@@ -213,12 +258,14 @@ const Order: React.FC = () => {
         onChange={setCurrentPage}
         pageSize={pageSize}
         total={filteredProducts.length}
+        current={currentPage} // Ensure the pagination component reflects the current page
         className="justify-center mb-[40px] hidden md:flex"
       />
       <Pagination
         onChange={setCurrentPage}
         total={filteredProducts.length}
         pageSize={pageSize}
+        current={currentPage} // Ensure the pagination component reflects the current page
         simple
         size="small"
         className="md:hidden justify-center"

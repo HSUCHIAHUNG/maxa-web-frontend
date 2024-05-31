@@ -7,13 +7,14 @@ import Guest from "./pages/Guest/Guest";
 // axios
 // import axios from "axios";
 
-/** @const 取得Guest頁面dilog開關狀態(全域狀態) */
 function App() {
   // 取得dilog開關狀態(全域狀態)
   const isDialog = useSelector((state: RootState) => state.auth.isDialog);
 
   // 取得登入狀態(全域狀態)
   const auth = useSelector((state: RootState) => state.auth.isMember);
+
+  
 
   // function print() {
   //   axios({
@@ -37,5 +38,4 @@ function App() {
     </>
   );
 }
-
 export default App;

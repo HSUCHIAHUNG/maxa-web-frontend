@@ -13,6 +13,8 @@ import {
   Select,
   Message,
 } from "@arco-design/web-react";
+// json
+import allProduct from "../assets/API/AllProduct.json";
 
 const SearchOrder: React.FC = () => {
   // 訂單切換狀態
@@ -25,14 +27,31 @@ const SearchOrder: React.FC = () => {
   const FormItem = Form.Item;
   const [form] = Form.useForm();
   const Option = Select.Option;
-  const options = ["Beijing", "Shanghai", "Guangzhou", "Disabled"];
 
   // login表單提交
-  const submit = (value: object) => {
-    console.log(value);
-    Message.success("查詢成功");
-    navigate("/orderContent");
+  const submit = (value: {
+    email: string;
+    departureDate: string;
+    route: string;
+  }) => {
+    if (tabState === "使用訂單編號查詢") {
+      navigate("/orderContent");
+    }
+
+    if (
+      value.route === "503 大溪快線" &&
+      tabState === "使用預定日期、路線查詢"
+    ) {
+      Message.success("查詢成功");
+      navigate("/orderContent");
+    } else {
+      Message.error("查無訂單");
+    }
   };
+
+  // 預定路線
+  const routes = allProduct.map((item) => item.name);
+
   return (
     <div className={`max-w-[1920px] `}>
       {/* banner */}
@@ -122,7 +141,7 @@ const SearchOrder: React.FC = () => {
               required
               rules={[{ required: true, message: "請輸入去程日期" }]}
             >
-              <DatePicker placeholder="请選擇日期" className={`w-full`} />
+              <DatePicker placeholder="Please select" className={`w-full`} />
             </FormItem>
             <FormItem
               label="預定路線"
@@ -131,7 +150,7 @@ const SearchOrder: React.FC = () => {
               rules={[{ required: true, message: "請選擇預定路線" }]}
             >
               <Select placeholder="Please select" allowClear>
-                {options.map((option) => (
+                {routes.map((option) => (
                   <Option key={option} value={option}>
                     {option}
                   </Option>

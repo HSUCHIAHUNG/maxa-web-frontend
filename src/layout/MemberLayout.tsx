@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, NavLink, Outlet } from "react-router-dom";
 
 import memberIcon from "@/assets/images/header/memberAvatar.svg";
@@ -6,6 +6,10 @@ import memberIcon from "@/assets/images/header/memberAvatar.svg";
 const MemberCenter: React.FC = () => {
   // 當前路由方法
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   // const memberMenu = [
   //   { id: 1, label: "帳號管理", route: "/memberCenter" },
