@@ -5,7 +5,7 @@ import React from "react";
 import Product from "../components/common/product";
 import BackToTopButton from "../components/common/BackToTopButton";
 // json
-import allProduct from "../assets/API/AllProduct.json";
+import allProduct from "../assets/API/allProduct.json";
 
 // ui kit
 // const Option = Select.Option;

@@ -9,6 +9,8 @@ import PhoneInput from "../../components/common/Form/PhoneInput";
 import PassengerDataFrom from "../../components/Order/PassengerDataFrom";
 // ui kit
 import { Form, Steps, Checkbox, Input } from "@arco-design/web-react";
+// 驗證規則
+import { email } from "../../utils/rules";
 
 // ui kit
 const Step = Steps.Step;
@@ -69,7 +71,7 @@ const PassengerData: React.FC = () => {
         className={`flex flex-col m-[0_auto] gap-[16px] my-[18px] md:my-[20px] md:gap-[20px] md:w-[560px] xl:flex-row-reverse xl:w-[900px] `}
       >
         {/* 訂單明細 */}
-        <OrderDetails totalTicketType={totalTicketType}></OrderDetails>
+        <OrderDetails totalTicketType={totalTicketType} buttonState={'pendingPayment'}></OrderDetails>
         <div className={`xl:w-[560px] flex flex-col gap-[16px] md:gap-[20px]`}>
           {/* 訂購人資料 */}
           <div
@@ -82,70 +84,37 @@ const PassengerData: React.FC = () => {
               <p className={`text-[16px] md:text-[20px] `}>訂購人資料</p>
               <FormItem
                 field="orderUpdateFrequentTravelers"
-                required
                 className={`w-auto mb-0 ${auth ? "block" : "hidden"}`}
               >
                 <Checkbox value="訂購人資料" className={`p-0`}>
-                  同步更新至會員中心
+                  同步更新至會員中心_個人資料
                 </Checkbox>
               </FormItem>
             </div>
+
             {/* 姓名 */}
-            <FormItem
-              label="姓名"
-              field="orderName"
-              required
-              rules={[{ required: true, message: "必填" }]}
-            >
+            <FormItem label="姓名" field="orderName">
               <Input placeholder="請填寫姓名" allowClear />
             </FormItem>
+
             {/* 身分證 */}
-            <FormItem
-              label="身分證或護照號碼"
-              field="orderId"
-              required
-              rules={[{ required: true, message: "必填" }]}
-            >
+            <FormItem label="身分證或護照號碼" field="orderId">
               <Input placeholder="請填寫身分證或護照號碼" allowClear />
             </FormItem>
+
             {/* 電話 */}
-            <Form.Item
-              label="電話"
-              field="orderphone"
-              required
-              rules={[{ required: true, message: "必填" }]}
-            >
+            <Form.Item label="電話" field="orderphone">
               <PhoneInput />
             </Form.Item>
+
             {/* 信箱 */}
-            <FormItem
-              label="Email"
-              field="orderEmail"
-              required
-              rules={[{ required: true, message: "必填" }]}
-            >
+            <FormItem label="Email" field="orderEmail" rules={email}>
               <Input placeholder="請輸入信箱" />
             </FormItem>
-            {/* 清空表單 */}
-            <FormItem className={`md:flex md:justify-end `}>
-              <button
-                type="button"
-                onClick={() =>
-                  form.resetFields([
-                    "orderName",
-                    "orderId",
-                    "orderphone",
-                    "orderEmail",
-                  ])
-                }
-                className={`bg-[#F2F3F5] w-full py-[5px] text-[#4E5969] md:w-[88px] rounded-[2px] `}
-              >
-                清空表單
-              </button>
-            </FormItem>
           </div>
+
           {/* 取票人資料 */}
-          <PassengerDataFrom title={"取票人資料"} fieldName={"taker"}>
+          <PassengerDataFrom title={"取票人資料"} fieldName={"taker"} isRequired>
             <FormItem className={`md:flex md:justify-end `}>
               <button
                 type="button"
@@ -164,6 +133,7 @@ const PassengerData: React.FC = () => {
               </button>
             </FormItem>
           </PassengerDataFrom>
+
           {/* 搭乘人資料 */}
           {Object.values(passengerTicket).map((_item, index) => (
             <PassengerDataFrom

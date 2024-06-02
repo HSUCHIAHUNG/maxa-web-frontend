@@ -25,7 +25,7 @@ import { Tabs, Typography } from "@arco-design/web-react";
 // 匯入型別
 import { ProductAPIType, ProductListType } from "../../pages/Order/type";
 // json
-import productAPI from "../../assets/API/ProductDetail.json";
+import productAPI from "../../assets/API/productDetail.json";
 
 // ui kit
 const BreadcrumbItem = Breadcrumb.Item;

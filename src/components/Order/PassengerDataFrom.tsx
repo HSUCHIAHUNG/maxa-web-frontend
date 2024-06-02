@@ -16,12 +16,14 @@ interface PassengerDataFromProps {
   title: string;
   fieldName: string;
   children?: ReactNode;
+  isRequired?: boolean
 }
 
 const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({
   title,
   fieldName,
   children,
+  isRequired = false,
 }) => {
   /** @func 全域狀態auth */
   const auth = useSelector((state: RootState) => state.auth.isMember);
@@ -40,20 +42,18 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({
         <p className={`text-[16px] md:text-[20px] `}>{title}</p>
         <FormItem
           field={`${fieldName}UpdateFrequentTravelers`}
-          required
           className={`w-auto mb-0 ${auth ? "block" : "hidden"}`}
         >
           <Checkbox value="訂購人資料" className={`p-0 `}>
-            同步更新至會員中心
+            同步更新至會員中心_常用旅客
           </Checkbox>
         </FormItem>
       </div>
+
       {/* 常用旅客選單 */}
       <FormItem
         label="選擇常用旅客"
         field={`${fieldName}FrequentTravelers`}
-        required
-        rules={[{ required: true, message: "必填" }]}
       >
         <Select placeholder="Please select" allowClear>
           {options.map((option, index) => (
@@ -63,39 +63,38 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({
           ))}
         </Select>
       </FormItem>
+
       {/* 姓名 */}
       <FormItem
         label="姓名"
         field={`${fieldName}Name`}
-        required
-        rules={[{ required: true, message: "必填" }]}
+        rules={[{ required: isRequired, message: "必填" }]}
       >
         <Input placeholder="請填寫姓名" allowClear />
       </FormItem>
+
       {/* 身分證 */}
       <FormItem
         label="身分證或護照號碼"
         field={`${fieldName}Id`}
-        required
-        rules={[{ required: true, message: "必填" }]}
+        rules={[{ required: isRequired, message: "必填" }]}
       >
         <Input placeholder="請填寫身分證或護照號碼" allowClear />
       </FormItem>
+
       {/* 電話 */}
       <Form.Item
         label="電話"
         field={`${fieldName}phone`}
-        required
-        rules={[{ required: true, message: "必填" }]}
+        rules={[{ required: isRequired, message: "必填" }]}
       >
         <PhoneInput />
       </Form.Item>
+
       {/* 信箱 */}
       <FormItem
         label="Email"
         field={`${fieldName}Email`}
-        required
-        rules={[{ required: true, message: "必填" }]}
       >
         <Input placeholder="請輸入信箱" />
       </FormItem>

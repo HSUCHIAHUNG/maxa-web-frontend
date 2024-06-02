@@ -11,7 +11,7 @@ import { ProductList, Filters, SubMenuKeys } from "./type";
 import { RootState } from "../../stores/index";
 import { useSelector } from "react-redux";
 // json
-import allProduct from "../../assets/API/AllProduct.json";
+import allProduct from "../../assets/API/allProduct.json";
 
 const Option = Select.Option;
 const recommendOptions = ["最推薦", "最新上架"];

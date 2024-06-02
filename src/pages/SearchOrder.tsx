@@ -14,7 +14,7 @@ import {
   Message,
 } from "@arco-design/web-react";
 // json
-import allProduct from "../assets/API/AllProduct.json";
+import allProduct from "../assets/API/allProduct.json";
 
 const SearchOrder: React.FC = () => {
   // 訂單切換狀態

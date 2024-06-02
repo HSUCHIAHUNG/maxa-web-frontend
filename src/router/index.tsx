@@ -127,7 +127,7 @@ const routes = [
             <OrderContentPage />
           </Suspense>
         ),
-        path: "/orderContent",
+        path: "/orderContent/:id",
       },
       // 查詢訂單(非會員查詢)
       {

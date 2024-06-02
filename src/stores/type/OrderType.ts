@@ -13,7 +13,7 @@ export type BookingStageType =
 // 訂單詳情
 export type OrderContentType = {
   paymentState?: string;
-  title: "pendingPayment" | "reserve" | "orderHistory" | "CheckoutDetails";
+  title: "pendingPayment" | "reserve" | "orderHistory" | "CheckoutDetails" | "alreadyPaid" | "expired";
   industryName?: string;
   routeName?: string;
   remarks?: string;
