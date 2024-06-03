@@ -1,5 +1,7 @@
 // react原生方法
 import React from "react";
+// router
+import { useNavigate, useParams } from "react-router-dom";
 // redux
 import { useSelector } from "react-redux";
 import { RootState } from "../../stores/index";
@@ -17,6 +19,15 @@ const Step = Steps.Step;
 const FormItem = Form.Item;
 
 const PassengerData: React.FC = () => {
+  // 動態導航
+  const navigate = useNavigate();
+
+  // 動態路由參數
+  const param = useParams();
+
+  // ui kit
+  const [form] = Form.useForm();
+
   // 訂車階段(起訖站、日期、時間狀態))
   const bookingStage = useSelector(
     (state: RootState) => state.order.bookingStage
@@ -25,6 +36,12 @@ const PassengerData: React.FC = () => {
   // 票數及種類
   const passengerTicket = useSelector(
     (state: RootState) => state.order.bookingData.passengerTicket
+  );
+
+  // 乘客總數
+  const passengerTicketTotal = Object.values(passengerTicket).reduce(
+    (acc, obj) => acc + obj.total,
+    0
   );
 
   // 總票數及票種彙整
@@ -36,16 +53,14 @@ const PassengerData: React.FC = () => {
 
   /** @func 全域狀態auth */
   const auth = useSelector((state: RootState) => state.auth.isMember);
-
-  // ui kit
-  const [form] = Form.useForm();
-
+  
   // 控制訂車階段顯示
   const isOpen = () => (bookingStage !== "passengerData" ? "hidden" : "block");
 
   // 訂單乘客資料送出
   function loginSubmit(value: object) {
     console.log(value);
+    navigate(`/creaditCard/${param.id}`)
   }
 
   return (
@@ -71,7 +86,12 @@ const PassengerData: React.FC = () => {
         className={`flex flex-col m-[0_auto] gap-[16px] my-[18px] md:my-[20px] md:gap-[20px] md:w-[560px] xl:flex-row-reverse xl:w-[900px] `}
       >
         {/* 訂單明細 */}
-        <OrderDetails totalTicketType={totalTicketType} buttonState={'pendingPayment'}></OrderDetails>
+        <OrderDetails
+          totalTicketType={totalTicketType}
+          // buttonState={"pendingPayment"}
+          paymentState={3}
+          title={false}
+        ></OrderDetails>
         <div className={`xl:w-[560px] flex flex-col gap-[16px] md:gap-[20px]`}>
           {/* 訂購人資料 */}
           <div
@@ -114,7 +134,11 @@ const PassengerData: React.FC = () => {
           </div>
 
           {/* 取票人資料 */}
-          <PassengerDataFrom title={"取票人資料"} fieldName={"taker"} isRequired>
+          <PassengerDataFrom
+            title={"取票人資料"}
+            fieldName={"taker"}
+            isRequired
+          >
             <FormItem className={`md:flex md:justify-end `}>
               <button
                 type="button"
@@ -135,7 +159,7 @@ const PassengerData: React.FC = () => {
           </PassengerDataFrom>
 
           {/* 搭乘人資料 */}
-          {Object.values(passengerTicket).map((_item, index) => (
+          {Array.from({ length: passengerTicketTotal }).map((_item, index) => (
             <PassengerDataFrom
               key={index}
               title={`搭乘人資料_${index + 1}`}

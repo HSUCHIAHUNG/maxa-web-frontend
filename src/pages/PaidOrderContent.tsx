@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 // router
 import { useParams } from "react-router-dom";
-// redux
-import { useSelector } from "react-redux";
-import { RootState } from "../stores/index.ts";
 // ui kit
 import { Alert, Steps } from "@arco-design/web-react";
 import Step from "@arco-design/web-react/es/Steps/step";
@@ -13,21 +10,18 @@ import OrderDetails from "../components/common/OrderDetails";
 import selectSeats from "../assets/images/memberCenter/selectSeats.png";
 // 匯入型別
 import { TravelDetails } from "../pages/MemberCenter/type.ts";
+// dayjs
+import dayjs from 'dayjs'
 // json
 import orderManagement from "../assets/API/orderManagement.json";
+
 
 const OrderContent: React.FC = () => {
   // 動態路由參數
   const param = useParams();
 
-  // 倒數計時器狀態
-  // const [remainingTime, setRemainingTime] = useState(3600);
-
-  // 全域狀態orderContent
-  const orderContent = useSelector(
-    (state: RootState) => state.order.orderContent
-  );
-  const { title } = orderContent;
+  // 取得當前時間
+  const currentTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
 
   // 產品資訊
   const [productDetail, setProductDetail] = useState<TravelDetails | null>(
@@ -42,113 +36,19 @@ const OrderContent: React.FC = () => {
     setProductDetail(detail || null);
   }, [param.id]);
 
-  // 待付款-如果狀態是待付款就啟用倒數計時器
-  // useEffect(() => {
-  //   if (title !== "pendingPayment") return;
-  //   const timer = setInterval(() => {
-  //     setRemainingTime((prevTime) => {
-  //       if (prevTime === 0) {
-  //         clearInterval(timer);
-  //         return 0;
-  //       } else {
-  //         return prevTime - 1;
-  //       }
-  //     });
-  //   }, 1000);
-
-  //   return () => clearInterval(timer);
-  // }, [title]);
-
-  // 待付款-將付款剩餘時間轉成時分秒
-  // const formatTime = (time: number): string => {
-  //   const hours = Math.floor(time / 3600);
-  //   const minutes = Math.floor((time % 3600) / 60);
-  //   const seconds = time % 60;
-  //   return `${hours.toString().padStart(2, "0")}:${minutes
-  //     .toString()
-  //     .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-  // };
-
-  // 付款狀態樣式動態設定
-  // const paymentStateFilter = () => {
-  //   switch (title) {
-  //     case "alreadyPaid":
-  //       return <Alert type="info" content="已付款，等待使用" />;
-  //     // case "申請退款中":
-  //     //   return <Alert type="warning" content="申請退款中" />;
-  //     case "expired":
-  //       return <Alert type="success" content="已完成活動" />;
-  //     default:
-  //       return <></>;
-  //   }
-  // };
-
-  // 付款狀態樣式動態設定
-  const paymentStateFilter = (paymentState: string) => {
-    switch (paymentState) {
-      case "已付款，等待使用":
-        return (
-          <Alert
-            type="info"
-            showIcon={false}
-            content={
-              <div className={`flex gap-[8px] items-center justify-center`}>
-                <span className="icon-[majesticons--alert-circle] text-[#3A57E8] "></span>
-                <p>已付款，等待使用</p>
-              </div>
-            }
-            className={` justify-center`}
-          />
-        );
-      case "申請退款中":
-        return (
-          <Alert
-            type="warning"
-            showIcon={false}
-            content={
-              <div className={`flex gap-[8px] items-center justify-center`}>
-                <span className="icon-[majesticons--alert-circle] text-[#FF7D00] "></span>
-                <p>申請退款中</p>
-              </div>
-            }
-            className={` justify-center`}
-          />
-        );
-      case "已完成活動":
-        return (
-          <Alert
-            type="success"
-            showIcon={false}
-            content={
-              <div className={`flex gap-[8px] items-center justify-center`}>
-                <span className="icon-[majesticons--alert-circle] text-[#00B42A] "></span>
-                <p>已完成活動</p>
-              </div>
-            }
-            className={`justify-center`}
-          />
-        );
-      default:
-        return (
-          <Alert
-            showIcon={false}
-            content={
-              <div className={`flex gap-[8px] items-center justify-center `}>
-                <span className="icon-[majesticons--alert-circle] text-[#808EB0] "></span>
-                <p>{productDetail?.paymentDescription}</p>
-              </div>
-            }
-            className={` justify-center bg-[#E5E6EB]`}
-          />
-        );
-    }
-  };
-
   return (
     <>
-      {/* 待付款 */}
-      {productDetail?.paymentDescription &&
-        paymentStateFilter(productDetail?.paymentDescription)}
+      <Alert
+        type="info"
+        showIcon={false}
+        content={
+          <div className={`flex gap-[8px] items-center justify-center`}>
+            <span className="icon-[majesticons--alert-circle] text-[#3A57E8] "></span>
+            <p>已付款，等待使用</p>
+          </div>
+        }
+        className={` justify-center`}
+      />
 
       {/* 主內容 */}
       <div className={` max-w-[1040px] m-[0_auto] md:px-[24px] xl:px-0 `}>
@@ -162,8 +62,8 @@ const OrderContent: React.FC = () => {
             name={productDetail?.name}
             ticket={productDetail?.ticket}
             amount={productDetail?.amount}
-            paymentState={productDetail?.paymentState}
-            paymentDescription={productDetail?.paymentDescription}
+            paymentState={1}
+            paymentDescription={`已付款，等待使用`}
             className={`border-b rounded-none md:border md:border-solid md:border-[#E5E6EB] md:rounded-[8px] `}
           ></OrderDetails>
 
@@ -205,7 +105,7 @@ const OrderContent: React.FC = () => {
                     <p className={`w-[112px] pb-[8px] `}>去程時間</p>
                   </div>
                   <div className={`md:py-[9px] md:px-[20px] md:w-full`}>
-                    2024-05-20 10:00
+                    2024-07-20 10:00
                   </div>
                 </div>
 
@@ -219,7 +119,7 @@ const OrderContent: React.FC = () => {
                     <p className={`w-[112px] pb-[8px] `}>回程時間</p>
                   </div>
                   <div className={`md:py-[9px] md:px-[20px] md:w-full`}>
-                    2024-05-21 20:00
+                    2024-07-21 20:00
                   </div>
                 </div>
 
@@ -236,12 +136,16 @@ const OrderContent: React.FC = () => {
                     <Steps
                       type="dot"
                       direction="vertical"
-                      current={1}
+                      current={2}
                       style={{ maxWidth: 780 }}
                     >
                       <Step
                         title="訂購時間"
                         description={productDetail?.orderDate}
+                      />
+                      <Step
+                        title="付款時間"
+                        description={currentTime}
                       />
                       <Step title="等待使用" description="------" />
                     </Steps>

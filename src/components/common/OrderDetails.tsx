@@ -1,12 +1,19 @@
+// 原生方法
 import React from "react";
+// redux
+import { RootState } from "../../stores/index";
+import { useSelector } from "react-redux";
+// router
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 interface OrderDetailsProps {
   title?: boolean;
-  buttonState?: string;
+  // buttonState?: string;
   className?: string;
   name?: string;
   amount?: number;
   paymentState?: number;
+  paymentDescription?: string;
   ticket?: {
     adult: number;
     child: number;
@@ -22,9 +29,16 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   ticket,
   amount,
   paymentState,
+  paymentDescription,
   totalTicketType = [],
-  buttonState = "",
+  // buttonState = "",
 }) => {
+  // 動態路由參數
+  const param = useParams();
+
+  // 動態導航
+  const navigate = useNavigate();
+
   // 是否預定流程並計算總票數
   const isOpen = totalTicketType.every((item) => item === undefined);
 
@@ -34,6 +48,27 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
     if (type === "child") return "兒童票";
     if (type === "old") return "敬老票";
   }
+
+  // 導向商品詳情頁
+  const navigateOrderPage = (id: string) => {
+    navigate(`/order/${id}`);
+  };
+
+  const passengerTicket = useSelector(
+    (state: RootState) => state.order.bookingData.passengerTicket
+  );
+
+  // 計算總金額
+  const totalAmount = () => {
+    if (Object.keys(passengerTicket).length > 0) {
+      return (
+        passengerTicket.adult.total * 399 +
+        passengerTicket.child.total * 200 +
+        passengerTicket.old.total * 200
+      );
+    }
+    return 100;
+  };
 
   return (
     <div
@@ -60,10 +95,15 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
               <div key={item.type}>
                 {item !== undefined && (
                   <div className={`flex justify-between `}>
-                    <p>
-                      {ticketName(item.type)}*{item.total}
-                    </p>
-                    <p>NT$ 399*{item.total}</p>
+                    {item.total > 0 && (
+                      <>
+                        <p>
+                          {ticketName(item.type)}*{item.total}
+                        </p>
+                        { item.type === 'adult' && <p>NT$ 399*{item.total}</p>}
+                        { item.type !== 'adult' && <p>NT$ 200*{item.total}</p>}
+                      </>
+                    )}
                   </div>
                 )}
               </div>
@@ -103,27 +143,21 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
             )}
           </div>
         )}
+        {/* 下底線 */}
         <div
           className={`border-b border-solid border-[#E5E6EB] w-full my-[8px] `}
         ></div>
+        {/*  */}
         <div className={`flex justify-between text-[20px]`}>
           <p>總金額</p>
-          <p>NT${amount}</p>
+          {(paymentState !== undefined && paymentState < 3) && <p>NT${amount}</p>}
+          {paymentState === 3 && <p>NT${totalAmount()}</p>}
         </div>
 
         {/* 以下按鈕相關 */}
-        
-        {/* 訂單管理-待付款 */}
-        {paymentState === 0 && (
-          <button
-            className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] `}
-          >
-            前往付款
-          </button>
-        )}
 
-        {/* 已付款 */}
-        {buttonState === "pendingPayment" && (
+        {/* 預定-確認付款 */}
+        {paymentState === 3 && (
           <button
             className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] `}
           >
@@ -131,9 +165,33 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
           </button>
         )}
 
-        {/* 已失效 */}
-        {buttonState === "expired" && (
+        {/* 訂單管理-待付款 */}
+        {paymentState === 0 && (
+          <Link
+            to={`/creaditCard/${param.id}`}
+            className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] text-center bg-[#3A57E8] `}
+          >
+            前往付款
+          </Link>
+        )}
+        
+        {/* 訂單管理-已付款 */}
+        {paymentState === 1 && paymentDescription === "已付款，等待使用" && (
           <button
+            className={`mt-[12px] px-[16px] py-[5px] w-full text-[#4E5969] bg-[#F2F3F5] `}
+          >
+            申請退款
+          </button>
+        )}
+
+        {/* 訂單管理-已失效 */}
+        {typeof param.id === "string" && paymentState === 2 && (
+          <button
+            onClick={() => {
+              if (param.id) {
+                navigateOrderPage(param.id);
+              }
+            }}
             className={`mt-[12px] px-[16px] py-[5px] w-full text-[#fff] bg-[#3A57E8] `}
           >
             再次預定

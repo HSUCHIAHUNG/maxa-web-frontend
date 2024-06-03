@@ -1,14 +1,8 @@
-// react原生方法
 import React, { useRef, useState } from "react";
-// router
 import { useNavigate } from "react-router-dom";
-// css樣式
-import "../../assets/OrderManagement.css";
-// 匯入組件
+import "../../assets/orderManagement.css";
 import OrderItem from "../../components/memberCenter/orderManagement/OrderItem";
-// 匯入型別
 import { TravelDetails } from "./type";
-// ui kit
 import {
   Button,
   Modal,
@@ -17,16 +11,11 @@ import {
   DatePicker,
   Message,
 } from "@arco-design/web-react";
-// dayjs時間套件
-import dayjs from "dayjs";
-// json
+import dayjs, { Dayjs } from "dayjs";
 import orderManagementList from "../../assets/API/orderManagement.json";
 
-// ui kit
 const TabPane = Tabs.TabPane;
-const { RangePicker } = DatePicker;
 
-// tab
 const tabs = [
   {
     id: "1",
@@ -43,82 +32,112 @@ const tabs = [
 ];
 
 const OrderManagement: React.FC = () => {
-  // 動態路由方法
   const navigate = useNavigate();
+  const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
+  const [orderTicket, setOrderTicket] =
+    useState<TravelDetails[]>(orderManagementList);
+  const selectTickit = useRef<TravelDetails | null>(null);
 
-  // 待付款-取消訂單modal狀態
-  const [deleteVisible, setDeleteVisible] = useState(false);
+  // 設置預設日期區間為本日前三個月到今天
+  const [startDate, setStartDate] = useState<Dayjs | null>(
+    dayjs().subtract(3, "month")
+  );
+  const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
 
-  // 待付款-取消訂單票券狀態
-  const [orderTicket, setOrderTicket] = useState(orderManagementList);
+  const filterOrdersByDate = (orders: TravelDetails[]): TravelDetails[] => {
+    if (!startDate && !endDate) return orders;
+    return orders.filter((order) => {
+      const orderDate = dayjs(order.orderDate);
+      if (startDate && endDate) {
+        return (
+          orderDate.isSame(startDate, "day") ||
+          orderDate.isSame(endDate, "day") ||
+          (orderDate.isAfter(startDate) && orderDate.isBefore(endDate))
+        );
+      } else if (startDate) {
+        return (
+          orderDate.isSame(startDate, "day") || orderDate.isAfter(startDate)
+        );
+      } else if (endDate) {
+        return orderDate.isSame(endDate, "day") || orderDate.isBefore(endDate);
+      }
+      return true;
+    });
+  };
 
-  // 待付款-訂單票券選擇項目
-  const selectTickit = useRef<TravelDetails>();
-
-  // 待付款-取消訂單按鈕
   const deleteButton = (ticket: TravelDetails) => {
     selectTickit.current = ticket;
     setDeleteVisible(true);
   };
 
-  // 待付款-取消訂單-確認
   const deleteSubmit = () => {
     setDeleteVisible(false);
     setOrderTicket((prevState) => {
-      return prevState.filter((item) => item.id !== selectTickit?.current?.id);
+      return prevState.filter((item) => item.id !== selectTickit.current?.id);
     });
     Message.success("取消成功");
   };
 
-  // 前往付款詳情頁
   const navigateOrderContent = (id: string) => {
     navigate(`/orderContent/${id}`);
   };
 
-  // 日期篩選
-  const datapickerVal = (dateString: string[], value: dayjs.Dayjs[]) => {
-    console.log(dateString);
-    console.log(value);
+  const navigateOrderPage = (id: string) => {
+    navigate(`/order/${id}`);
+  };
+
+  const handleStartDateChange = (_dateString: string, date: Dayjs) => {
+    setStartDate(date);
+    setEndDate(null); // 清空結束日期
+  };
+
+  const handleEndDateChange = (_dateString: string, date: Dayjs) => {
+    setEndDate(date);
+  };
+
+  const disabledEndDate = (current: Dayjs) => {
+    return startDate ? current.isBefore(startDate, "day") : false;
   };
 
   return (
     <>
-      {/* 主頁 */}
-      <div
-        className={`px-[8px] border border-solid border-[#E5E6EB] bg-[#fff] rounded-[16px] md:p-[40px] xl:w-[800px] `}
-      >
-        <p className={`hidden text-[20px] pb-[20px] md:block `}>訂單管理</p>
-        {/* tab切換 */}
+      <div className=" orderManagementTab border border-solid border-[#E5E6EB] bg-[#fff] md:rounded-[16px] md:p-[40px] xl:w-[800px]">
+        <p className="hidden text-[20px] pb-[20px] md:block">訂單管理</p>
         <Tabs
           defaultActiveTab="1"
           extra={
-            <RangePicker
-              className={`w-[240px] mt-[4px]`}
-              onChange={datapickerVal}
-              shortcuts={[
-                {
-                  text: "next 7 days",
-                  value: () => [dayjs(), dayjs().add(1, "week")],
-                },
-                {
-                  text: "next 30 days",
-                  value: () => [dayjs(), dayjs().add(1, "month")],
-                },
-                {
-                  text: "next 365 days",
-                  value: () => [dayjs(), dayjs().add(1, "year")],
-                },
-              ]}
-            />
+            <div className="flex gap-[4px]">
+              <DatePicker
+                position="br"
+                placeholder="起始日期"
+                className="w-[134px]"
+                value={startDate?.toDate()}
+                onChange={handleStartDateChange}
+              />
+              <div className="flex justify-center items-center bg-[#F2F3F5] w-[32px] h-[32px]">
+                <span className="icon-[solar--arrow-right-outline] text-[#4E5969]"></span>
+              </div>
+              <DatePicker
+                position="br"
+                placeholder="結束日期"
+                className="w-[134px]"
+                value={endDate?.toDate()}
+                onChange={handleEndDateChange}
+                disabledDate={disabledEndDate}
+                disabled={!startDate}
+              />
+            </div>
           }
         >
           {tabs.map((tab) => (
-            <TabPane key={tab.id} title={tab.name}>
+            <TabPane
+              key={tab.id}
+              title={tab.name}
+              className="p-[8px] md:p-[20px] bg-[#f2f3f5]"
+            >
               <Typography.Paragraph>
-                {/* 訂單項目 */}
-                {orderTicket.map((order) => (
+                {filterOrdersByDate(orderTicket).map((order) => (
                   <div key={order.id}>
-                    {/* 待付款 */}
                     {tab.name === "待付款" && order.paymentState === 0 && (
                       <OrderItem
                         name={order.name}
@@ -129,20 +148,18 @@ const OrderManagement: React.FC = () => {
                       >
                         <button
                           onClick={() => deleteButton(order)}
-                          className={`px-[16px] py-[3px] text-[#4E5969] bg-[#F2F3F5] w-[35%] md:w-auto `}
+                          className="px-[16px] py-[3px] text-[#4E5969] bg-[#F2F3F5] w-[35%] md:w-auto"
                         >
                           取消訂單
                         </button>
                         <button
                           onClick={() => navigateOrderContent(order.id)}
-                          className={`bg-[#3A57E8] text-[#fff] px-[16px] py-[3px] w-[65%] text-center md:w-auto `}
+                          className="bg-[#3A57E8] text-[#fff] px-[16px] py-[3px] w-[65%] text-center md:w-auto"
                         >
                           前往付款
                         </button>
                       </OrderItem>
                     )}
-
-                    {/* 已付款 */}
                     {tab.name === "已付款" && order.paymentState === 1 && (
                       <OrderItem
                         name={order.name}
@@ -154,14 +171,12 @@ const OrderManagement: React.FC = () => {
                       >
                         <button
                           onClick={() => navigateOrderContent(order.id)}
-                          className={`bg-[#3A57E8] text-[#fff] px-[16px] py-[3px] w-[65%] text-center md:w-auto `}
+                          className="bg-[#3A57E8] text-[#fff] px-[16px] py-[3px] w-[65%] text-center md:w-auto"
                         >
                           訂單詳情
                         </button>
                       </OrderItem>
                     )}
-
-                    {/* 已失效 */}
                     {tab.name === "已失效" && order.paymentState === 2 && (
                       <OrderItem
                         name={order.name}
@@ -174,12 +189,13 @@ const OrderManagement: React.FC = () => {
                         <>
                           <button
                             onClick={() => navigateOrderContent(order.id)}
-                            className={`px-[16px] py-[3px] text-[#4E5969] bg-[#F2F3F5] w-[35%] md:w-auto `}
+                            className="px-[16px] py-[3px] text-[#4E5969] bg-[#F2F3F5] w-[35%] md:w-auto"
                           >
                             訂單詳請
                           </button>
                           <button
-                            className={`bg-[#3A57E8] text-[#fff] px-[16px] py-[3px] w-[65%] text-center md:w-auto `}
+                            onClick={() => navigateOrderPage(order.id)}
+                            className="bg-[#3A57E8] text-[#fff] px-[16px] py-[3px] w-[65%] text-center md:w-auto"
                           >
                             再次預定
                           </button>
@@ -188,44 +204,39 @@ const OrderManagement: React.FC = () => {
                     )}
                   </div>
                 ))}
-
-                {/* <Pagination className={`justify-center`} total={200} /> */}
               </Typography.Paragraph>
             </TabPane>
           ))}
         </Tabs>
       </div>
 
-      {/* 待付款-取消訂單modal */}
       {deleteVisible === true && (
         <Modal
           title="是否確定要取消訂單??"
           visible={deleteVisible}
           onCancel={() => setDeleteVisible(false)}
           footer={
-            <div className={` flex flex-col justify-end md:flex-row`}>
-              <div className={`flex gap-[8px]`}>
-                <div className={`flex gap-[8px]`}>
-                  <Button
-                    onClick={() => deleteSubmit()}
-                    type="primary"
-                    className={` w-full !bg-[#EC4A58]`}
-                  >
-                    確定
-                  </Button>
-                  <Button
-                    onClick={() => setDeleteVisible(false)}
-                    className={`w-full`}
-                  >
-                    取消
-                  </Button>
-                </div>
+            <div className="flex flex-col justify-end md:flex-row">
+              <div className="flex gap-[8px]">
+                <Button
+                  onClick={() => deleteSubmit()}
+                  type="primary"
+                  className="w-full !bg-[#EC4A58]"
+                >
+                  確定
+                </Button>
+                <Button
+                  onClick={() => setDeleteVisible(false)}
+                  className="w-full"
+                >
+                  取消
+                </Button>
               </div>
             </div>
           }
-          className={`w-[90%] md:w-[520px]`}
+          className="w-[90%] md:w-[520px]"
         >
-          <p className={`pb-[4px]`}>
+          <p className="pb-[4px]">
             提醒您，訂單取消後資料不會保存，需再次訂購。
           </p>
         </Modal>

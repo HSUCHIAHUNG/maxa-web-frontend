@@ -14,8 +14,6 @@ import SelectTime from "../../components/Order/SelectTime";
 import SelectSeats from "../../components/Order/SelectSeats";
 import Contract from "./Contract";
 import PassengerData from "./PassengerData";
-// 匯入樣式
-import "../../assets/ProductDetail.css";
 // ui kit
 import { Breadcrumb } from "@arco-design/web-react";
 import { Carousel } from "@arco-design/web-react";
@@ -175,13 +173,13 @@ const ProductDetail: React.FC = () => {
                 <p className={`text-[16px] `}>乘車路線圖</p>
               </div>
               {/* 路線圖 */}
-              <Tabs
-                defaultActiveTab={ticketState}
-                type="card-gutter"
-                className={``}
-              >
+              <Tabs defaultActiveTab={ticketState} type="card-gutter">
                 {/* 去程 */}
-                <TabPane key="oneWayTicket" title="去程">
+                <TabPane
+                  key="oneWayTicket"
+                  title="去程"
+                  className={`p-[12px] md:p-[40px]`}
+                >
                   <Typography.Paragraph>
                     <Steps
                       type="dot"
@@ -199,8 +197,12 @@ const ProductDetail: React.FC = () => {
                     </Steps>
                   </Typography.Paragraph>
                 </TabPane>
-                {/* 回程 */}
-                <TabPane key="roundTripTicket" title="回程">
+
+                <TabPane
+                  key="roundTripTicket"
+                  title="回程"
+                  className={`p-[12px] md:p-[40px]`}
+                >
                   <Typography.Paragraph>
                     <Steps
                       type="dot"
@@ -239,7 +241,11 @@ const ProductDetail: React.FC = () => {
                 type="card-gutter"
                 onChange={switchTab}
               >
-                <TabPane key="oneWayTicket" title="單程票">
+                <TabPane
+                  key="oneWayTicket"
+                  title="單程票"
+                  className={`p-[12px] md:p-[40px]`}
+                >
                   {ticketState === "oneWayTicket" && (
                     <Typography.Paragraph>
                       {/* 1. 選擇站點、日期 */}
@@ -251,7 +257,11 @@ const ProductDetail: React.FC = () => {
                     </Typography.Paragraph>
                   )}
                 </TabPane>
-                <TabPane key="roundTripTicket" title="來回票">
+                <TabPane
+                  key="roundTripTicket"
+                  title="來回票"
+                  className={`p-[12px] md:p-[40px]`}
+                >
                   {ticketState === "roundTripTicket" && (
                     <Typography.Paragraph>
                       {/* 1. 選擇站點、日期 */}
@@ -318,7 +328,9 @@ const ProductDetail: React.FC = () => {
                         {subTitle?.content?.map((content) => (
                           <div
                             key={content.id}
-                            className={`pl-[20px] pt-[8px] ${content.text.length < 1 && 'hidden'}`}
+                            className={`pl-[20px] pt-[8px] ${
+                              content.text.length < 1 && "hidden"
+                            }`}
                           >
                             <p className="text-[13px] md:text-[16px] ">
                               {content.text}
@@ -390,7 +402,11 @@ const ProductDetail: React.FC = () => {
               className={`w-[331px]`}
             >
               {/* 去程 */}
-              <TabPane key="oneWayTicket" title="去程">
+              <TabPane
+                key="oneWayTicket"
+                title="去程"
+                className={`p-[12px] md:p-[40px]`}
+              >
                 <Typography.Paragraph>
                   <Steps
                     type="dot"
@@ -409,7 +425,11 @@ const ProductDetail: React.FC = () => {
                 </Typography.Paragraph>
               </TabPane>
               {/* 回程 */}
-              <TabPane key="roundTripTicket" title="回程">
+              <TabPane
+                key="roundTripTicket"
+                title="回程"
+                className={`p-[12px] md:p-[40px]`}
+              >
                 <Typography.Paragraph>
                   <Steps
                     type="dot"
@@ -417,11 +437,11 @@ const ProductDetail: React.FC = () => {
                     current={productList.stations.length}
                     style={{ maxWidth: 780 }}
                   >
-                    {productList.stations.reverse().map((station) => (
+                    {[...productList.stations].reverse().map((station) => (
                       <Step
                         key={station.id}
                         title={station.name}
-                          // description={item.Comment || ""}
+                        // description={item.Comment || ""}
                       />
                     ))}
                   </Steps>

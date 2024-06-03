@@ -11,10 +11,12 @@ const OrderPage = lazy(() => import("../pages/Order/Order"));
 const ProductDetailPage = lazy(() => import("../pages/Order/ProductDetail"));
 const CartPages = lazy(() => import("../pages/Cart"));
 const OrderContentPage = lazy(() => import("../pages/OrderContent"));
+const PaidOrderContentPage = lazy(() => import("../pages/PaidOrderContent"))
 const SearchOrderPage = lazy(() => import("../pages/SearchOrder"));
 const AccountPage = lazy(() => import("../pages/MemberCenter/Account"));
 const CollectionPage = lazy(() => import("../pages/Collection"));
 const DeleteAccountPage = lazy(() => import("../pages/DeleteAccount"));
+const CreaditCardPage = lazy(() => import("../layout/CreaditCard"));
 const FrequentTravelersPage = lazy(
   () => import("../pages/MemberCenter/FrequentTravelers")
 );
@@ -156,7 +158,26 @@ const routes = [
         ),
         path: "/deleteAccount",
       },
+      
     ],
+  },
+  // 支付頁面 
+  {
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <CreaditCardPage />
+      </Suspense>
+    ),
+    path: "/creaditCard/:id",
+  },
+  // 支付完成頁面 
+  {
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <PaidOrderContentPage />
+      </Suspense>
+    ),
+    path: "/paidOrderContent/:id",
   },
 ];
 

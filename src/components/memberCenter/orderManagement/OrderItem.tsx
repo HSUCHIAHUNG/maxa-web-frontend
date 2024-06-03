@@ -63,60 +63,69 @@ const OrderItem: React.FC<OrderItemPropsType> = ({
       case "已完成活動":
         return <Alert type="success" content="已完成活動" />;
       case "付款期限已截止":
-        return <Alert type="success" content="付款期限已截止" />;
+        return (
+          <Alert
+            showIcon={false}
+            content={
+              <div className={`flex gap-[8px] items-center `}>
+                <span className="icon-[majesticons--alert-circle] text-[#808EB0] "></span>
+                <p>付款期限已截止</p>
+              </div>
+            }
+            className={` justify-center bg-[#E5E6EB]`}
+          />
+        );
       default:
         break;
     }
   };
 
   return (
-    <>
-      <div
-        className={`bg-[#fff] mb-[12px] last:mb-0 border border-solid border-[#86909C rounded-[4px]`}
-      >
-        {/* 標題 */}
-        <p className={`px-[12px] py-[8px] md:px-[20px] md:py-[12px]`}>{name}</p>
+    <div
+      className={`bg-[#fff] !mb-[12px] last:mb-0 border border-solid border-[#86909C rounded-[4px] md:!mb-[16px]`}
+    >
+      {/* 標題 */}
+      <p className={`px-[12px] py-[8px] md:px-[20px] md:py-[12px]`}>{name}</p>
 
-        {/* banner */}
-        {paymentDescription.length > 0 && (
-          <>{paymentStateFilter(paymentDescription)}</>
-        )}
+      {/* banner */}
+      {paymentDescription.length > 0 && (
+        <>{paymentStateFilter(paymentDescription)}</>
+      )}
 
-        {/* 訂單內容 */}
-        <div className={`p-[12px] md:p-[16px] xl:p-[20px] `}>
-          <div className={`md:flex gap-[16px]`}>
-            <img
-              src={imgUrl}
-              alt="圖"
-              className={`w-full h-[96px] md:w-[160px] object-cover`}
-            />
-            <div className={`pt-[8px]`}>
-              <div className={`pb-[8px] text-[14px]`}>
-                <p>{`訂單時間 : ${orderDate}`}</p>
-                <p>{ticket.adult > 0 && `成人票*${ticket.adult}`}</p>
-                <p>{ticket.child > 0 && `兒童票*${ticket.child}`}</p>
-                <p>{ticket.old > 0 && `敬老票*${ticket.old}`}</p>
-              </div>
+      {/* 訂單內容 */}
+      <div className={`p-[12px] md:p-[16px] xl:p-[20px] `}>
+        <div className={`md:flex gap-[16px]`}>
+          <img
+            src={imgUrl}
+            alt="圖"
+            className={`w-full h-[96px] md:w-[160px] object-cover`}
+          />
+          <div className={`pt-[8px]`}>
+            <div className={`pb-[8px] text-[14px]`}>
+              <p>{`訂單時間 : ${orderDate}`}</p>
+              <p>{ticket.adult > 0 && `成人票*${ticket.adult}`}</p>
+              <p>{ticket.child > 0 && `兒童票*${ticket.child}`}</p>
+              <p>{ticket.old > 0 && `敬老票*${ticket.old}`}</p>
             </div>
           </div>
-          <p className={`text-[20px] text-right `}>{`NT$ ${amount}`}</p>
         </div>
-        <Divider
-          className={`bg-[#F2F3F5] m-0`}
-          style={{
-            borderBottomWidth: 2,
-            borderBottomStyle: "dashed",
-          }}
-        />
-
-        {/* 以下為按鈕顯示狀態 */}
-        <div
-          className={`flex gap-[8px] p-[12px] md:justify-end md:px-[16px] md:py-[11px]`}
-        >
-          {children}
-        </div>
+        <p className={`text-[20px] text-right `}>{`NT$ ${amount}`}</p>
       </div>
-    </>
+      <Divider
+        className={`bg-[#F2F3F5] m-0`}
+        style={{
+          borderBottomWidth: 2,
+          borderBottomStyle: "dashed",
+        }}
+      />
+
+      {/* 以下為按鈕顯示狀態 */}
+      <div
+        className={`flex gap-[8px] p-[12px] md:justify-end md:px-[16px] md:py-[11px]`}
+      >
+        {children}
+      </div>
+    </div>
   );
 };
 

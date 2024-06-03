@@ -59,21 +59,15 @@ const SelectSeats: React.FC = () => {
   const totalAmount = () => {
     if (Object.keys(passengerTicket).length > 0) {
       return (
-        passengerTicket.adult.total * 100 +
-        passengerTicket.child.total * 80 +
-        passengerTicket.old.total * 80
+        passengerTicket.adult.total * 399 +
+        passengerTicket.child.total * 200 +
+        passengerTicket.old.total * 200
       );
     }
     return 100;
   };
 
   const submit = () => {
-    // console.log(passengerTicketTotal);
-    // console.log(tabState);
-    // console.log(seatsData.oneWayTicket.length + seatsData.roundTripTicket.length !==
-    //   passengerTicketTotal * 2);
-    // console.log(seatsData.oneWayTicket.length);
-    // console.log(seatsData.roundTripTicket.length)
     if (passengerTicketTotal < 1) {
       Message.error("乘客票數不可小於1");
       return;
@@ -284,12 +278,12 @@ const SelectSeats: React.FC = () => {
             <p>商品最大購買數量：10</p>
           </div>
           <div>
-            <div className={`relative text-[#86909C]`}>
+            {/* <div className={`relative text-[#86909C]`}>
               <div
                 className={` absolute w-[60px] border-b botder-solid botder-[#86909C] right-[-10px] top-[9px] md:top-[10px] md:w-[70px]`}
               ></div>
               <p className={`text-[12px] md:text-[14px] text-right`}>NT$ 140</p>
-            </div>
+            </div> */}
             <p className={`text-[16px] md:text-[20px]`}>NT$ {totalAmount()}</p>
           </div>
         </div>
