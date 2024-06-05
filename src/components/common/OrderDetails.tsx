@@ -89,6 +89,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
       />
       <div className="w-[100%] p-[16px] flex flex-col justify-between ">
         <div className={`pb-[20px] text-[24px]`}>{name}</div>
+        <p className={`text-bold`}>單程票</p>
         {!isOpen && (
           <>
             {totalTicketType.map((item) => (
@@ -178,7 +179,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
         {/* 訂單管理-已付款 */}
         {paymentState === 1 && paymentDescription === "已付款，等待使用" && (
           <button
-            className={`mt-[12px] px-[16px] py-[5px] w-full text-[#4E5969] bg-[#F2F3F5] `}
+            className={` ml-auto mt-[12px] px-[16px] py-[5px] w-fit text-[#4E5969] bg-[#F2F3F5] `}
           >
             申請退款
           </button>

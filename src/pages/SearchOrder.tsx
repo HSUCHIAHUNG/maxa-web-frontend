@@ -13,6 +13,10 @@ import {
   Select,
   Message,
 } from "@arco-design/web-react";
+// 匯入圖片
+import bannerImg from "../assets/images/memberCenter/member-Center.png";
+// 匯入組件
+import Banner from "../components/common/Banner";
 // json
 import allProduct from "../assets/API/allProduct.json";
 
@@ -29,24 +33,27 @@ const SearchOrder: React.FC = () => {
   const Option = Select.Option;
 
   // login表單提交
-  const submit = (value: {
+  const submit = (_value: {
     email: string;
     departureDate: string;
     route: string;
   }) => {
-    if (tabState === "使用訂單編號查詢") {
-      navigate("/orderContent");
-    }
+    navigate("/orderContent/A1B2C3D4E5");
+    Message.success("查詢成功");
 
-    if (
-      value.route === "503 大溪快線" &&
-      tabState === "使用預定日期、路線查詢"
-    ) {
-      Message.success("查詢成功");
-      navigate("/orderContent");
-    } else {
-      Message.error("查無訂單");
-    }
+    // if (tabState === "使用訂單編號查詢") {
+    //   navigate("/orderContent/A1B2C3D4E5");
+    // }
+
+    // if (
+    //   value.route === "503 大溪快線" &&
+    //   tabState === "使用預定日期、路線查詢"
+    // ) {
+    //   Message.success("查詢成功");
+    //   navigate("/orderContent/A1B2C3D4E5");
+    // } else {
+    //   Message.error("查無訂單");
+    // }
   };
 
   // 預定路線
@@ -55,7 +62,8 @@ const SearchOrder: React.FC = () => {
   return (
     <div className={`max-w-[1920px] `}>
       {/* banner */}
-      <div className={` h-[80px] bg-[#E5E6EB] md:h-[160px] `}></div>
+      <Banner url={bannerImg} text={["查", "尋", "訂", "單"]}></Banner>
+
       {/* 內容 */}
       <div
         className={`md:w-[720px] md:m-[0_auto] md:mb-[80px] md:mt-[40px] md:rounded-[16px] md:border md:border-solid md:border-[#E5E6EB] `}

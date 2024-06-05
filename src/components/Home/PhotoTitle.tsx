@@ -8,7 +8,7 @@ interface CarouseProps {
   className?: string;
 }
 
-const Carousel: React.FC<CarouseProps> = (props) => {
+const PhotoTitle: React.FC<CarouseProps> = (props) => {
   const { text, subtitle, className, readAll=false } = props;
   return (
     <>
@@ -46,4 +46,4 @@ const Carousel: React.FC<CarouseProps> = (props) => {
   );
 };
 
-export default Carousel;
+export default PhotoTitle;

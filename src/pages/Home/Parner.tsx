@@ -140,7 +140,7 @@ const Patner: React.FC = () => {
         {/* 熱門商品 */}
         <div>
           <PhotoTitle
-            text="熱門商品"
+            text="熱門路線"
             subtitle="Popular product"
             readAll
             className={`py-[16px]`}

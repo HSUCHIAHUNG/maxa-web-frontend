@@ -5,7 +5,7 @@ interface ChoseProps {
   title: string,
 }
 
-const Carousel: React.FC<ChoseProps> = (props) => {
+const Chose: React.FC<ChoseProps> = (props) => {
   const { url, title } = props;
 
   return (
@@ -20,4 +20,4 @@ const Carousel: React.FC<ChoseProps> = (props) => {
   );
 };
 
-export default Carousel;
+export default Chose;

@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useLocation, NavLink, Outlet } from "react-router-dom";
-
+// 匯入圖片
 import memberIcon from "@/assets/images/header/memberAvatar.svg";
-
+import bannerImg from "../assets/images/memberCenter/member-Center.png";
+// 匯入組件
+import Banner from "../components/common/Banner";
 const MemberCenter: React.FC = () => {
   // 當前路由方法
   const location = useLocation();
@@ -32,7 +34,8 @@ const MemberCenter: React.FC = () => {
 
   return (
     <div className={`max-w-[1920px]`}>
-      <div className={`h-[80px] bg-[#E5E6EB] md:h-[160px]`}></div>
+      <Banner url={bannerImg} text={["會", "員", "中", "心"]}></Banner>
+
       <div
         className={`max-w-[1040px] m-[0_auto] pb-[20px] md:px-[24px] md:pt-[20px] md:pb-[52px] xl:pt-[40px] xl:pb-[92px] flex flex-col gap-[12px] md:gap-[20px] xl:flex-row xl:px-0`}
       >

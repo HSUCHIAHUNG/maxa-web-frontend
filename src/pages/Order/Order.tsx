@@ -2,26 +2,23 @@ import React, { useEffect, useState } from "react";
 // redux
 import { orderActions } from "../../stores/order";
 import { useAppDispatch } from "../../stores/index";
-import Banner from "../../components/Carousel";
 import Product from "../../components/common/product";
 import BackToTopButton from "../../components/common/BackToTopButton";
 import Mask from "../../components/common/Mask";
-import { Carousel, Pagination, Select } from "@arco-design/web-react";
 import { ProductList, Filters, SubMenuKeys } from "./type";
 import { RootState } from "../../stores/index";
 import { useSelector } from "react-redux";
+// 匯入圖片
+import bannerImg from "../../assets/images/order/search-route.png";
+import emptyState from "../../assets/images/empty-state.png";
+// 匯入組件
+import Banner from "../../components/common/Banner";
 // json
 import allProduct from "../../assets/API/allProduct.json";
+import { Pagination, Select } from "@arco-design/web-react";
 
 const Option = Select.Option;
 const recommendOptions = ["最推薦", "最新上架"];
-
-const imageSrc = [
-  "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/cd7a1aaea8e1c5e3d26fe2591e561798.png~tplv-uwbnlip3yd-webp.webp",
-  "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/6480dbc69be1b5de95010289787d64f1.png~tplv-uwbnlip3yd-webp.webp",
-  "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/0265a04fddbd77a19602a15d9d55d797.png~tplv-uwbnlip3yd-webp.webp",
-  "//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/24e0dd27418d2291b65db1b21aa62254.png~tplv-uwbnlip3yd-webp.webp",
-];
 
 // 產品列表-初始資料
 const Order: React.FC = () => {
@@ -151,14 +148,8 @@ const Order: React.FC = () => {
 
   return (
     <div className="relative">
-      <Carousel
-        className="overflow-x-hidden max-w-[1920px] h-[320px] md:h-[500px]"
-        autoPlay={true}
-      >
-        {imageSrc.map((src) => (
-          <Banner key={src} src={src} />
-        ))}
-      </Carousel>
+      <Banner url={bannerImg} text={['搜', '尋', '路', '線']}></Banner>
+      
 
       <div className="max-w-[1200px] px-[12px] md:px-[24px] xl:m-[0_auto] xl:flex xl:flex-row-reverse xl:gap-[24px] xl:pt-[60px] xl:pb-[80px]">
         <div className="w-[100%] h-[100%] pt-[16px] pb-[23px] md:w-[720px] md:pb-[40px] md:m-[0_auto] xl:w-[940px] xl:p-[0]">
@@ -200,6 +191,20 @@ const Order: React.FC = () => {
               />
             ))}
           </div>
+
+          {/* emptyState */}
+          {filteredProducts.length < 1 && (
+            <div
+              className={` flex flex-col items-center justify-center m-[40px_auto]  md:w-[280px] `}
+            >
+              <img
+                src={emptyState}
+                alt="empty"
+                className={`w-[180px] h-[180px] md:w-[280px] md:h-[280px] `}
+              />
+              <p>搜尋不到結果</p>
+            </div>
+          )}
         </div>
 
         {/* ProductFilter section */}
@@ -254,22 +259,26 @@ const Order: React.FC = () => {
         {/* End ProductFilter section */}
       </div>
       <BackToTopButton />
-      <Pagination
-        onChange={setCurrentPage}
-        pageSize={pageSize}
-        total={filteredProducts.length}
-        current={currentPage} // Ensure the pagination component reflects the current page
-        className="justify-center mb-[40px] hidden md:flex"
-      />
-      <Pagination
-        onChange={setCurrentPage}
-        total={filteredProducts.length}
-        pageSize={pageSize}
-        current={currentPage} // Ensure the pagination component reflects the current page
-        simple
-        size="small"
-        className="md:hidden justify-center"
-      />
+      {filteredProducts.length > 0 && (
+        <>
+          <Pagination
+            onChange={setCurrentPage}
+            pageSize={pageSize}
+            total={filteredProducts.length}
+            current={currentPage} // Ensure the pagination component reflects the current page
+            className="justify-center mb-[40px] hidden md:flex"
+          />
+          <Pagination
+            onChange={setCurrentPage}
+            total={filteredProducts.length}
+            pageSize={pageSize}
+            current={currentPage} // Ensure the pagination component reflects the current page
+            simple
+            size="small"
+            className="md:hidden mb-[40px] justify-center"
+          />
+        </>
+      )}
     </div>
   );
 };

@@ -2,15 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { orderActions } from "../../stores/order";
 import { RootState, useAppDispatch } from "../../stores/index";
-import {
-  Button,
-  Form,
-  InputNumber,
-  Message,
-} from "@arco-design/web-react";
+import { Button, Form, InputNumber, Message } from "@arco-design/web-react";
 import SetSeat from "./SetSeat";
 // 匯入型別
-import { PassengerTicketKey } from '../../stores/type/OrderType'
+import { PassengerTicketKey } from "../../stores/type/OrderType";
 
 interface FormValues {
   adult: number;
@@ -72,9 +67,12 @@ const SelectSeats: React.FC = () => {
       Message.error("乘客票數不可小於1");
       return;
     }
-
+    console.log(tabState);
     if (tabState === "oneWayTicket" && selectedOneWayMethod === "手動劃位") {
+      // console.log(seatsData.oneWayTicket.length);
+      // console.log(passengerTicketTotal);
       if (seatsData.oneWayTicket.length !== passengerTicketTotal) {
+        console.log(1);
         Message.error("票數與已選座位數不符");
         return;
       }
@@ -82,17 +80,24 @@ const SelectSeats: React.FC = () => {
 
     if (
       tabState === "roundTripTicket" &&
-      selectedRoundTripMethod === "手動劃位"
+      (selectedOneWayMethod === "手動劃位" ||
+        selectedRoundTripMethod === "手動劃位")
     ) {
+      // console.log(
+      //   seatsData.oneWayTicket.length + seatsData.roundTripTicket.length
+      // );
+      // console.log(passengerTicketTotal * 2);
       if (
         seatsData.oneWayTicket.length + seatsData.roundTripTicket.length !==
         passengerTicketTotal * 2
       ) {
+        console.log(2);
         Message.error("票數與已選座位數不符");
         return;
       }
     }
-
+    // console.log(selectedOneWayMethod);
+    // console.log(selectedRoundTripMethod);
     dispatch(orderActions.switchStage("contract"));
   };
 
@@ -139,7 +144,7 @@ const SelectSeats: React.FC = () => {
           adult: 0,
           child: 0,
           old: 0,
-          payment: '現金付款'
+          payment: "現金付款",
         }}
         onSubmit={submit}
       >
@@ -199,7 +204,9 @@ const SelectSeats: React.FC = () => {
         </FormItem>
 
         <FormItem label="選擇去程座位" required>
-          <div className={`flex flex-col gap-[8px] md:flex-row md:justify-between`}>
+          <div
+            className={`flex flex-col gap-[8px] md:flex-row md:justify-between`}
+          >
             <button
               onClick={() =>
                 seatHandler("系統自動劃位", "選擇去程座位", "oneWay")
@@ -235,7 +242,9 @@ const SelectSeats: React.FC = () => {
 
         {tabState === "roundTripTicket" && (
           <FormItem label="選擇回程座位" required>
-            <div className={`flex flex-col gap-[8px] md:flex-row md:justify-between`}>
+            <div
+              className={`flex flex-col gap-[8px] md:flex-row md:justify-between`}
+            >
               <button
                 onClick={() =>
                   seatHandler("系統自動劃位", "選擇回程座位", "roundTrip")

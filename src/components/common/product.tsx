@@ -10,10 +10,11 @@ interface ProductProps {
   className?: string;
   mask?: boolean;
   id?: string
+  collect?: boolean
 }
 
-const Carousel: React.FC<ProductProps> = (props) => {
-  const { url, title, tag, className, mask, id } = props;
+const Product: React.FC<ProductProps> = (props) => {
+  const { url, title, tag, className, mask, id, collect } = props;
 
   const [isCollect, setIsCollect] = useState(true);
 
@@ -76,6 +77,7 @@ const Carousel: React.FC<ProductProps> = (props) => {
           alt={title}
           className=" w-full h-full rounded-[8px_8px_0_0] object-cover "
         />
+
         {/* 收藏商品頁面(商品下架用樣式) - 開始 */}
         <div
           className={`absolute inset-0 bg-[#1d2129] opacity-60 rounded-[8px_8px_0_0] ${
@@ -93,7 +95,7 @@ const Carousel: React.FC<ProductProps> = (props) => {
           onClick={collectChenge}
           className={`absolute top-[12px] right-[12px] icon-[mingcute--star-fill] w-[24px] h-[24px] ${
             isCollect ? "text-[#F7BA1E]" : "text-[#F2F3F5]"
-          } ${mask ? "block" : "hidden"} `}
+          } ${(mask || collect) ? "block" : "hidden"} `}
         ></button>
         {/* 收藏商品頁面(商品下架用樣式) - 結束 */}
       </div>
@@ -116,4 +118,4 @@ const Carousel: React.FC<ProductProps> = (props) => {
   );
 };
 
-export default Carousel;
+export default Product;

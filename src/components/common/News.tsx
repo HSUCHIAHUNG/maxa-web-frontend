@@ -7,7 +7,7 @@ interface NewsProps {
   date: string,
 }
 
-const Carousel: React.FC<NewsProps> = (props) => {
+const News: React.FC<NewsProps> = (props) => {
 
 
   return (
@@ -28,4 +28,4 @@ const Carousel: React.FC<NewsProps> = (props) => {
   );
 };
 
-export default Carousel;
+export default News;

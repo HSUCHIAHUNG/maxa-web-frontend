@@ -5,14 +5,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { orderActions } from "../../stores/order";
 import { useAppDispatch } from "../../stores/index";
 
-interface parnerProps {
+interface ParnerProps {
   colorUrl: string;
   blackUrl: string;
   industry: string;
   id: string
 }
 
-const Patner: React.FC<parnerProps> = ({ colorUrl, blackUrl, industry, id }) => {
+const Patner: React.FC<ParnerProps> = ({ colorUrl, blackUrl, industry, id }) => {
   // redux
   const dispatch = useAppDispatch();
 
@@ -30,11 +30,11 @@ const Patner: React.FC<parnerProps> = ({ colorUrl, blackUrl, industry, id }) => 
       <button
         onClick={() => setParner()}
         className="w-[200px] h-[200px] bg-cover bg-center duration-300 hidden md:w-[144px] md:h-[144px] xl:w-[224px] xl:h-[224px] md:block "
-        style={{ backgroundImage: `url(${blackUrl})` }}
+        style={{ backgroundImage: `url(${colorUrl})` }}
       >
         <div
           className="w-full h-full bg-cover bg-center duration-300  opacity-0 hover:opacity-100"
-          style={{ backgroundImage: `url(${colorUrl})` }}
+          style={{ backgroundImage: `url(${blackUrl})` }}
         ></div>
       </button>
       {/* 手機版 */}

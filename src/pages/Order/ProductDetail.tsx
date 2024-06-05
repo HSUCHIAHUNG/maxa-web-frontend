@@ -30,6 +30,8 @@ const BreadcrumbItem = Breadcrumb.Item;
 const TabPane = Tabs.TabPane;
 const Step = Steps.Step;
 
+type IndustryType = "桃園客運" | "屏東客運" | "金門縣公共車船管理處" | "國光客運";
+
 const ProductDetail: React.FC = () => {
   // redux(方法調用)
   const dispatch = useAppDispatch();
@@ -37,7 +39,7 @@ const ProductDetail: React.FC = () => {
   const param = useParams<{ id: string }>();
   const { id } = param;
 
-  // 将 productAPI 断言为 ProductAPIType
+  //  productAPI  ProductAPIType
   const productData: ProductAPIType = productAPI;
 
   // ticket( 單程票、來回票 )狀態
@@ -64,6 +66,17 @@ const ProductDetail: React.FC = () => {
     dispatch(orderActions.switchTab());
     dispatch(orderActions.resetBookingData());
   };
+
+  // 合作夥伴mapping
+  const parnerMap = {
+    '屏東客運': "AC010001",
+    '桃園客運': "AC010003",
+    '金門縣公共車船管理處': "AC010004",
+    '國光客運': "AC010002",
+  };
+
+  // 合作夥伴頁面連結參數
+  const navigateParner = (param: keyof typeof parnerMap) => parnerMap[param]
 
   if (id === undefined || !productData[id]) {
     return <div>合作夥伴 ID 無效或找不到資料</div>;
@@ -108,9 +121,9 @@ const ProductDetail: React.FC = () => {
             <p className={`text-[20px]`}>
               {productList.name}
               <span className={`text-[14px] text-[#86909C] px-[14px]`}>|</span>
-              <span className={`text-[14px] text-[#86909C]`}>
+              <Link to={`/parner/${navigateParner(productList.industry as IndustryType)}`} className={`text-[14px] text-[#3A57E8]`}>
                 {productList.industry}
-              </span>
+              </Link>
             </p>
           </div>
         </div>

@@ -5,15 +5,15 @@ import select_1 from "../../assets/images/homePage/select_1.png";
 import select_2 from "../../assets/images/homePage/select_2.png";
 import select_3 from "../../assets/images/homePage/select_3.png";
 import select_4 from "../../assets/images/homePage/select_4.png";
-import tb_bkImg from "../../assets/images/homePage/TB_bk.png";
-import tb_Img from "../../assets/images/homePage/TB.png";
-import pt_bkImg from "../../assets/images/homePage/PT_bk.png";
-import pt_Img from "../../assets/images/homePage/PT.png";
-import kk_bkimg from "../../assets/images/homePage/KK_bk.png";
+import tb_himg from "../../assets/images/homePage/TB_h.png";
+import tb_img from "../../assets/images/homePage/TB.png";
+import pt_himg from "../../assets/images/homePage/PT_h.png";
+import pt_img from "../../assets/images/homePage/PT.png";
+import kk_himg from "../../assets/images/homePage/KK_h.png";
 import kk_img from "../../assets/images/homePage/KK.png";
-import kb_bkimg from "../../assets/images/homePage/KB_bk.png";
+import kb_himg from "../../assets/images/homePage/KB_h.png";
 import kb_img from "../../assets/images/homePage/KB.png";
-import cj_bkimg from "../../assets/images/homePage/CJ_bk.png";
+import cj_himg from "../../assets/images/homePage/CJ_h.png";
 import cj_img from "../../assets/images/homePage/CJ.png";
 import PT_CITY from "../../assets/images/homePage/PT_CITY.png";
 import TY_CITY from "../../assets/images/homePage/TY_CITY.png";
@@ -134,32 +134,32 @@ function Home() {
   const parnerList = [
     {
       id: "AC010001",
-      colorUrl: pt_Img,
-      blackUrl: pt_bkImg,
+      colorUrl: pt_img,
+      blackUrl: pt_himg,
       industry: "屏東客運",
     },
     {
       id: "AC010003",
-      colorUrl: tb_Img,
-      blackUrl: tb_bkImg,
+      colorUrl: tb_img,
+      blackUrl: tb_himg,
       industry: "桃園客運",
     },
     {
       id: "AC010004",
       colorUrl: kb_img,
-      blackUrl: kb_bkimg,
+      blackUrl: kb_himg,
       industry: "金門縣公共車船管理處",
     },
     {
       id: "AC010002",
       colorUrl: kk_img,
-      blackUrl: kk_bkimg,
+      blackUrl: kk_himg,
       industry: "國光客運",
     },
     {
       id: "AC010005",
       colorUrl: cj_img,
-      blackUrl: cj_bkimg,
+      blackUrl: cj_himg,
       industry: "國光客運",
     },
   ];
@@ -178,7 +178,7 @@ function Home() {
         <div className=" w-[100%] max-w-[1200px] m-[0_auto] px-[12px] flex flex-col gap-[45px] md:gap-[80px] md:w-[720px] xl:w-[90%] md:px-0 ">
           {/* 熱門商品 */}
           <div className={` xl:w-auto`}>
-            <PhotoTitle text="熱門商品" subtitle="Popular product" readAll />
+            <PhotoTitle text="熱門路線" subtitle="Popular product" readAll />
             <div className=" flex gap-[20px] flex-col md:flex-row ">
               {productList.map((productItem) => (
                 <Product

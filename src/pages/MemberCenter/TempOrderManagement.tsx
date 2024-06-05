@@ -1,8 +1,7 @@
 // react原生方法
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 // redux
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../stores/index.ts";
+import { useAppDispatch } from "../../stores/index.ts";
 import { orderActions } from "../../stores/order";
 // router
 import { useNavigate } from "react-router-dom";

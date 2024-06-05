@@ -7,6 +7,7 @@ import { authActions } from "../../stores/auth.ts";
 import { useAppDispatch, RootState } from "../../stores/index.ts";
 // img
 import Logo from "@/assets/images/header/header_text.svg";
+import LoginImg from "../../assets/images/login.png";
 // 組件
 import Login from "../Guest/Login.tsx";
 import SignUp from "./SignUp.tsx";
@@ -97,8 +98,8 @@ function GuestPage() {
       {/* 內容 */}
       <div className=" w-[320px] h-[580px] bg-[white] pb-[20px] rounded-[16px] md:flex md:justify-center md:items-center md:w-[768px] ">
         {/* 左 */}
-        <div className="hidden w-[328px] h-[540px] pt-[4px] rounded-[8px] bg-[#E5E6EB] md:block">
-          圖片未定
+        <div className="hidden w-[328px] h-[540px] pt-[4px]  md:block">
+          <img src={LoginImg} alt="maxa" className={`rounded-[8px]`} />
         </div>
         {/* 右 */}
         <div

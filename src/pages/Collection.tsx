@@ -4,6 +4,10 @@ import React from "react";
 // import { Select } from "@arco-design/web-react";
 import Product from "../components/common/product";
 import BackToTopButton from "../components/common/BackToTopButton";
+// 匯入圖片
+import bannerImg from "../assets/images/memberCenter/member-Center.png";
+// 匯入組件
+import Banner from "../components/common/Banner";
 // json
 import allProduct from "../assets/API/allProduct.json";
 
@@ -132,7 +136,8 @@ const Collection: React.FC = () => {
   return (
     <div className={`max-w-[1920px] `}>
       {/* banner */}
-      <div className={` h-[80px] bg-[#E5E6EB] md:h-[160px] `}></div>
+      <Banner url={bannerImg} text={['收', '藏', '路', '線']}></Banner>
+
       {/* 主內容 */}
       <div
         className={` flex flex-col max-w-[1200px] m-[0_auto] px-[12px] py-[20px] md:px-0 md:w-[720px] md:py-[40px] xl:w-auto xl:px-[24px] xl:pb-[80px] xl:pt-[40px] `}
@@ -163,6 +168,7 @@ const Collection: React.FC = () => {
               title={productItem.name}
               tag={productItem.tags}
               mask={productItem.mask}
+              collect={true}
             />
           ))}
         </div>

@@ -48,7 +48,7 @@ export type ProductAPIType = {
 export type ProductListType = {
   id: string;
   industry: string;
-  name: string;
+  name: string
   banner: { id: string; url: string }[];
   stations: { id: string; name: string }[];
   tags: string[];

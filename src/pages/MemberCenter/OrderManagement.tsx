@@ -171,7 +171,7 @@ const OrderManagement: React.FC = () => {
                       >
                         <button
                           onClick={() => navigateOrderContent(order.id)}
-                          className="bg-[#3A57E8] text-[#fff] px-[16px] py-[3px] w-[65%] text-center md:w-auto"
+                          className="bg-[#3A57E8] text-[#fff] px-[16px] py-[3px] w-[65%] text-center w-full md:w-auto"
                         >
                           訂單詳情
                         </button>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 // Import component
-import Checkbox from "../../components/common/Checkbox";
 import Mask from "../common/Mask";
 
 interface ProductFilterProps {

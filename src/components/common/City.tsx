@@ -7,7 +7,7 @@ interface CityProps {
     title: string,
 }
 
-const Carousel: React.FC<CityProps> = (props) => {
+const City: React.FC<CityProps> = (props) => {
   const { url, title } = props;
 
   return (
@@ -25,4 +25,4 @@ const Carousel: React.FC<CityProps> = (props) => {
   );
 };
 
-export default Carousel; 
+export default City; 
