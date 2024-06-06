@@ -49,6 +49,9 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
     if (type === "old") return "敬老票";
   }
 
+  // 單程票or來回票
+  const tabState = useSelector((state: RootState) => state.order.ticket);
+  console.log(tabState);
   // 導向商品詳情頁
   const navigateOrderPage = (id: string) => {
     navigate(`/order/${id}`);
@@ -89,7 +92,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
       />
       <div className="w-[100%] p-[16px] flex flex-col justify-between ">
         <div className={`pb-[20px] text-[24px]`}>{name}</div>
-        <p className={`text-bold`}>單程票</p>
+        {tabState === "roundTripTicket" ? <p>來回票</p> : <p>單程票</p>}
         {!isOpen && (
           <>
             {totalTicketType.map((item) => (
@@ -99,10 +102,11 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
                     {item.total > 0 && (
                       <>
                         <p>
-                          {ticketName(item.type)}*{item.total}
+                        {ticketName(item.type)}*{tabState === "roundTripTicket" ? item.total*2 : item.total}
+
                         </p>
-                        { item.type === 'adult' && <p>NT$ 399*{item.total}</p>}
-                        { item.type !== 'adult' && <p>NT$ 200*{item.total}</p>}
+                        { item.type === 'adult' && <p>NT$ 399*{tabState === "roundTripTicket" ? item.total*2 : item.total}</p>}
+                        { item.type !== 'adult' && <p>NT$ 200*{tabState === "roundTripTicket" ? item.total*2 : item.total}</p>}
                       </>
                     )}
                   </div>
@@ -152,7 +156,8 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
         <div className={`flex justify-between text-[20px]`}>
           <p>總金額</p>
           {(paymentState !== undefined && paymentState < 3) && <p>NT${amount}</p>}
-          {paymentState === 3 && <p>NT${totalAmount()}</p>}
+          {(paymentState === 3 && tabState === "roundTripTicket") && <p>NT${totalAmount()*2}</p> }
+          {(paymentState === 3 && tabState === 'oneWayTicket') && <p>NT${totalAmount()}</p> }
         </div>
 
         {/* 以下按鈕相關 */}
