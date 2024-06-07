@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // redux
 import { orderActions } from "../../stores/order";
 import { useAppDispatch } from "../../stores/index";
-import Product from "../../components/common/product";
+import Product from "../../components/common/Product";
 import BackToTopButton from "../../components/common/BackToTopButton";
 import Mask from "../../components/common/Mask";
 import { ProductList, Filters, SubMenuKeys } from "./type";

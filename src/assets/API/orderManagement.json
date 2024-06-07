@@ -7,7 +7,7 @@
     "ticket": {"adult" : 1 , "child": 1, "old": 1 },
     "amount": 799,
     "paymentState": 1,
-    "paymentDescription": "已付款，等待使用",
+    "paymentDescription": "已付款",
     "imageUrl": "https://www.funtime.com.tw/blog/wp-content/uploads/2020/08/guide-to-taoyuan-daxi2.jpg",
     "description": "桃園客運中壢總站 ⇋ 石門水庫(坪林收費站)",
     "tags": [
@@ -145,7 +145,7 @@
     "ticket": {"adult" : 1 , "child": 0, "old": 0 },
     "amount": 399,
     "paymentState": 1,
-    "paymentDescription": "已付款，等待使用",
+    "paymentDescription": "已付款",
     "imageUrl": "https://kinmen.travel/tours/36711/1024x768_tours-image-nu2360eopeostfjcpro3wa.jpg",
     "description": "臺北－金山青年活動中心",
     "tags": ["可攜寵物", "語音報站", "部分無障礙班車"]

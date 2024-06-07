@@ -71,7 +71,7 @@ const Product: React.FC<ProductProps> = (props) => {
     <div
       className={`border border-solid border-[#E5E6EB] rounded-[8px] w-[100%] h-[400px] md:w-[232px] xl:w-[370px] ${className}`}
     >
-      <div className={`w-[100%] h-[50%] relative `}>
+      <Link to={collect ? '#' : `/order/${id}`} className={`w-[100%] h-[50%] relative block ${collect ? 'cursor-default' : ''} `}>
         <img
           src={url}
           alt={title}
@@ -98,9 +98,9 @@ const Product: React.FC<ProductProps> = (props) => {
           } ${(mask || collect) ? "block" : "hidden"} `}
         ></button>
         {/* 收藏商品頁面(商品下架用樣式) - 結束 */}
-      </div>
+      </Link>
       <Link
-        to={`/order/${id ?? 'test'}`}
+        to={`/order/${id}`}
         className="w-[100%] h-[50%] p-[16px] flex flex-col justify-between "
       >
         <div>

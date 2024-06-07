@@ -11,7 +11,7 @@ import selectSeats from "../assets/images/memberCenter/selectSeats.png";
 // 匯入型別
 import { TravelDetails } from "../pages/MemberCenter/type.ts";
 // dayjs
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 // json
 import orderManagement from "../assets/API/orderManagement.json";
 
@@ -20,7 +20,7 @@ const OrderContent: React.FC = () => {
   const param = useParams();
 
   // 取得當前時間
-  const currentTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+  // const currentTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
   // 產品資訊
   const [productDetail, setProductDetail] = useState<TravelDetails | null>(
@@ -43,7 +43,7 @@ const OrderContent: React.FC = () => {
         content={
           <div className={`flex gap-[8px] items-center justify-center`}>
             <span className="icon-[majesticons--alert-circle] text-[#3A57E8] "></span>
-            <p>已付款，等待使用</p>
+            <p>已付款</p>
           </div>
         }
         className={` justify-center`}
@@ -62,7 +62,7 @@ const OrderContent: React.FC = () => {
             ticket={productDetail?.ticket}
             amount={productDetail?.amount}
             paymentState={1}
-            paymentDescription={`已付款，等待使用`}
+            // paymentDescription={`已付款`}
             className={`border-b rounded-none md:border md:border-solid md:border-[#E5E6EB] md:rounded-[8px] `}
           ></OrderDetails>
 
@@ -208,6 +208,22 @@ const OrderContent: React.FC = () => {
                       />
                     </Steps>
                   </div>
+                </div>
+
+                {/* 退款 */}
+                <div
+                  className={`py-[8px] px-[12px] border-b border-solid border-[#E5E6EB] md:p-0 md:flex `}
+                >
+                  <div
+                    className={`text-[#86909C] md:border-r md:border-solid md:border-[#E5E6EB] md:bg-[#F7F8FA] md:py-[9px] md:px-[20px] `}
+                  >
+                    <p className={`w-[112px]`}>退款</p>
+                  </div>
+                  <button
+                    className={`  px-[16px] py-[2px] w-fit text-[#4E5969] bg-[#F2F3F5] md:py-[5px]  md:my-[9px] md:mx-[20px] `}
+                  >
+                    申請退款
+                  </button>
                 </div>
 
                 {/* 繳款人統編或ID */}

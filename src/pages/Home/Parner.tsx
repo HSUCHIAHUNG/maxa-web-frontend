@@ -16,7 +16,7 @@ import Guoguang_logo from "@/assets/images/parner/Guoguang_logo.png";
 // 匯入組件
 // import Banner from "../../components/Carousel";
 import PhotoTitle from "../../components/Home/PhotoTitle";
-import Product from "../../components/common/product";
+import Product from "../../components/common/Product";
 // json
 import parterList from "../../assets/API/parner.json";
 

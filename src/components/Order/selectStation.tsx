@@ -14,7 +14,7 @@ import {
 } from "@arco-design/web-react";
 // 匯入型別
 import { ProductListType } from "../../pages/Order/type";
-import { StationDataType } from '../../stores/type/OrderType'
+import { StationDataType } from "../../stores/type/OrderType";
 // 時間控制相關
 import dayjs from "dayjs";
 
@@ -114,9 +114,11 @@ const SelectStation: React.FC<SelectStationProps> = ({
           <DatePicker
             onSelect={(_valueString, value) => {
               setTimeDates(value);
-              form.resetFields(['endDate'])
+              form.resetFields(["endDate"]);
             }}
-            disabledDate={(current) => current.isBefore(dayjs())}
+            disabledDate={(current) =>
+              current.isBefore(dayjs().subtract(1, "day"))
+            }
             placeholder="選擇去程日期"
             className={`w-full`}
           />
@@ -140,7 +142,7 @@ const SelectStation: React.FC<SelectStationProps> = ({
                   const selected = current.isBefore(timeDates);
                   return beforeDtae || selected;
                 }
-                return false;
+                return current.isBefore(dayjs().subtract(1, "day"));
               }}
               placeholder="選擇回程日期"
               className={`w-full`}

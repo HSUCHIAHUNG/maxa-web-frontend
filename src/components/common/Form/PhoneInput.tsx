@@ -29,7 +29,7 @@ const PhoneInput: React.FC<PhoneInputProps> = (props) => {
           size={"mini"}
           placeholder="請選擇"
           style={{ width: 100 }}
-          options={["+886", "+86"]}
+          options={["+886"]}
           onChange={(v) => {
             handleChange({ ...value, select: v });
           }}

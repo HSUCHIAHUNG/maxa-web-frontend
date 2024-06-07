@@ -13,7 +13,7 @@ interface OrderDetailsProps {
   name?: string;
   amount?: number;
   paymentState?: number;
-  paymentDescription?: string;
+  // paymentDescription?: string;
   ticket?: {
     adult: number;
     child: number;
@@ -29,7 +29,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
   ticket,
   amount,
   paymentState,
-  paymentDescription,
+  // paymentDescription,
   totalTicketType = [],
   // buttonState = "",
 }) => {
@@ -182,13 +182,13 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
         )}
         
         {/* 訂單管理-已付款 */}
-        {paymentState === 1 && paymentDescription === "已付款，等待使用" && (
+        {/* {paymentState === 1 && paymentDescription === "已付款" && (
           <button
             className={` ml-auto mt-[12px] px-[16px] py-[5px] w-fit text-[#4E5969] bg-[#F2F3F5] `}
           >
             申請退款
           </button>
-        )}
+        )} */}
 
         {/* 訂單管理-已失效 */}
         {typeof param.id === "string" && paymentState === 2 && (

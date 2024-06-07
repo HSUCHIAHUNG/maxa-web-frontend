@@ -56,8 +56,8 @@ const OrderItem: React.FC<OrderItemPropsType> = ({
   // 付款狀態樣式動態設定
   const paymentStateFilter = (paymentState: string) => {
     switch (paymentState) {
-      case "已付款，等待使用":
-        return <Alert type="info" content="已付款，等待使用" />;
+      case "已付款":
+        return <Alert type="info" content="已付款" />;
       case "申請退款中":
         return <Alert type="warning" content="申請退款中" />;
       case "已完成活動":

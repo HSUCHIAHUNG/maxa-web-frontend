@@ -45,7 +45,7 @@ const OrderManagement: React.FC = () => {
       id: "1",
       name: "格上租車券+阿里山門票+奮起湖經典三大美食",
       selected: false,
-      paymentState: "已付款，等待使用",
+      paymentState: "已付款",
     },
     {
       id: "2",
@@ -130,8 +130,8 @@ const OrderManagement: React.FC = () => {
   // 付款狀態樣式動態設定
   const paymentStateFilter = (paymentState: string) => {
     switch (paymentState) {
-      case "已付款，等待使用":
-        return <Alert type="info" content="已付款，等待使用" />;
+      case "已付款":
+        return <Alert type="info" content="已付款" />;
       case "申請退款中":
         return <Alert type="warning" content="申請退款中" />;
       case "已完成活動":

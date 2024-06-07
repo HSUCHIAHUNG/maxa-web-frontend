@@ -25,7 +25,7 @@ import banner_2 from "../../assets/images/homePage/banner_2.png";
 // 匯入組件
 import Banner from "../../components/Carousel";
 // import News from "../../components/common/News";
-import Product from "../../components/common/product";
+import Product from "../../components/common/Product";
 import PhotoTitle from "../../components/Home/PhotoTitle";
 import CityCard from "../../components/common/City";
 import Chose from "../../components/common/chose";
