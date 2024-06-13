@@ -5,7 +5,7 @@ import React from "react";
 import Product from "../components/common/Product";
 import BackToTopButton from "../components/common/BackToTopButton";
 // 匯入圖片
-import bannerImg from "../assets/images/memberCenter/member-Center.png";
+import bannerImg from "../assets/images/collect_banner.png";
 // 匯入組件
 import Banner from "../components/common/Banner";
 // json

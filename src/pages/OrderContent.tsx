@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // router
 import { useParams } from "react-router-dom";
+// redux
+import { useSelector } from "react-redux";
+import { RootState } from "../stores/index.ts";
 // ui kit
 import { Alert, Steps } from "@arco-design/web-react";
 import Step from "@arco-design/web-react/es/Steps/step";
@@ -22,6 +25,17 @@ const OrderContent: React.FC = () => {
     null
   );
 
+  // 單程票or來回票
+  const tabState = useSelector((state: RootState) => state.order.ticket);
+
+  // 訂單付款狀態
+  const orderContent = useSelector(
+    (state: RootState) => state.order.orderContent
+  );
+
+  const orderDetailsRef = useRef<HTMLDivElement>(null);
+  const [isSticky, setIsSticky] = useState(false);
+
   // 取得產品資訊
   useEffect(() => {
     const detail = orderManagement.find(
@@ -29,6 +43,25 @@ const OrderContent: React.FC = () => {
     );
     setProductDetail(detail || null);
   }, [param.id]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (orderDetailsRef.current) {
+        const rect = orderDetailsRef.current.getBoundingClientRect();
+        setIsSticky(rect.top < -320);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // 初始调用，以防止页面刷新时状态不正确
+    handleScroll();
+
+    // 在组件卸载时移除事件监听器
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   // 付款狀態樣式動態設定
   const paymentStateFilter = (paymentState: string) => {
@@ -97,22 +130,44 @@ const OrderContent: React.FC = () => {
       {productDetail?.paymentDescription &&
         paymentStateFilter(productDetail?.paymentDescription)}
 
+      {/* 滾動-產品價格內容 */}
+      <div
+        className={
+          isSticky
+            ? "sticky flex justify-between items-center top-0 bg-[#fff] w-full z-[100] shadow-md h-[52px] px-[12px] md:px-[20px] duration-300 transition-all"
+            : " h-0 overflow-hidden"
+        }
+      >
+        <p>{productDetail?.name}</p>
+        <p>{orderContent.title !== "reserve" && "NT$798"}</p>
+        {orderContent.title === "reserve" && (
+          <p>
+            <span className={`pr-[4px]`}>NT$</span>
+            {tabState === "roundTripTicket" && orderContent.totalAmount
+              ? +orderContent.totalAmount * 2
+              : productDetail?.amount}
+          </p>
+        )}
+      </div>
+
       {/* 主內容 */}
       <div className={` max-w-[1040px] m-[0_auto] md:px-[24px] xl:px-0 `}>
         <div
           className={`flex !w-full flex-col gap-[16px] mb-[20px] md:my-[20px] md:gap-[20px] md:w-[560px] xl:flex-row-reverse xl:w-[900px] `}
         >
           {/* 訂單明細 */}
-          <OrderDetails
-            // buttonState={title}
-            title={false}
-            name={productDetail?.name}
-            ticket={productDetail?.ticket}
-            amount={productDetail?.amount}
-            paymentState={productDetail?.paymentState}
-            // paymentDescription={productDetail?.paymentDescription}
-            className={`border-b rounded-none md:border md:border-solid md:border-[#E5E6EB] md:rounded-[8px] `}
-          ></OrderDetails>
+          <div ref={orderDetailsRef}>
+            <OrderDetails
+              // buttonState={title}
+              title={false}
+              name={productDetail?.name}
+              ticket={productDetail?.ticket}
+              amount={productDetail?.amount}
+              paymentState={productDetail?.paymentState}
+              // paymentDescription={productDetail?.paymentDescription}
+              className={`border-b rounded-none md:border md:border-solid md:border-[#E5E6EB] md:rounded-[8px] `}
+            ></OrderDetails>
+          </div>
 
           {/* 訂單詳情表格內容 */}
           <div
@@ -243,7 +298,7 @@ const OrderContent: React.FC = () => {
                     <Steps
                       type="dot"
                       direction="vertical"
-                      current={2}
+                      current={7}
                       style={{ maxWidth: 780 }}
                     >
                       <Step
@@ -254,10 +309,26 @@ const OrderContent: React.FC = () => {
                         title={`驗證支付`}
                         description={`2024-12-12 12:12:12`}
                       />
+                      <Step
+                        title={`提交交易`}
+                        description={`2024-12-12 12:12:12`}
+                      />
+                      <Step
+                        title={`提交授權申請`}
+                        description={`2024-12-12 12:12:12`}
+                      />
+                      <Step
+                        title={`獲得授權`}
+                        description={`2024-12-12 12:12:12`}
+                      />
+                      <Step
+                        title={`向商戶付款`}
+                        description={`2024-12-12 12:12:12`}
+                      />
                     </Steps>
                   </div>
                 </div>
-                
+
                 {/* 退款 */}
                 {/* {productDetail?.paymentState === 1 && (
                   <div

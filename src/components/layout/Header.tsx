@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useLocation, NavLink, useNavigate } from "react-router-dom";
 // ui kit
-import { Input } from "@arco-design/web-react";
+import { AutoComplete, Input } from "@arco-design/web-react";
 // css樣式
 import "../../assets/Guest.css";
 // Icon
@@ -13,6 +13,8 @@ import { useSelector } from "react-redux";
 import { authActions } from "../../stores/auth.ts";
 import { orderActions } from "../../stores/order.ts";
 import { useAppDispatch, RootState } from "../../stores/index.ts";
+// json
+import allProduct from "../../assets/API/allProduct.json";
 
 // 選單開關狀態型別
 interface IsOpenType {
@@ -21,6 +23,14 @@ interface IsOpenType {
   memberList: boolean;
   langue: boolean;
   collection: boolean;
+}
+
+interface Product {
+  id: string;
+  industry: string;
+  name: string;
+  imageUrl: string;
+  description: string;
 }
 
 const Header: React.FC = () => {
@@ -49,10 +59,13 @@ const Header: React.FC = () => {
   const currentPathName = location.pathname;
 
   // ui ki( 搜尋框 )
-  const InputSearch = Input.Search;
+  // const InputSearch = Input.Search;
 
   // 選單開關狀態控制
   const { search, list, memberList } = isOpen;
+
+  const [inputValue, setInputValue] = useState("");
+  const [data, setData] = useState<Product[]>([]);
 
   // 開啟登入註冊選單
   const setGuestIsOpen = () => {
@@ -135,8 +148,30 @@ const Header: React.FC = () => {
   };
 
   // 搜尋商品
-  const searchProduct = (value: string) => {
-    dispatch(orderActions.setSearchProduct(value));
+  // const searchProduct = (value: string) => {
+  //   dispatch(orderActions.setSearchProduct(value));
+  //   navigate("/order");
+  // };
+
+  /** @func 搜尋商品 */
+  const handleChange = (inputValue: string) => {
+    setInputValue(inputValue);
+    setData(
+      inputValue
+        ? allProduct.filter((item) => item.name.includes(inputValue))
+        : []
+    );
+  };
+
+  // 案enter時搜尋條件
+  const handlePressEnter = () => {
+    dispatch(orderActions.setSearchProduct(inputValue));
+    navigate("/order");
+  };
+
+  // autoComplet選擇選項時
+  const handleSelect = (selectValue: string) => {
+    dispatch(orderActions.setSearchProduct(selectValue));
     navigate("/order");
   };
 
@@ -151,12 +186,22 @@ const Header: React.FC = () => {
             <img src={headerText} alt="MAXA" className="w-[66px] h-[14px]" />
           </NavLink>
           {/* 電腦版搜尋行程 */}
-          <InputSearch
+          {/* <InputSearch
             onSearch={searchProduct}
             className={` w-[265px] h-[32px] hidden md:block `}
             placeholder="搜尋行程"
             // loading
             searchButton
+          /> */}
+          {/* 電腦版搜尋行程 */}
+          <AutoComplete
+            placeholder="Search"
+            onSelect={handleSelect}
+            onPressEnter={handlePressEnter}
+            onChange={handleChange}
+            data={data.map((item) => item.name)}
+            allowClear
+            className={` w-[265px] h-[32px] hidden md:block `}
           />
         </div>
 
@@ -165,7 +210,9 @@ const Header: React.FC = () => {
           {/* 查詢訂單 */}
           <div
             onClick={() => toggleOpen("collection")}
-            className={`group ${auth ? "hidden" : "block"} flex flex-col items-center justify-center `}
+            className={`group ${
+              auth ? "hidden" : "block"
+            } flex flex-col items-center justify-center `}
           >
             <NavLink
               to={"/searchOrder"}
@@ -312,12 +359,22 @@ const Header: React.FC = () => {
             onClick={() => toggleOpen("search")}
             className={`icon-[solar--arrow-left-outline] w-[24px] h-[24px] text-[#4E5969]`}
           ></span>
-          <InputSearch
+          {/* <InputSearch
             onSearch={searchProduct}
             searchButton
             className={` w-[265px] h-[32px] `}
             placeholder="搜尋行程"
             required
+          /> */}
+
+          <AutoComplete
+            placeholder="Search"
+            onChange={handleChange}
+            onSelect={handleSelect}
+            onPressEnter={handlePressEnter}
+            data={data.map((item) => item.name)}
+            allowClear
+            className={` w-[265px] h-[32px] `}
           />
         </div>
       </section>
@@ -334,9 +391,7 @@ const Header: React.FC = () => {
             key={menuRoute.id}
             className={`group p-[9px] ${
               menuRoute.lable === "收藏商品" && !auth ? "hidden" : "block"
-            } ${
-              menuRoute.lable === "訂單查詢" && auth ? "hidden" : "block"
-            } `}
+            } ${menuRoute.lable === "訂單查詢" && auth ? "hidden" : "block"} `}
           >
             <div className="flex items-center gap-[16px]">
               <span

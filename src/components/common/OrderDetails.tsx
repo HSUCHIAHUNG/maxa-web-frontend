@@ -51,7 +51,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({
 
   // 單程票or來回票
   const tabState = useSelector((state: RootState) => state.order.ticket);
-  console.log(tabState);
+
   // 導向商品詳情頁
   const navigateOrderPage = (id: string) => {
     navigate(`/order/${id}`);

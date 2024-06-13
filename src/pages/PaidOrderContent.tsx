@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+// redux
+import { useSelector } from "react-redux";
+import { RootState } from "../stores/index.ts";
 // router
 import { useParams } from "react-router-dom";
 // ui kit
@@ -27,6 +30,28 @@ const OrderContent: React.FC = () => {
     null
   );
 
+  // 單程票or來回票
+  const tabState = useSelector((state: RootState) => state.order.ticket);
+
+  const orderDetailsRef = useRef<HTMLDivElement>(null);
+  const [isSticky, setIsSticky] = useState(false);
+
+  const passengerTicket = useSelector(
+    (state: RootState) => state.order.bookingData.passengerTicket
+  );
+
+  // 計算總金額
+  const totalAmount = () => {
+    if (Object.keys(passengerTicket).length > 0) {
+      return (
+        passengerTicket.adult.total * 399 +
+        passengerTicket.child.total * 200 +
+        passengerTicket.old.total * 200
+      );
+    }
+    return 100;
+  };
+
   // 取得產品資訊
   useEffect(() => {
     const detail = orderManagement.find(
@@ -34,6 +59,25 @@ const OrderContent: React.FC = () => {
     );
     setProductDetail(detail || null);
   }, [param.id]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (orderDetailsRef.current) {
+        const rect = orderDetailsRef.current.getBoundingClientRect();
+        setIsSticky(rect.top < -320);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // 初始调用，以防止页面刷新时状态不正确
+    handleScroll();
+
+    // 在组件卸载时移除事件监听器
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -49,22 +93,36 @@ const OrderContent: React.FC = () => {
         className={` justify-center`}
       />
 
+      {/* 滾動-產品價格內容 */}
+      <div
+        className={
+          isSticky
+            ? "sticky flex justify-between items-center top-0 bg-[#fff] w-full z-[100] shadow-md h-[52px] px-[12px] md:px-[20px] duration-300 transition-all"
+            : " h-0 overflow-hidden"
+        }
+      >
+        <p>{productDetail?.name}</p>
+        <span>商品合計 NT$ {productDetail?.amount}</span>
+      </div>
+
       {/* 主內容 */}
       <div className={` max-w-[1040px] m-[0_auto] md:px-[24px] xl:px-0 `}>
         <div
           className={`flex !w-full flex-col gap-[16px] mb-[20px] md:my-[20px] md:gap-[20px] md:w-[560px] xl:flex-row-reverse xl:w-[900px] `}
         >
           {/* 訂單明細 */}
-          <OrderDetails
-            // buttonState={title}
-            title={false}
-            name={productDetail?.name}
-            ticket={productDetail?.ticket}
-            amount={productDetail?.amount}
-            paymentState={1}
-            // paymentDescription={`已付款`}
-            className={`border-b rounded-none md:border md:border-solid md:border-[#E5E6EB] md:rounded-[8px] `}
-          ></OrderDetails>
+          <div ref={orderDetailsRef}>
+            <OrderDetails
+              // buttonState={title}
+              title={false}
+              name={productDetail?.name}
+              ticket={productDetail?.ticket}
+              amount={productDetail?.amount}
+              paymentState={1}
+              // paymentDescription={`已付款`}
+              className={`border-b rounded-none md:border md:border-solid md:border-[#E5E6EB] md:rounded-[8px] `}
+            ></OrderDetails>
+          </div>
 
           {/* 訂單詳情表格內容 */}
           <div
@@ -195,7 +253,7 @@ const OrderContent: React.FC = () => {
                     <Steps
                       type="dot"
                       direction="vertical"
-                      current={2}
+                      current={7}
                       style={{ maxWidth: 780 }}
                     >
                       <Step
@@ -204,6 +262,22 @@ const OrderContent: React.FC = () => {
                       />
                       <Step
                         title={`驗證支付`}
+                        description={`2024-12-12 12:12:12`}
+                      />
+                      <Step
+                        title={`提交交易`}
+                        description={`2024-12-12 12:12:12`}
+                      />
+                      <Step
+                        title={`提交授權申請`}
+                        description={`2024-12-12 12:12:12`}
+                      />
+                      <Step
+                        title={`獲得授權`}
+                        description={`2024-12-12 12:12:12`}
+                      />
+                      <Step
+                        title={`向商戶付款`}
                         description={`2024-12-12 12:12:12`}
                       />
                     </Steps>

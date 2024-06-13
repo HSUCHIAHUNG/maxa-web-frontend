@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "../layout/DefaultLayout";
 import { lazy, Suspense } from "react";
+import Loading from "../components/Loading";
 
 const HomePage = lazy(() => import("../pages/Home/Home"));
 const ErrorPage = lazy(() => import("../pages/Error"));
@@ -34,53 +35,15 @@ const routes = [
       {
         path: "/",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <HomePage />
           </Suspense>
         ),
       },
-      // 會員中心
-      {
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <MemberCenterPage />
-          </Suspense>
-        ),
-        path: "/memberCenter",
-        children: [
-          // 帳號管理
-          {
-            element: (
-              <Suspense fallback={<div>Loading...</div>}>
-                <AccountPage />
-              </Suspense>
-            ),
-            path: "",
-          },
-          // 訂單管理
-          {
-            element: (
-              <Suspense fallback={<div>Loading...</div>}>
-                <FrequentTravelersPage />
-              </Suspense>
-            ),
-            path: "frequentTravelers",
-          },
-          // 常用旅客
-          {
-            element: (
-              <Suspense fallback={<div>Loading...</div>}>
-                <OrderManagementPage />
-              </Suspense>
-            ),
-            path: "orderManagementPage",
-          },
-        ],
-      },
       // 合作夥伴
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <ParnerPage />
           </Suspense>
         ),
@@ -89,7 +52,7 @@ const routes = [
       // 註冊登入(密碼更改)
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <EditPasswordPage />
           </Suspense>
         ),
@@ -98,7 +61,7 @@ const routes = [
       // 行程產品
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <OrderPage />
           </Suspense>
         ),
@@ -107,7 +70,7 @@ const routes = [
       // 行程產品細節
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <ProductDetailPage />
           </Suspense>
         ),
@@ -116,7 +79,7 @@ const routes = [
       // 購物車
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <CartPages />
           </Suspense>
         ),
@@ -125,7 +88,7 @@ const routes = [
       // 訂單明細
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <OrderContentPage />
           </Suspense>
         ),
@@ -134,7 +97,7 @@ const routes = [
       // 查詢訂單(非會員查詢)
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <SearchOrderPage />
           </Suspense>
         ),
@@ -143,7 +106,7 @@ const routes = [
       // 收藏
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <CollectionPage />
           </Suspense>
         ),
@@ -152,7 +115,7 @@ const routes = [
       // 刪除帳號完成頁
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <DeleteAccountPage />
           </Suspense>
         ),
@@ -161,7 +124,7 @@ const routes = [
       // 支付完成頁面
       {
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Loading isLoading={true} />}>
             <PaidOrderContentPage />
           </Suspense>
         ),
@@ -169,10 +132,48 @@ const routes = [
       },
     ],
   },
+  // 會員中心
+  {
+    element: (
+      <Suspense fallback={<Loading isLoading={true} />}>
+        <MemberCenterPage />
+      </Suspense>
+    ),
+    path: "/memberCenter",
+    children: [
+      // 帳號管理
+      {
+        element: (
+          <Suspense fallback={<Loading isLoading={true} />}>
+            <AccountPage />
+          </Suspense>
+        ),
+        path: "",
+      },
+      // 訂單管理
+      {
+        element: (
+          <Suspense fallback={<Loading isLoading={true} />}>
+            <FrequentTravelersPage />
+          </Suspense>
+        ),
+        path: "frequentTravelers",
+      },
+      // 常用旅客
+      {
+        element: (
+          <Suspense fallback={<Loading isLoading={true} />}>
+            <OrderManagementPage />
+          </Suspense>
+        ),
+        path: "orderManagementPage",
+      },
+    ],
+  },
   // 支付頁面
   {
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading isLoading={true} />}>
         <CreaditCardPage />
       </Suspense>
     ),

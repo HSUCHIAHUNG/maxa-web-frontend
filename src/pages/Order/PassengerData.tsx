@@ -18,31 +18,32 @@ const PassengerData: React.FC = () => {
   const [isSticky, setIsSticky] = useState(false);
   const orderDetailsRef = useRef<HTMLDivElement>(null);
 
+  // 單程票or來回票
+  const tabState = useSelector((state: RootState) => state.order.ticket);
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsSticky(!entry.isIntersecting);
-      },
-      {
-        root: null,
-        threshold: 1.0, // 调整这个值来确定何时触发
-      }
-    );
-
-    if (orderDetailsRef.current) {
-      observer.observe(orderDetailsRef.current);
-    }
-
-    return () => {
+    const handleScroll = () => {
       if (orderDetailsRef.current) {
-        observer.unobserve(orderDetailsRef.current);
+        const rect = orderDetailsRef.current.getBoundingClientRect();
+        setIsSticky(rect.top < -320);
       }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // 初始调用，以防止页面刷新时状态不正确
+    handleScroll();
+
+    // 在组件卸载时移除事件监听器
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const bookingStage = useSelector(
     (state: RootState) => state.order.bookingStage
   );
+
   const passengerTicket = useSelector(
     (state: RootState) => state.order.bookingData.passengerTicket
   );
@@ -57,6 +58,18 @@ const PassengerData: React.FC = () => {
     passengerTicket?.child,
     passengerTicket?.old,
   ];
+
+  // 計算總金額
+  const totalAmount = () => {
+    if (Object.keys(passengerTicket).length > 0) {
+      return (
+        passengerTicket.adult.total * 399 +
+        passengerTicket.child.total * 200 +
+        passengerTicket.old.total * 200
+      );
+    }
+    return 100;
+  };
 
   const auth = useSelector((state: RootState) => state.auth.isMember);
 
@@ -76,7 +89,12 @@ const PassengerData: React.FC = () => {
             : " overflow-hidden h-0 duration-100"
         }
       >
-        <p>商品合計 NT$ 1,100</p>
+        {tabState === "roundTripTicket" && (
+          <span>商品合計 NT${totalAmount() * 2}</span>
+        )}
+
+        {tabState === "oneWayTicket" && <p>NT${totalAmount()}</p>}
+
         <button
           onClick={form.submit}
           className={` px-[16px] py-[5px] text-[#fff] bg-[#3A57E8] `}

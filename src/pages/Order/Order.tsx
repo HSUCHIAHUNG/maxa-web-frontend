@@ -76,7 +76,6 @@ const Order: React.FC = () => {
     const filtered = allProduct.filter((item) =>
       item.name.includes(searchProduct)
     );
-    console.log(filtered);
     setFilterProductList(filtered);
   }, [searchProduct]);
 
@@ -148,8 +147,7 @@ const Order: React.FC = () => {
 
   return (
     <div className="relative">
-      <Banner url={bannerImg} text={['搜', '尋', '路', '線']}></Banner>
-      
+      <Banner url={bannerImg} text={["搜", "尋", "路", "線"]}></Banner>
 
       <div className="max-w-[1200px] px-[12px] md:px-[24px] xl:m-[0_auto] xl:flex xl:flex-row-reverse xl:gap-[24px] xl:pt-[60px] xl:pb-[80px]">
         <div className="w-[100%] h-[100%] pt-[16px] pb-[23px] md:w-[720px] md:pb-[40px] md:m-[0_auto] xl:w-[940px] xl:p-[0]">
