@@ -2,6 +2,7 @@
 .orderManagementTab .arco-tabs-header-scroll {
   flex-direction: column;
   padding: 8px 12px;
+  align-items: center;
 }
 
 .orderManagementTab .arco-tabs-header {
@@ -42,6 +43,7 @@
   /* tab bar */
   .orderManagementTab .arco-tabs-header-scroll {
     flex-direction: row;
+    align-items: start;
     padding: 8px 16px;
   }
 

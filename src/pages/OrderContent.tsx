@@ -66,6 +66,22 @@ const OrderContent: React.FC = () => {
   // 付款狀態樣式動態設定
   const paymentStateFilter = (paymentState: string) => {
     switch (paymentState) {
+      case "付款截止時間":
+        return (
+          <Alert
+            type="error"
+            showIcon={false}
+            content={
+              <div className={`flex gap-[8px] items-center justify-center `}>
+                <p className={` `}>
+                  付款截止時間:{" "}
+                  <span className={`text-[#EC4A58]`}>2024-04-21 12:12:12</span>
+                </p>
+              </div>
+            }
+            className={` justify-center`}
+          />
+        );
       case "已付款":
         return (
           <Alert

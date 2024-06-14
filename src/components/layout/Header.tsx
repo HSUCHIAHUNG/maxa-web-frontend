@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useLocation, NavLink, useNavigate } from "react-router-dom";
 // ui kit
-import { AutoComplete, Input } from "@arco-design/web-react";
+import { AutoComplete, Input, Message } from "@arco-design/web-react";
 // css樣式
 import "../../assets/Guest.css";
 // Icon
@@ -144,6 +144,7 @@ const Header: React.FC = () => {
   const signOut = () => {
     setCloseList();
     dispatch(authActions.isLogin());
+    Message.success("登出成功");
     navigate("/");
   };
 
@@ -200,6 +201,7 @@ const Header: React.FC = () => {
             onPressEnter={handlePressEnter}
             onChange={handleChange}
             data={data.map((item) => item.name)}
+            triggerElement={<Input.Search />}
             allowClear
             className={` w-[265px] h-[32px] hidden md:block `}
           />
@@ -374,6 +376,7 @@ const Header: React.FC = () => {
             onPressEnter={handlePressEnter}
             data={data.map((item) => item.name)}
             allowClear
+            triggerElement={<Input.Search />}
             className={` w-[265px] h-[32px] `}
           />
         </div>
@@ -455,7 +458,7 @@ const Header: React.FC = () => {
               </NavLink>
             )}
             {memberRoute.lable === "登出" && (
-              <div onClick={signOut} className="group p-[9px] block">
+              <div onClick={signOut} className="group p-[9px] block cursor-pointer">
                 <div className="flex items-center gap-[16px]">
                   <span
                     className={`icon-[solar--logout-3-bold-duotone] w-[24px] h-[24px] cursor-pointer group-hover:text-[#3A57E8] ${

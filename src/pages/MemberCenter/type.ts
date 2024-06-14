@@ -15,6 +15,7 @@ export interface TravelDetails {
   amount: number;
   paymentState: number;
   paymentDescription: string;
+  paymentDeadline?: string
   imageUrl: string;
   description: string;
   tags: string[];
@@ -31,5 +32,6 @@ export interface OrderItemType {
     old: number;
   };
   paymentDescription?: string;
+  paymentDeadline?: string
   children?: ReactNode;
 }

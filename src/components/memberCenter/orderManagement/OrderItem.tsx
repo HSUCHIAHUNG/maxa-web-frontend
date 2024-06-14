@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 // ui kit
 import { Alert, Divider } from "@arco-design/web-react";
+
+
 // redux
 // import { useAppDispatch } from "../../../stores/index.ts";
 // import { orderActions } from "../../../stores/order";
@@ -30,6 +32,7 @@ interface OrderItemPropsType {
     old: number;
   };
   paymentDescription?: string;
+  PaymentDeadline?: string;
   children: ReactNode;
 }
 
@@ -56,6 +59,22 @@ const OrderItem: React.FC<OrderItemPropsType> = ({
   // 付款狀態樣式動態設定
   const paymentStateFilter = (paymentState: string) => {
     switch (paymentState) {
+      case "付款截止時間":
+        return (
+          <Alert
+            type="error"
+            showIcon={false}
+            content={
+              <div className={`flex gap-[8px] `}>
+                <p className={` `}>
+                  付款截止時間:{" "}
+                  <span className={`text-[#EC4A58]`}>2024-04-21 12:12:12</span>
+                </p>
+              </div>
+            }
+            className={` justify-center`}
+          />
+        );
       case "已付款":
         return <Alert type="info" content="已付款" />;
       case "申請退款中":

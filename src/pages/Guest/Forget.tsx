@@ -67,7 +67,7 @@ const Forget: React.FC<forgetProps> = (props) => {
       requiredSymbol={{ position: "start" }}
       layout="vertical"
       onSubmit={forgetSubmit}
-      className={` ${className} pt-[16px] w-[260px]`}
+      className={` ${className} pt-[16px] w-[260px] `}
     >
       <p className="text-[13px] text-center pb-[16px]">{changeTitle[model]}</p>
       <FormItem

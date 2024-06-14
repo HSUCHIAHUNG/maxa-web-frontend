@@ -1,0 +1,32 @@
+[
+    {
+        "id": "AC010001",
+        "colorUrl": "pt_img",
+        "blackUrl": "pt_himg",
+        "industry": "屏東客運"
+    },
+    {
+        "id": "AC010003",
+        "colorUrl": "tb_img",
+        "blackUrl": "tb_himg",
+        "industry": "桃園客運"
+    },
+    {
+        "id": "AC010004",
+        "colorUrl": "kb_img",
+        "blackUrl": "kb_himg",
+        "industry": "金門縣公共車船管理處"
+    },
+    {
+        "id": "AC010002",
+        "colorUrl": "kk_img",
+        "blackUrl": "kk_himg",
+        "industry": "國光客運"
+    },
+    {
+        "id": "AC010005",
+        "colorUrl": "cj_img",
+        "blackUrl": "cj_himg",
+        "industry": "國光客運"
+    }
+]

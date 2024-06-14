@@ -21,6 +21,9 @@ export default {
       transitionProperty: {
         height: "height",
       },
+      height: {
+        '-webkit-fill-available': '-webkit-fill-available',
+      }
     },
     
   },

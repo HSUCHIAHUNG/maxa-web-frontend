@@ -1,7 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-// redux
-import { useSelector } from "react-redux";
-import { RootState } from "../stores/index.ts";
 // router
 import { useParams } from "react-router-dom";
 // ui kit
@@ -30,27 +27,11 @@ const OrderContent: React.FC = () => {
     null
   );
 
-  // 單程票or來回票
-  const tabState = useSelector((state: RootState) => state.order.ticket);
 
   const orderDetailsRef = useRef<HTMLDivElement>(null);
   const [isSticky, setIsSticky] = useState(false);
 
-  const passengerTicket = useSelector(
-    (state: RootState) => state.order.bookingData.passengerTicket
-  );
 
-  // 計算總金額
-  const totalAmount = () => {
-    if (Object.keys(passengerTicket).length > 0) {
-      return (
-        passengerTicket.adult.total * 399 +
-        passengerTicket.child.total * 200 +
-        passengerTicket.old.total * 200
-      );
-    }
-    return 100;
-  };
 
   // 取得產品資訊
   useEffect(() => {

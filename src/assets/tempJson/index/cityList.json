@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "url": "PT_CITY",
+        "title": "屏東"
+    },
+    {
+        "id": 2,
+        "url": "TY_CITY",
+        "title": "桃園"
+    },
+    {
+        "id": 3,
+        "url": "LT_CITY",
+        "title": "南投"
+    },
+    {
+        "id": 4,
+        "url": "CH_CITY",
+        "title": "彰化"
+    },
+    {
+        "id": 5,
+        "url": "KK_CITY",
+        "title": "金門"
+    }
+]

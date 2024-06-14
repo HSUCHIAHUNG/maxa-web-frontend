@@ -103,7 +103,7 @@ function GuestPage() {
         </div>
         {/* 右 */}
         <div
-          className={`w-[320px] max-h-[80vh] overflow-y-auto pt-[16px] flex flex-col items-center md:w-[420px] md:h-fit justify-between`}
+          className={`w-[320px] max-h-[80vh] h-[-webkit-fill-available] overflow-y-auto pt-[16px] flex flex-col items-center md:w-[420px] justify-between `}
         >
           <button onClick={dialogToggle} className={`self-end`}>
             <span className="icon-[ri--close-fill] cursor-pointer h-[16px] w-[16px] mr-[16px]   "></span>

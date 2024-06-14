@@ -1,7 +1,10 @@
 // react原生方法
 import React from "react";
+// redux
+import { authActions } from "../../stores/auth.ts";
+import { useAppDispatch } from "../../stores/index.ts";
 // ui kit
-import { Form, Input, Button } from "@arco-design/web-react";
+import { Form, Input, Button, Message } from "@arco-design/web-react";
 // 驗證規則
 import { email, password } from "../../utils/rules";
 
@@ -17,9 +20,14 @@ const Login: React.FC<LoginProps> = (props) => {
   const FormItem = Form.Item;
   const [form] = Form.useForm();
 
+  // redux方法呼叫
+  const dispatch = useAppDispatch();
+
   /** @func login表單提交 */
-  const loginSubmit = (value: object) => {
+  const submit = (value: object) => {
     console.log(value);
+    dispatch(authActions.isLogin());
+    Message.success("登入成功");
   };
   return (
     <>
@@ -28,7 +36,7 @@ const Login: React.FC<LoginProps> = (props) => {
         autoComplete="off"
         requiredSymbol={{ position: "start" }}
         layout="vertical"
-        onSubmit={loginSubmit}
+        onSubmit={submit}
         className={` ${className} pt-[45px] w-[260px]`}
       >
         <FormItem label="註冊信箱" field="email" required rules={email}>
