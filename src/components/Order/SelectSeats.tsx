@@ -72,7 +72,6 @@ const SelectSeats: React.FC = () => {
       // console.log(seatsData.oneWayTicket.length);
       // console.log(passengerTicketTotal);
       if (seatsData.oneWayTicket.length !== passengerTicketTotal) {
-        console.log(1);
         Message.error("票數與已選座位數不符");
         return;
       }
@@ -80,18 +79,12 @@ const SelectSeats: React.FC = () => {
 
     if (
       tabState === "roundTripTicket" &&
-      (selectedOneWayMethod === "手動劃位" ||
-        selectedRoundTripMethod === "手動劃位")
+      selectedRoundTripMethod === "手動劃位"
     ) {
-      // console.log(
-      //   seatsData.oneWayTicket.length + seatsData.roundTripTicket.length
-      // );
-      // console.log(passengerTicketTotal * 2);
       if (
         seatsData.oneWayTicket.length + seatsData.roundTripTicket.length !==
         passengerTicketTotal * 2
       ) {
-        console.log(2);
         Message.error("票數與已選座位數不符");
         return;
       }

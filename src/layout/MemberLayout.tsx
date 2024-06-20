@@ -17,9 +17,7 @@ const MemberCenter: React.FC = () => {
   // 控制 Loading 顯示的狀態
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+
 
   // 監聽路由變化，顯示 Loading 並設定 0.3 秒後隱藏
   useEffect(() => {
@@ -30,6 +28,7 @@ const MemberCenter: React.FC = () => {
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
+  
   return (
     <>
       <Header />

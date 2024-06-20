@@ -122,11 +122,11 @@ const SelectTime: React.FC = () => {
 
   const submit = () => {
     console.log(bookingData);
-    if (ticketState === "oneWayTicket" && !bookingData.timeData.startTime) {
+    if (ticketState === "oneWayTicket" && bookingData.timeData.startTime.id.length < 1) {
       Message.error("請選擇搭車時間");
     } else if (
       ticketState === "roundTripTicket" &&
-      (!bookingData.timeData.startTime || !bookingData.timeData.endTime)
+      (!bookingData.timeData.startTime || bookingData.timeData.endTime.id.length < 1)
     ) {
       Message.error("請選擇搭車時間");
     } else {
