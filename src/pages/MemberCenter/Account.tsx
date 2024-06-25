@@ -100,7 +100,7 @@ function AccountPage() {
   const deleteSubmit = () => {
     setDeleteVisible(false);
     Message.success("刪除帳號成功");
-    dispatch(authActions.isLogin());
+    dispatch(authActions.logout());
     navigate("/deleteAccount");
   };
 

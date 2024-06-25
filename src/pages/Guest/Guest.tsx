@@ -15,7 +15,7 @@ import Forget from "./Forget.tsx";
 import OAuth from "../../components/Guest/OAuth.tsx";
 import Terms from "../../components/Guest/Terms.tsx";
 
-// TODO: TS索引簽章待複習
+
 // title切換
 interface Titles {
   [key: string]: string;
@@ -37,11 +37,11 @@ function GuestPage() {
   const auth = useSelector((state: RootState) => state.auth.isMember);
 
   /** @const 取得dilog開關狀態(全域狀態) */
-  const isDialog = useSelector((state: RootState) => state.auth.isDialog);
+  const guestDialog = useSelector((state: RootState) => state.auth.guestDialog);
 
   /** @func 控制diaLog開關(全域狀態) */
-  const dialogToggle = () => {
-    dispatch(authActions.dialogToggle());
+  const guestDialogToggle = () => {
+    dispatch(authActions.guestDialogToggle());
     setModel("login");
     // 恢復滾動軸
     document.body.style.overflow = "";
@@ -60,8 +60,8 @@ function GuestPage() {
   // 點擊灰底區域關閉視窗
   const handleBackdropClick = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLElement;
-    if (target.classList.contains("bg-[black]") && isDialog && !auth) {
-      dialogToggle(); // 关闭对话框
+    if (target.classList.contains("bg-[black]") && guestDialog && !auth) {
+      guestDialogToggle(); 
     }
   };
 
@@ -91,7 +91,7 @@ function GuestPage() {
     // 灰底背景
     <section
       className={`fixed top-0 left-0 w-full h-full z-50 flex justify-center items-center bg-[black] bg-opacity-25 ${
-        isDialog && !auth ? "block" : "hidden"
+        guestDialog && !auth ? "block" : "hidden"
       }`}
       onClick={(e) => handleBackdropClick(e)}
     >
@@ -105,7 +105,7 @@ function GuestPage() {
         <div
           className={`w-[320px] max-h-[80vh] h-[-webkit-fill-available] overflow-y-auto pt-[16px] flex flex-col items-center md:w-[420px] justify-between `}
         >
-          <button onClick={dialogToggle} className={`self-end`}>
+          <button onClick={guestDialogToggle} className={`self-end`}>
             <span className="icon-[ri--close-fill] cursor-pointer h-[16px] w-[16px] mr-[16px]   "></span>
           </button>
           <div>

@@ -15,18 +15,18 @@ import {
 import dayjs, { Dayjs } from "dayjs";
 import orderManagementList from "../../assets/API/orderManagement.json";
 // 匯入圖片
-import noOrderImg from '@/assets/images/noOrderState.png'
+import noOrderImg from "@/assets/images/noOrderState.png";
 
 const TabPane = Tabs.TabPane;
 
 const tabs = [
   {
     id: "1",
-    name: "待付款",
+    name: "已付款",
   },
   {
     id: "2",
-    name: "已付款",
+    name: "待付款",
   },
   {
     id: "3",
@@ -78,11 +78,11 @@ const OrderManagement: React.FC = () => {
       filteredOrders = filteredOrders.filter((order) => {
         switch (selectedCategory) {
           case "已付款":
-            return order.paymentDescription === '已付款';
+            return order.paymentDescription === "已付款";
           case "申請退款中":
-            return order.paymentDescription === '申請退款中';
+            return order.paymentDescription === "申請退款中";
           case "付款期限已截止":
-            return order.paymentDescription === '付款期限已截止';
+            return order.paymentDescription === "付款期限已截止";
           default:
             return true;
         }
@@ -209,6 +209,7 @@ const OrderManagement: React.FC = () => {
                           </button>
                         </OrderItem>
                       )}
+
                       {tab.name === "已付款" && order.paymentState === 1 && (
                         <OrderItem
                           name={order.name}

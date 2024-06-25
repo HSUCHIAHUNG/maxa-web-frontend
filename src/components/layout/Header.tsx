@@ -77,7 +77,7 @@ const Header: React.FC = () => {
       langue: false,
       collection: false,
     }));
-    dispatch(authActions.dialogToggle());
+    dispatch(authActions.guestDialogToggle());
   };
 
   // 關閉所有選單
@@ -143,9 +143,9 @@ const Header: React.FC = () => {
   // 登出
   const signOut = () => {
     setCloseList();
-    dispatch(authActions.isLogin());
+    dispatch(authActions.logout());
     Message.success("登出成功");
-    navigate("/");
+    // navigate("/");
   };
 
   // 搜尋商品

@@ -54,174 +54,195 @@ const FrequentTravelersPage = lazy(() =>
 const OrderManagementPage = lazy(() =>
   delay(500).then(() => import("../pages/MemberCenter/OrderManagement"))
 );
-const EmailValidPage = lazy(() => import("../pages/EmailValid"));
+const EmailValidPage = lazy(() =>
+  delay(500).then(() => import("../pages/EmailValid"))
+);
+const PrivateRouterPage = lazy(() => import("./PrivateRouter"));
 
 const routes = [
   {
-    path: "/",
-    element: <DefaultLayout />,
-    errorElement: (
+    path: "*",
+    element: (
       <Suspense fallback={<Loading isLoading={true} />}>
         <ErrorPage />
       </Suspense>
     ),
+  },
+
+  {
+    path: "/",
+    element: (
+      <Suspense fallback={<Loading isLoading={true} />}>
+        <PrivateRouterPage />
+      </Suspense>
+    ),
     children: [
-      // 首頁
+      // 會員中心
+      {
+        path: "/memberCenter",
+        element: (
+          <Suspense fallback={<Loading isLoading={true} />}>
+            <MemberCenterPage />
+          </Suspense>
+        ),
+        children: [
+          // 帳號管理
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <AccountPage />
+              </Suspense>
+            ),
+          },
+          // 常用旅客
+          {
+            path: "frequentTravelers",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <FrequentTravelersPage />
+              </Suspense>
+            ),
+          },
+          // 訂單管理
+          {
+            path: "orderManagementPage",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <OrderManagementPage />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      // 支付頁面
+      {
+        path: "/creaditCard/:id",
+        element: (
+          <Suspense fallback={<Loading isLoading={true} />}>
+            <CreaditCardPage />
+          </Suspense>
+        ),
+      },
+      // DefaultLayout
       {
         path: "/",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <HomePage />
-          </Suspense>
-        ),
-      },
-      // 合作夥伴
-      {
-        path: "/parner/:id",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <ParnerPage />
-          </Suspense>
-        ),
-      },
-      // 註冊登入(密碼更改)
-      {
-        path: "/editPassword/:token",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <EditPasswordPage />
-          </Suspense>
-        ),
-      },
-      // 行程產品
-      {
-        path: "/order",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <OrderPage />
-          </Suspense>
-        ),
-      },
-      // 行程產品細節
-      {
-        path: "order/:id",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <ProductDetailPage />
-          </Suspense>
-        ),
-      },
-      // 購物車
-      {
-        path: "/cart",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <CartPages />
-          </Suspense>
-        ),
-      },
-      // 訂單明細
-      {
-        path: "/orderContent/:id",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <OrderContentPage />
-          </Suspense>
-        ),
-      },
-      // 查詢訂單(非會員查詢)
-      {
-        path: "/searchOrder",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <SearchOrderPage />
-          </Suspense>
-        ),
-      },
-      // 收藏
-      {
-        path: "/collection",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <CollectionPage />
-          </Suspense>
-        ),
-      },
-      // 刪除帳號完成頁
-      {
-        path: "/deleteAccount",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <DeleteAccountPage />
-          </Suspense>
-        ),
-      },
-      // 支付完成頁面
-      {
-        path: "/paidOrderContent/:id",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <PaidOrderContentPage />
-          </Suspense>
-        ),
-      },
-      // 信箱驗證頁面
-      {
-        path: "/emailValid",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <EmailValidPage />
-          </Suspense>
-        ),
-      },
-    ],
-  },
-  // 會員中心
-  {
-    path: "/memberCenter",
-    element: (
-      <Suspense fallback={<Loading isLoading={true} />}>
-        <MemberCenterPage />
-      </Suspense>
-    ),
-    children: [
-      // 帳號管理
-      {
-        path: "",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <AccountPage />
-          </Suspense>
-        ),
-      },
-      // 常用旅客
-      {
-        path: "frequentTravelers",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <FrequentTravelersPage />
-          </Suspense>
-        ),
-      },
-      // 訂單管理
-      {
-        path: "orderManagementPage",
-        element: (
-          <Suspense fallback={<Loading isLoading={true} />}>
-            <OrderManagementPage />
-          </Suspense>
-        ),
+        element: <DefaultLayout />,
+        children: [
+          // 首頁
+          {
+            path: "/",
+            meta: {
+              requiresAuth: true,
+            },
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <HomePage />
+              </Suspense>
+            ),
+          },
+          // 合作夥伴
+          {
+            path: "/parner/:id",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <ParnerPage />
+              </Suspense>
+            ),
+          },
+          // 註冊登入(密碼更改)
+          {
+            path: "/editPassword/:token",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <EditPasswordPage />
+              </Suspense>
+            ),
+          },
+          // 行程產品
+          {
+            path: "/order",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <OrderPage />
+              </Suspense>
+            ),
+          },
+          // 行程產品細節
+          {
+            path: "order/:id",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <ProductDetailPage />
+              </Suspense>
+            ),
+          },
+          // 購物車
+          {
+            path: "/cart",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <CartPages />
+              </Suspense>
+            ),
+          },
+          // 訂單明細
+          {
+            path: "/orderContent/:id",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <OrderContentPage />
+              </Suspense>
+            ),
+          },
+          // 查詢訂單(非會員查詢)
+          {
+            path: "/searchOrder",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <SearchOrderPage />
+              </Suspense>
+            ),
+          },
+          // 收藏
+          {
+            path: "/collection",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <CollectionPage />
+              </Suspense>
+            ),
+          },
+          // 刪除帳號完成頁
+          {
+            path: "/deleteAccount",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <DeleteAccountPage />
+              </Suspense>
+            ),
+          },
+          // 支付完成頁面
+          {
+            path: "/paidOrderContent/:id",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <PaidOrderContentPage />
+              </Suspense>
+            ),
+          },
+          // 信箱驗證頁面
+          {
+            path: "/emailValid",
+            element: (
+              <Suspense fallback={<Loading isLoading={true} />}>
+                <EmailValidPage />
+              </Suspense>
+            ),
+          },
+        ],
       },
     ],
-  },
-  // 支付頁面
-  {
-    path: "/creaditCard/:id",
-    element: (
-      <Suspense fallback={<Loading isLoading={true} />}>
-        <CreaditCardPage />
-      </Suspense>
-    ),
   },
 ];
 

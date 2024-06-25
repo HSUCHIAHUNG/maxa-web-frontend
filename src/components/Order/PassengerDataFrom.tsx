@@ -16,7 +16,7 @@ interface PassengerDataFromProps {
   title: string;
   fieldName: string;
   children?: ReactNode;
-  isRequired?: boolean
+  isRequired?: boolean;
 }
 
 const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({
@@ -29,7 +29,7 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({
   const auth = useSelector((state: RootState) => state.auth.isMember);
 
   // 常用旅客資料
-  const options = ["Beijing", "Shanghai", "Guangzhou"];
+  const options = ["Alden", "Json", "Peter"];
 
   return (
     <div
@@ -51,10 +51,7 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({
       </div>
 
       {/* 常用旅客選單 */}
-      <FormItem
-        label="選擇常用旅客"
-        field={`${fieldName}FrequentTravelers`}
-      >
+      <FormItem label="選擇常用旅客" field={`${fieldName}FrequentTravelers`}>
         <Select placeholder="Please select" allowClear>
           {options.map((option, index) => (
             <Option key={option} disabled={index === 3} value={option}>
@@ -92,10 +89,7 @@ const PassengerDataFrom: React.FC<PassengerDataFromProps> = ({
       </Form.Item>
 
       {/* 信箱 */}
-      <FormItem
-        label="Email"
-        field={`${fieldName}Email`}
-      >
+      <FormItem label="Email" field={`${fieldName}Email`}>
         <Input placeholder="請輸入信箱" />
       </FormItem>
       {/* 清空表單 */}

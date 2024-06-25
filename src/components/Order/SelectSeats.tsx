@@ -67,10 +67,9 @@ const SelectSeats: React.FC = () => {
       Message.error("乘客票數不可小於1");
       return;
     }
-    console.log(tabState);
-    if (tabState === "oneWayTicket" && selectedOneWayMethod === "手動劃位") {
-      // console.log(seatsData.oneWayTicket.length);
-      // console.log(passengerTicketTotal);
+    console.log(seatsData.oneWayTicket.length);
+    console.log(passengerTicketTotal);
+    if (selectedOneWayMethod === "手動劃位") {
       if (seatsData.oneWayTicket.length !== passengerTicketTotal) {
         Message.error("票數與已選座位數不符");
         return;
@@ -81,16 +80,12 @@ const SelectSeats: React.FC = () => {
       tabState === "roundTripTicket" &&
       selectedRoundTripMethod === "手動劃位"
     ) {
-      if (
-        seatsData.oneWayTicket.length + seatsData.roundTripTicket.length !==
-        passengerTicketTotal * 2
-      ) {
+      if (seatsData.roundTripTicket.length * 2 !== passengerTicketTotal * 2) {
         Message.error("票數與已選座位數不符");
         return;
       }
     }
-    // console.log(selectedOneWayMethod);
-    // console.log(selectedRoundTripMethod);
+
     dispatch(orderActions.switchStage("contract"));
   };
 

@@ -7,6 +7,8 @@ import { useAppDispatch } from "../../stores/index.ts";
 import { Form, Input, Button, Message } from "@arco-design/web-react";
 // 驗證規則
 import { email, password } from "../../utils/rules";
+// api
+import { FETCH_AUTH } from "../../service";
 
 interface LoginProps {
   className?: string;
@@ -24,11 +26,34 @@ const Login: React.FC<LoginProps> = (props) => {
   const dispatch = useAppDispatch();
 
   /** @func login表單提交 */
-  const submit = (value: object) => {
-    console.log(value);
-    dispatch(authActions.isLogin());
-    Message.success("登入成功");
+  const submit = async (value: { email: string; password: string }) => {
+    try {
+      const response = await FETCH_AUTH.Login({
+        action: "login",
+        token: "",
+        data: {
+          member_account: value.email,
+          member_passwd: value.password,
+        },
+      });
+  
+      const { success, message, data } = response.data; // 從 response 的 data 屬性中解構你需要的資料
+  
+      if (!success) {
+        dispatch(authActions.logout());
+        Message.error(message);
+        return;
+      }
+  
+      // 登入成功將使用者資料存進 redux
+      dispatch(authActions.login({ token: data.token }));
+      Message.success("登入成功");
+    } catch (error) {
+      Message.error("登入失敗");
+    }
   };
+  
+
   return (
     <>
       <Form

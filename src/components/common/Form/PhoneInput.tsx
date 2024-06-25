@@ -1,6 +1,6 @@
 import React from "react";
 import { Select, Input } from "@arco-design/web-react";
-import countryCodeJson from '../../../assets/API/countryCode.json'
+import countryCodeJson from "../../../assets/API/countryCode.json";
 
 interface PhoneInputProps {
   value?: {
@@ -17,8 +17,15 @@ const PhoneInput: React.FC<PhoneInputProps> = (props) => {
     props.onChange && props.onChange(newValue);
   };
 
-  const countryCode = countryCodeJson.map((item) => item.code)
-
+  const countryCode = [
+    { code: "+886" },
+    ...countryCodeJson
+      .filter((entry) => entry.code !== "+886")
+      .sort(
+        (a, b) =>
+          parseInt(a.code.replace("+", "")) - parseInt(b.code.replace("+", ""))
+      ),
+  ].map((entry) => entry.code);
 
   return (
     <Input
@@ -28,8 +35,8 @@ const PhoneInput: React.FC<PhoneInputProps> = (props) => {
       }}
       addBefore={
         <Select
-          value={value.select}
           error={props.error}
+          defaultValue={'+886'}
           size={"mini"}
           placeholder="請選擇"
           style={{ width: 100 }}

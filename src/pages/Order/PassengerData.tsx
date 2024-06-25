@@ -123,6 +123,14 @@ const PassengerData: React.FC = () => {
           layout="vertical"
           onSubmit={loginSubmit}
           className={`flex flex-col m-[0_auto] gap-[16px] my-[18px] md:my-[20px] md:gap-[20px] md:w-[560px] xl:flex-row-reverse xl:w-[900px]`}
+          initialValues={{
+            orderphone: {
+              select: "+886",
+            },
+            takerphone: {
+              select: "+886",
+            },
+          }}
         >
           {/* 訂單明細 */}
           <div ref={orderDetailsRef}>

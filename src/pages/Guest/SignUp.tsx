@@ -6,18 +6,22 @@ import { Form, Input, Button } from "@arco-design/web-react";
 import { email, password } from "../../utils/rules";
 // 自定義hook
 import useCountdownTimer from "../../hook/useCountdownTimer";
+// api測試
+import { FETCH_AUTH } from "../../service";
+// cookie
+import { SET_COOKIES } from "../../utils/js-cookie.ts";
 
-interface signUpProps {
+interface SignUpProps {
   className?: string;
   model: string;
   setModel: (state: string) => void;
 }
 
-interface changeModel {
+interface ChangeModel {
   [key: string]: string;
 }
 
-const Sigup: React.FC<signUpProps> = (props) => {
+const Sigup: React.FC<SignUpProps> = (props) => {
   // 父層props
   const { className, setModel, model } = props;
 
@@ -35,8 +39,34 @@ const Sigup: React.FC<signUpProps> = (props) => {
   const [form] = Form.useForm();
 
   /** @func signUp表單提交 */
-  const signUpSubmit = (value: object) => {
-    // setModel("signUpDefault");
+  const submit = async (value: {
+    email: string;
+    password: string;
+    name: string;
+  }) => {
+    const resp = await FETCH_AUTH.SignUp({
+      action: "reg",
+      data: {
+        member_account: value.email,
+        member_passwd: value.password,
+        member_name: value.name,
+      },
+    });
+    const { data: respData = {} } = resp;
+    const { code, success, message, data } = respData;
+    const {member_account, tmp_session } = data
+
+    console.log(member_account, tmp_session);
+
+    if (code === 2) {
+      console.log({ code, success, message, data });
+    } else if (!success) {
+      return;
+    }
+
+    SET_COOKIES('tmp_session', tmp_session)
+
+    setModel("signUpDefault");
     console.log(value);
     /** @func 表單提交後開始計時器 */
     if (model !== "signUpTimerStart") {
@@ -46,7 +76,7 @@ const Sigup: React.FC<signUpProps> = (props) => {
   };
 
   /** @const {object} 按鈕文字動態切換 */
-  const changeButton: changeModel = {
+  const changeButton: ChangeModel = {
     signUpDefault: "註冊",
     signUpTimerStart: `(${countdown}後可重新發送)`,
     signUpTimerEnd: "重新發送",
@@ -59,7 +89,7 @@ const Sigup: React.FC<signUpProps> = (props) => {
         autoComplete="on"
         requiredSymbol={{ position: "start" }}
         layout="vertical"
-        onSubmit={signUpSubmit}
+        onSubmit={submit}
         className={` ${className} pt-[14px] w-[260px]`}
       >
         <FormItem
@@ -73,9 +103,9 @@ const Sigup: React.FC<signUpProps> = (props) => {
         </FormItem>
         <FormItem
           label="姓名"
-          field="namea"
+          field="name"
           required
-          rules={[{required:true}]}
+          rules={[{ required: true }]}
           className={model !== "signUpDefault" ? "hidden" : "block"}
         >
           <Input placeholder="請輸入姓名" />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 // router
 import { useParams } from "react-router-dom";
@@ -30,17 +30,31 @@ const BreadcrumbItem = Breadcrumb.Item;
 const TabPane = Tabs.TabPane;
 const Step = Steps.Step;
 
-type IndustryType = "桃園客運" | "屏東客運" | "金門縣公共車船管理處" | "國光客運";
+type IndustryType =
+  | "桃園客運"
+  | "屏東客運"
+  | "金門縣公共車船管理處"
+  | "國光客運";
 
 const ProductDetail: React.FC = () => {
   // redux(方法調用)
   const dispatch = useAppDispatch();
 
+  // 路由參數
   const param = useParams<{ id: string }>();
   const { id } = param;
 
   //  productAPI  ProductAPIType
   const productData: ProductAPIType = productAPI;
+
+  // 錨點顯示狀態
+  const [isSticky, setIsSticky] = useState(false);
+
+  // 付款方式element
+  const paymentRef = useRef<HTMLDivElement>(null);
+
+  // 參考"選擇日期與票數"區塊
+  const bookingSectionRef = useRef<HTMLDivElement>(null);
 
   // ticket( 單程票、來回票 )狀態
   const ticketState = useSelector((state: RootState) => state.order.ticket);
@@ -69,24 +83,72 @@ const ProductDetail: React.FC = () => {
 
   // 合作夥伴mapping
   const parnerMap = {
-    '屏東客運': "AC010001",
-    '桃園客運': "AC010003",
-    '金門縣公共車船管理處': "AC010004",
-    '國光客運': "AC010002",
+    屏東客運: "AC010001",
+    桃園客運: "AC010003",
+    金門縣公共車船管理處: "AC010004",
+    國光客運: "AC010002",
   };
 
   // 合作夥伴頁面連結參數
-  const navigateParner = (param: keyof typeof parnerMap) => parnerMap[param]
+  const navigateParner = (param: keyof typeof parnerMap) => parnerMap[param];
+
+  // 錨點
+  useEffect(() => {
+    const handleScroll = () => {
+      if (paymentRef.current) {
+        const rect = paymentRef.current.getBoundingClientRect();
+        setIsSticky(rect.top < -320);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // 初始调用，以防止页面刷新时状态不正确
+    handleScroll();
+
+    // 在组件卸载时移除事件监听器
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   if (id === undefined || !productData[id]) {
     return <div>合作夥伴 ID 無效或找不到資料</div>;
   }
+
+  // 滾動到"選擇日期與票數"區塊
+  const scrollToBookingSection = () => {
+    if (bookingSectionRef.current) {
+      bookingSectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   // 對應產品id資料
   const productList: ProductListType = productData[id];
 
   return (
     <>
+      {/* 滾動-產品價格內容 */}
+      <div
+        className={
+          isSticky
+            ? "sticky flex justify-end gap-[8px] items-center top-0 bg-[#fff] w-full z-[100] shadow-md h-[52px] px-[12px] md:px-[20px] duration-300 transition-all"
+            : " h-0 overflow-hidden"
+        }
+      >
+        <button
+          className={`p-[5px_45px] rounded-[2px] text-center text-[14px] text-[#4E5969] bg-[#F2F3F5]`}
+        >
+          收藏商品
+        </button>
+        <button
+          onClick={scrollToBookingSection}
+          className={`p-[5px_45px] rounded-[2px] text-center text-[14px] text-[#FFFFFF] bg-[#3A57E8]`}
+        >
+          立即購買
+        </button>
+      </div>
+
       {/* 4. 購買契約 */}
       {bookingStage === "contract" && <Contract />}
       {/* 5.填寫乘客資料 */}
@@ -95,12 +157,22 @@ const ProductDetail: React.FC = () => {
         className={`mx-[12px] mb-[20px] md:mb-[40px] xl:mb-[80px] md:m-[0_auto] md:w-[720px] xl:w-[1152px] ${isOpen()} `}
       >
         {/* 手機板title */}
-        <div className={`flex items-center py-[14px] md:hidden`}>
+        <div className={`flex gap-[12px] items-center py-[14px] md:hidden`}>
           <Link
             to={"/order"}
             className={`icon-[iconamoon--arrow-left-2-thin] w-[24px] h-[24px] `}
           ></Link>
-          <p className={`m-[0_auto] text-[16px]`}>{productList.name}</p>
+          <div>
+            <p className={`m-[0_auto] text-[16px]`}>{productList.name}</p>
+            <Link
+              to={`/parner/${navigateParner(
+                productList.industry as IndustryType
+              )}`}
+              className={`text-[14px] text-[#3A57E8]`}
+            >
+              {productList.industry}
+            </Link>
+          </div>
         </div>
 
         {/* 電腦版麵包屑 */}
@@ -121,7 +193,12 @@ const ProductDetail: React.FC = () => {
             <p className={`text-[20px]`}>
               {productList.name}
               <span className={`text-[14px] text-[#86909C] px-[14px]`}>|</span>
-              <Link to={`/parner/${navigateParner(productList.industry as IndustryType)}`} className={`text-[14px] text-[#3A57E8]`}>
+              <Link
+                to={`/parner/${navigateParner(
+                  productList.industry as IndustryType
+                )}`}
+                className={`text-[14px] text-[#3A57E8]`}
+              >
                 {productList.industry}
               </Link>
             </p>
@@ -148,6 +225,7 @@ const ProductDetail: React.FC = () => {
           <div className={`xl:w-[70%]`}>
             {/* 使用方式、付款方式 */}
             <div
+              ref={paymentRef}
               className={`md:flex gap-[8px] mb-[20px] md:mb-[40px] xl:mb-0 `}
             >
               {/* 使用方式 */}
@@ -237,7 +315,7 @@ const ProductDetail: React.FC = () => {
             </div>
 
             {/* 訂票流程-內容 */}
-            <div>
+            <div ref={bookingSectionRef}>
               <div
                 className={` flex gap-[8px] py-[20px] md:pt-[40px] xl:pt-[60px]`}
               >
