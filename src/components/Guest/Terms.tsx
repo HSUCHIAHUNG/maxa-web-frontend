@@ -1,12 +1,12 @@
 import React from "react";
 
-interface oAuthProps {
-  className?: string;
+interface OAuthProps {
+  // className?: string;
   setModel: (state: string) => void;
   model: string;
 }
 
-const OAuth: React.FC<oAuthProps> = (props) => {
+const OAuth: React.FC<OAuthProps> = (props) => {
   const { model, setModel } = props;
   
 

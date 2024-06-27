@@ -40,7 +40,7 @@ const Forget: React.FC<forgetProps> = (props) => {
 
     if (model !== "forgetTimerStart") {
       setModel("forgetTimerStart");
-      setCountdown(5);
+      setCountdown(60);
     }
   };
 

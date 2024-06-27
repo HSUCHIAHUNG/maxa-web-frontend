@@ -37,11 +37,16 @@ const Login: React.FC<LoginProps> = (props) => {
         },
       });
   
-      const { success, message, data } = response.data; // 從 response 的 data 屬性中解構你需要的資料
-  
+      const { code, success, data } = response.data; // 從 response 的 data 屬性中解構你需要的資料
+      
+      if(!success && code === -23) {
+        Message.error('信箱尚未完成驗證');
+        return
+      }
+
       if (!success) {
         dispatch(authActions.logout());
-        Message.error(message);
+        Message.error('登入失敗請確認信箱或密碼');
         return;
       }
   

@@ -15,14 +15,13 @@ import Forget from "./Forget.tsx";
 import OAuth from "../../components/Guest/OAuth.tsx";
 import Terms from "../../components/Guest/Terms.tsx";
 
-
 // title切換
 interface Titles {
   [key: string]: string;
 }
 
 // 表單切換
-interface componentSwitch {
+interface ComponentSwitch {
   [key: string]: JSX.Element;
 }
 
@@ -61,14 +60,14 @@ function GuestPage() {
   const handleBackdropClick = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLElement;
     if (target.classList.contains("bg-[black]") && guestDialog && !auth) {
-      guestDialogToggle(); 
+      guestDialogToggle();
     }
   };
 
   /** @const object title切換 */
   const titles: Titles = {
-    login: "歡迎登入",
-    signUpDefault: "註冊會員",
+    login: "歡迎登入MAXA",
+    signUpDefault: "註冊MAXA會員",
     signUpTimerStart: "註冊會員",
     signUpTimerEnd: "註冊會員",
     fotgetDefault: "忘記密碼",
@@ -77,7 +76,7 @@ function GuestPage() {
   };
 
   /** @const object 表單切換 */
-  const componentSwitch: componentSwitch = {
+  const componentSwitch: ComponentSwitch = {
     login: <Login setModel={setModel} />,
     signUpDefault: <SignUp model={model} setModel={setModel} />,
     signUpTimerStart: <SignUp model={model} setModel={setModel} />,
@@ -109,8 +108,14 @@ function GuestPage() {
             <span className="icon-[ri--close-fill] cursor-pointer h-[16px] w-[16px] mr-[16px]   "></span>
           </button>
           <div>
-            <p className={`text-center py-[8px]`}>{titles[model]}</p>
-            <img src={Logo} alt="Logo" className={`w-[120px] h-[28px] `} />
+            {model === "login" || model === "signUpDefault" ? (
+              <p className={`text-center text-[24px] font-extrabold `}>{titles[model]}</p>
+            ) : (
+              <>
+                <p className={`text-center py-[8px]`}>{titles[model]}</p>
+                <img src={Logo} alt="Logo" className={`w-[120px] h-[28px] `} />
+              </>
+            )}
           </div>
           {componentSwitch[model]}
           <OAuth model={model} />

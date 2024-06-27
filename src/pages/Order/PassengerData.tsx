@@ -5,7 +5,7 @@ import { RootState } from "../../stores/index";
 import OrderDetails from "../../components/common/OrderDetails";
 import PhoneInput from "../../components/common/Form/PhoneInput";
 import PassengerDataFrom from "../../components/Order/PassengerDataFrom";
-import { Form, Steps, Checkbox, Input } from "@arco-design/web-react";
+import { Form, Steps, Checkbox, Input, Message } from "@arco-design/web-react";
 import { email } from "../../utils/rules";
 
 const Step = Steps.Step;
@@ -20,6 +20,9 @@ const PassengerData: React.FC = () => {
 
   // 單程票or來回票
   const tabState = useSelector((state: RootState) => state.order.ticket);
+
+  // 訂購人資料輸入區塊
+  const subscriberRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,8 +83,18 @@ const PassengerData: React.FC = () => {
     navigate(`/creaditCard/${param.id}`);
   };
 
+  // 錨點
+  function anchorSubmit() {
+    if (subscriberRef.current) {
+      subscriberRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    Message.info('輸入資料格式錯誤')
+    form.submit();
+  }
+
   return (
     <>
+      {/* 浮動錨點 */}
       <div
         className={
           isSticky
@@ -96,12 +109,13 @@ const PassengerData: React.FC = () => {
         {tabState === "oneWayTicket" && <p>NT${totalAmount()}</p>}
 
         <button
-          onClick={form.submit}
+          onClick={anchorSubmit}
           className={` px-[16px] py-[5px] text-[#fff] bg-[#3A57E8] `}
         >
           確認付款
         </button>
       </div>
+
       <div className={`max-w-[900px] m-[0_auto] px-[12px] ${isOpen()}`}>
         <div className={`xl:flex xl:justify-center`}>
           <Steps
@@ -145,6 +159,7 @@ const PassengerData: React.FC = () => {
             className={`xl:w-[560px] flex flex-col gap-[16px] md:gap-[20px]`}
           >
             <div
+              ref={subscriberRef}
               className={`w-full border border-[#E5E6EB] border-solid rounded-[16px] py-[20px] px-[16px] md:px-[60px] md:py-[40px]`}
             >
               <div

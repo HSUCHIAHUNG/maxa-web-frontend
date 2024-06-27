@@ -35,7 +35,6 @@ const PhoneInput: React.FC<PhoneInputProps> = (props) => {
       }}
       addBefore={
         <Select
-          error={props.error}
           defaultValue={'+886'}
           size={"mini"}
           placeholder="請選擇"

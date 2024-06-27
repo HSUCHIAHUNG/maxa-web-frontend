@@ -145,6 +145,12 @@ const Order: React.FC = () => {
     </div>
   );
 
+  // 分頁切換
+  const chengePage = (currentPage: number) => {
+    window.scrollTo({top: 0, behavior: 'smooth'})
+    setCurrentPage(currentPage)
+  }
+
   return (
     <div className="relative">
       <Banner url={bannerImg} text={["搜", "尋", "路", "線"]}></Banner>
@@ -260,14 +266,14 @@ const Order: React.FC = () => {
       {filteredProducts.length > 0 && (
         <>
           <Pagination
-            onChange={setCurrentPage}
+            onChange={chengePage}
             pageSize={pageSize}
             total={filteredProducts.length}
             current={currentPage} // Ensure the pagination component reflects the current page
             className="justify-center mb-[40px] hidden md:flex"
           />
           <Pagination
-            onChange={setCurrentPage}
+            onChange={chengePage}
             total={filteredProducts.length}
             pageSize={pageSize}
             current={currentPage} // Ensure the pagination component reflects the current page

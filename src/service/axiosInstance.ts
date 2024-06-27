@@ -19,7 +19,8 @@ axiosInstance.interceptors.request.use(
     if (accessToken !== "false") {
       headers.Authorization = accessToken;
     }
-
+    console.log(accessToken);
+    console.log(headers);
     return { ...configSetting, headers };
   },
   (error) => Promise.reject(new Error(error))
